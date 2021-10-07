@@ -1,14 +1,7 @@
-# Syllabus-Management-System
+# ALI Interpretation
 Capstone/Software Development project
 
-Each CS faculty emails his/her syllabi to the CS Administrative Assistant at the beginning of each semester. The Admin Assistant subsequently saves each syllabi on his/her hard drive.
-
-The current system has several drawbacks: students do not have access to the Admin’s computer, and hence do not have the ability to review the course syllabi prior to registering for the course. A student may wish to review the required textbook for the course.
-
-The CS Faculty members do not have access to the Admin’s computer or email, and therefore cannot easily review the contents of an existing course. This poses a challenge for a faculty trying to create a new course. The contents of a new course could easily overlap an existing course.
-
-At the minimum, the SMS should provide the following capabilities:
-
-Allow faculty to submit and review syllabi each semester
-Allow students to review syllabi
-Allow the CS Administrative Assistant to manage the SMS. The CS Admin should be able to Add, Delete and Modify contents of the SMS
+Create an interpretation and database software in order to provide interpretation services for patients in hospitals that have inadequate interpretation services. 
+We want the software to mimic an interpreter to create a natural conversation between patient and medical professional. 
+The software should also transcribe and translate the conversations into a database for twenty four hours to keep track of key parts of the conversations between patients and medical professionals. 
+The software can help keep track of the conversations, the languages in which the conversations happened, and help doctors accurately record patient information.
