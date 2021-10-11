@@ -1,3 +1,4 @@
+#ALI server file
 from bottle import route, get, post 
 from bottle import run, debug
 from bottle import request, response, redirect, template
@@ -11,10 +12,39 @@ import os
 import codecs
 
 
-@route("/")
-def loginPage():
+#!!! please have username as 'username' inside mySql datbase. it will be easier in the future
+#login page functionality
+@get("/")
+def getloginPage():
     return template("login")
 
+@post("/")
+def postloginPage():
+    session = getSession(request)
+    # this will grap user input from html page
+    username = request.forms.get('username') 
+    password = request.forms.get('password')
+
+    user = getUser(username)
+    #!!we need to add a pop up if user credentials is wrong. Because we can not redirect to signup page
+    #bootstrap has some cool alert messages 
+    if not user:
+        return redirect('/') #if not found will redirect user back to login page
+    if 'credentials' not in user:
+        return redirect('/')
+    if not verifyPassword(password, user['credentials']):
+        return redirect('/') #if password is wrong will redirect to login page
+    session['username'] = username #gives user name to session
+    saveSession(response, session) #saves the session
+    return redirect('/home') #will redirect to home page with the user being logged in 
+
+
+#ADMIN create account functionality
+#code for create an account will be added here
+
+@route("/home")
+def homePage():
+    return template("home")
 
 
 

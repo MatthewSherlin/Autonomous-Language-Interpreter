@@ -25,20 +25,21 @@
 </head>
 
 <body>
+<form action="/" method="post"> 
     <div class="main-wrapper">
       <div class="small bubble"></div>
       <div class="large bubble"></div>
-
       <img src="static\logo.png" alt="logo">
-
-      <i class="fas fa-user"></i>    
-      <input type="text" placeholder="Username" class="text">      
-      <input type="text" placeholder="Password" class="text"> 
+      <i class="fas fa-user"></i> 
+      <input type="text" placeholder="Username" name="username" class="text">      
+      <input type="text" placeholder="Password" name="password" class="text"> 
 
       <input type="button" value="Login" class="button">
 
-      <p>Dont have an account? <a href="#">Sign up</a></p>
+      <p>Don't have an account or forgot password?</p> 
+      <p>Please contact ALI support.</p>
     </div>
+</form>
 
     <script src="Scripts/login-page.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"
