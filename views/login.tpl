@@ -1,6 +1,6 @@
 <html lang="en">
 <style>
-%include login-page-css
+%include views/css/login-page-css.tpl
 </style>
 <head>
   <meta charset="utf-8">
