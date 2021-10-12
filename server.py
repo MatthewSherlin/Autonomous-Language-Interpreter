@@ -47,6 +47,10 @@ def homePage():
     return template("home")
 
 
+@route("/signup")
+def signUpPage():
+    return template("signup")
+
 
 
 

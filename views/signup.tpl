@@ -1,6 +1,6 @@
 <html>
 <style>
-include views/css/signup-page-css.tpl
+%include views/css/signup-page-css.tpl
 </style>
 
 <head>
