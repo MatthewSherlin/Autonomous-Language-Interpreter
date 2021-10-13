@@ -32,8 +32,6 @@ db = mysql.connector.connect(
 #mycursor.execute("INSERT INTO test (username, password) VALUES(%s,%s)", ("Test1","Test1"))
 #db.commit()
 
-=======
-
 #!!! please have username as 'username' inside mySql datbase. it will be easier in the future
 #login page functionality
 @get("/")
