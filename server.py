@@ -4,12 +4,38 @@ from bottle import run, debug
 from bottle import request, response, redirect, template
 from bottle import default_app
 from bottle import static_file
+
+
+import mysql.connector
+
+## connecting to database
+## !!!may need to put root as password if no connection occurs!!!
+## make sure database = ali ##
+
+db = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "",
+    database = "ali"
+    )
+
+
+
+## Testing database connection ##
+## create a table named test with username varchar(20), password varachar(20) to test connection 
+#mycursor = db.cursor()
+
+#mycursor.execute("INSERT INTO test (username, password) VALUES(%s,%s)", ("Test1","Test1"))
+#db.commit()
+
+=======
 import json
 import random
 import string
 import hashlib
 import os
 import codecs
+
 
 
 #!!! please have username as 'username' inside mySql datbase. it will be easier in the future
