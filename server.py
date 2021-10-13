@@ -4,8 +4,12 @@ from bottle import run, debug
 from bottle import request, response, redirect, template
 from bottle import default_app
 from bottle import static_file
-
-
+import json
+import random
+import string
+import hashlib
+import os
+import codecs
 import mysql.connector
 
 ## connecting to database
@@ -29,14 +33,6 @@ db = mysql.connector.connect(
 #db.commit()
 
 =======
-import json
-import random
-import string
-import hashlib
-import os
-import codecs
-
-
 
 #!!! please have username as 'username' inside mySql datbase. it will be easier in the future
 #login page functionality
