@@ -10,6 +10,7 @@ import string
 import hashlib
 import os
 import codecs
+import dataset
 
 
 #!!! please have username as 'username' inside mySql datbase. it will be easier in the future
@@ -46,9 +47,29 @@ def postloginPage():
 def homePage():
     return template("home")
 
-@route("/signup")
-def signUpPage():
+@get("/signup") #returns sign up page 
+def getSignUp():
     return template("signup")
+
+@post("/signup")
+def postSignUp():
+    session = getSession(request) #get session
+    companyKey = request.form.get('companyKey')
+    username = request.forms.get('username') #get username form page
+    password = request.forms.get('password') #get password from page
+    passwordRepeat = request.forms.get('password_again') #get password from page
+    if password != passwordRepeat: #makes sure the double password input is the same
+        saveSession(response, session) 
+        return redirect('signup')    #will redirct to home page if not the same
+    ##need to check key before 
+    saveUser(username, { #saves user after signup
+        'username':username,
+        'credentials':generateCredentials(password),
+        'companyKey' :companyKey #change to company name
+    })
+    session['username'] = username #sets session user name to the new users name
+    saveSession(response, session)
+    return redirect('/')
 
 #---------------session functions------------------------
 def getSession(request):
@@ -162,6 +183,8 @@ def verifyPassword(Userpassword, Usercredentials):
     return newKey == key #returns bool to see if they match
 
 
+#def checkCompanyKey():
+    #need function to verify companies keys
 
 
 
