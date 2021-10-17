@@ -5,12 +5,15 @@ from bottle import request, response, redirect, template
 from bottle import default_app
 from bottle import static_file
 
+from sessions import saveSession, getSession
+
 import json
 # import random
 import string
 import hashlib
 import os
 import codecs
+
 
 
 
@@ -51,6 +54,26 @@ def homePage():
 @route("/signup")
 def signUpPage():
     return template("signup")
+
+@post("/signup")
+def postSignUp():
+    session = getSession(request) #get session
+    companyKey = request.forms.get('companyKey')
+    username = request.forms.get('username') #get username form page
+    password = request.forms.get('password') #get password from page
+    passwordRepeat = request.forms.get('password_again') #get password from page
+    if password != passwordRepeat: #makes sure the double password input is the same
+        saveSession(response, session) 
+        return redirect('signup')    #will redirct to home page if not the same
+    ##need to check key before 
+    saveUser(username, { #saves user after signup
+        'username':username,
+        'credentials':generateCredentials(password),
+        'companyKey' :companyKey #change to company name
+    })
+    session['username'] = username #sets session user name to the new users name
+    saveSession(response, session)
+    return redirect('/')
 
 
 #---------------------json file functions---------------------------------------
