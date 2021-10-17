@@ -54,7 +54,7 @@ def getSignUp():
 @post("/signup")
 def postSignUp():
     session = getSession(request) #get session
-    companyKey = request.form.get('companyKey')
+    companyKey = request.forms.get('companyKey')
     username = request.forms.get('username') #get username form page
     password = request.forms.get('password') #get password from page
     passwordRepeat = request.forms.get('password_again') #get password from page
