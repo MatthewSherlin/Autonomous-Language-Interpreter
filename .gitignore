@@ -134,3 +134,6 @@ dmypy.json
 
 # MACOS noise
 .DS_Store
+
+# VS Code
+.vscode
