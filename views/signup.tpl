@@ -21,14 +21,14 @@
       <i class="fas fa-users-cog"></i>
       
       <p1>For use by Administrators in account creation.</p1>
-      <input type="text" placeholder="Create Username" class="text"> 
-      <input type="text" placeholder="Repeat Username" class="text">
-      <input type="text" placeholder="Create Password" class="text">
-      <input type="text" placeholder="Repeat Password" class="text"> 
+      <input type="text" placeholder = "Company Key" name="companyKey" class="text">
+      <input type="text" placeholder="Create Username" name="username" class="text"> 
+      <input type="text" placeholder="Create Password" name="password" class="text">
+      <input type="text" placeholder="Repeat Password" name="password_again" class="text"> 
 
       <input type="button" value="Create User Account" class="button">
     </div>
-
+    </form>
     <script src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
             crossorigin="anonymous">
