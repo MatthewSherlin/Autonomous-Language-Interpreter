@@ -6,7 +6,7 @@ from bottle import default_app
 from bottle import static_file
 
 from sessions import saveSession, getSession
-
+from database import companies
 import json
 # import random
 import string
@@ -37,9 +37,9 @@ def postloginPage():
         return redirect('/') #if not found will redirect user back to login page
     if 'credentials' not in user:
         return redirect('/')
-    if not verifyPassword(password, user['credentials']):
+    if not verifyPassword(password, user['password']):
         return redirect('/') #if password is wrong will redirect to login page
-    session['username'] = username #gives user name to session
+    session['user_id'] = username #gives user name to session
     saveSession(response, session) #saves the session
     return redirect('/home') #will redirect to home page with the user being logged in 
 
@@ -57,23 +57,32 @@ def signUpPage():
 
 @post("/signup")
 def postSignUp():
-    session = getSession(request) #get session
+    session = getSession(request) #get session 
     companyKey = request.forms.get('companyKey')
     username = request.forms.get('username') #get username form page
     password = request.forms.get('password') #get password from page
     passwordRepeat = request.forms.get('password_again') #get password from page
+
     if password != passwordRepeat: #makes sure the double password input is the same
         saveSession(response, session) 
         return redirect('signup')    #will redirct to home page if not the same
-    ##need to check key before 
-    saveUser(username, { #saves user after signup
-        'username':username,
-        'credentials':generateCredentials(password),
-        'companyKey' :companyKey #change to company name
+    
+    try: 
+        companyInfo = list(companies.find(company_key = companyKey))
+    except: 
+        return redirect('signup') #input message (bootstrap alert) that says company key wrong
+        
+    companyName = companyInfo[0].get('company_name')
+    saveUser({ #saves user after signup
+        'username': username,
+        'credentials': generateCredentials(password),
+        'company_name': companyName, #change to company name
+        'user_id' : username
     })
-    session['username'] = username #sets session user name to the new users name
+    session['user_id'] = username #sets session user name to the new users name
     saveSession(response, session)
     return redirect('/')
+
 
 
 #---------------------json file functions---------------------------------------
@@ -145,7 +154,7 @@ def verifyPassword(Userpassword, Usercredentials):
         'sha256', # The hash digest algorithm for HMAC
         Userpassword.encode('utf-8'), # Convert the password to bytes
         salt, # Provide the salt
-        100000 # It is recommended to use at least 100,000 iterations of SHA-256 
+        100000 # It is recommended to use at least 100,000 iterations of SHA-256
         )
     return newKey == key #returns bool to see if they match
 

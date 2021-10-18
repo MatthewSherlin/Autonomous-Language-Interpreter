@@ -34,9 +34,9 @@ def getSession(request):
 
 # saving session
 def saveSession(response, session):
-    # write(session["session_id"], session)  # write through json
-    
-    response.set_cookie("session_id", session["session_id"], path="/")  # sets session
+    assert type(session) is dict
+    session_table.insert({'session_id': session['session_id'], 'user_id':session['user_id']})
+    response.set_cookie('session_id', session['session_id'], path="/")  # sets session
 
 
 # uses token function to get new session ID

@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <form action="/" method="post"> 
+  <form action="/signup" method="post"> 
     <div class="main-wrapper">
       <div class="small bubble"></div>
       <div class="large bubble"></div>
