@@ -4,13 +4,17 @@ from bottle import run, debug
 from bottle import request, response, redirect, template
 from bottle import default_app
 from bottle import static_file
+
+from sessions import saveSession, getSession, newSession
+from database import companies, saveUser, getUser
 import json
-import random
+# import random
 import string
 import hashlib
 import os
 import codecs
-import dataset
+
+
 
 
 #!!! please have username as 'username' inside mySql datbase. it will be easier in the future
@@ -22,20 +26,23 @@ def getloginPage():
 @post("/")
 def postloginPage():
     session = getSession(request)
-    # this will grap user input from html page
+    # this will grab user input from html page
     username = request.forms.get('username') 
     password = request.forms.get('password')
 
     user = getUser(username)
+    print(type(user))
+    print(f"username is type: {type(username)}")
+    print(user)
     #!!we need to add a pop up if user credentials is wrong. Because we can not redirect to signup page
     #bootstrap has some cool alert messages 
     if not user:
         return redirect('/') #if not found will redirect user back to login page
-    if 'credentials' not in user:
+    if 'password' not in user:
         return redirect('/')
-    if not verifyPassword(password, user['credentials']):
+    if not verifyPassword(password, user['password']):
         return redirect('/') #if password is wrong will redirect to login page
-    session['username'] = username #gives user name to session
+    session['user_id'] = username #gives user name to session
     saveSession(response, session) #saves the session
     return redirect('/home') #will redirect to home page with the user being logged in 
 
@@ -47,65 +54,42 @@ def postloginPage():
 def homePage():
     return template("home")
 
-@get("/signup") #returns sign up page 
-def getSignUp():
+@route("/signup")
+def signUpPage():
     return template("signup")
 
 @post("/signup")
 def postSignUp():
-    session = getSession(request) #get session
-    companyKey = request.form.get('companyKey')
+    session = getSession(request) #get session 
+    companyKey = request.forms.get('companyKey')
     username = request.forms.get('username') #get username form page
+    print("Getting password")
     password = request.forms.get('password') #get password from page
+    print(f"password is: {password}")
     passwordRepeat = request.forms.get('password_again') #get password from page
+
     if password != passwordRepeat: #makes sure the double password input is the same
         saveSession(response, session) 
         return redirect('signup')    #will redirct to home page if not the same
-    ##need to check key before 
-    saveUser(username, { #saves user after signup
-        'username':username,
-        'credentials':generateCredentials(password),
-        'companyKey' :companyKey #change to company name
-    })
-    session['username'] = username #sets session user name to the new users name
+    
+    try: 
+        companyInfo = list(companies.find(company_key = companyKey))
+    except: 
+        # need to return error code rather than redirect
+        return redirect('signup') #input message (bootstrap alert) that says company key wrong
+        
+    companyName = companyInfo[0].get('company_name')   
+    data = { #saves user after signup
+        'username': username,
+        'password': generateCredentials(password),
+        'company_name': companyName, #change to company name
+        'user_id' : username
+    }
+    print(type(data))
+    saveUser(data)
+    session['user_id'] = username #sets session user name to the new users name
     saveSession(response, session)
     return redirect('/')
-
-#---------------session functions------------------------
-def getSession(request):
-    
-    def newSession(): #creates new session dic
-        sessionId = newSessionId()
-        s = { #creating dic
-            "session_id" : sessionId,
-            "username" : ''
-        }
-        return s #returning data
-
-    sessionId = request.get_cookie("session_id", default=None) #asking for browser given data
-    if sessionId == None:
-        s = newSession() #if none found create new
-    else: # if found, get it 
-        try:
-            s= read(sessionId) 
-        except: # exception for proctection
-            s = newSession()
-    return s #return session 
-
-#saving session 
-def saveSession(response, session):
-    write(session['session_id'], session) #write through json
-    response.set_cookie("session_id", session['session_id'], path="/") # sets session 
-
-#uses token function to get new session ID
-def newSessionId():
-    return createToken()
-
-#create token for session ID
-def createToken(k=32):
-    return ''.join(random.choices(string.ascii_lowercase + string.digits, k=k)) #creates random string
-
-
 
 
 
@@ -122,7 +106,7 @@ def read(key):
     assert type(data) is dict #make sure it is a dict data type
     return data
 
-def getUser(name):
+""" def getUser(name):
     try:
         with open(f"data/user.{name}.json", "r") as f: #reads from json file to find username
             data = json.load(f) #load for read
@@ -130,13 +114,13 @@ def getUser(name):
         return data
     except:
         return None
-
-def saveUser(name, data):
+ """
+""" def saveUser(name, data):
     assert type(data) is dict #make sure it is a dict data type
     with open(f"data/user.{name}.json", "w") as f: #writes data to json file 
         json.dump(data,f) #dump for write
     return
-
+ """
 
 
 
@@ -178,13 +162,11 @@ def verifyPassword(Userpassword, Usercredentials):
         'sha256', # The hash digest algorithm for HMAC
         Userpassword.encode('utf-8'), # Convert the password to bytes
         salt, # Provide the salt
-        100000 # It is recommended to use at least 100,000 iterations of SHA-256 
+        100000 # It is recommended to use at least 100,000 iterations of SHA-256
         )
     return newKey == key #returns bool to see if they match
 
 
-#def checkCompanyKey():
-    #need function to verify companies keys
 
 
 
