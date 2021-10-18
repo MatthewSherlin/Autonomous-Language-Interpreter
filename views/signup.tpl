@@ -26,7 +26,7 @@
       <input type="text" placeholder="Create Password" name="password" class="text">
       <input type="text" placeholder="Repeat Password" name="password_again" class="text"> 
 
-      <input type="button" value="Create User Account" class="button">
+      <input type="submit" value="Create User Account" class="button">
     </div>
     </form>
     <script src="https://code.jquery.com/jquery-3.6.0.js"

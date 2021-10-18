@@ -12,7 +12,7 @@ import json
 # ---------------session functions------------------------
 def newSession():  # creates new session dic
     sessionId = newSessionId()
-    s = {"session_id": sessionId, "user_id": None}  # creating dic
+    s = {"session_id": sessionId, "user_id": ""}  # creating dic
     return s  # returning data
 
 
@@ -26,7 +26,8 @@ def getSession(request):
         try:
             # s = read(sessionId)
             session = list(session_table.find(session_id=sessionId))
-            s = session[0].get('session_id')
+            sessionId = session[0].get('session_id')
+            s = {'session_id': sessionId, 'user_id': ""}
         except:  # exception for proctection
             s = newSession()
     return s  # return session

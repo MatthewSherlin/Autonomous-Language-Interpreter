@@ -31,7 +31,7 @@
       <input type="text" placeholder="Username" name="username" class="text">      
       <input type="text" placeholder="Password" name="password" class="text"> 
 
-      <input type="button" value="Login" class="button">
+      <input type="submit" value="Login" class="button">
 
       <p>Don't have an account or forgot password?</p> 
       <p>Please contact ALI support.</p>

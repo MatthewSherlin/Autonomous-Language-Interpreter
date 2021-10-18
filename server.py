@@ -5,8 +5,8 @@ from bottle import request, response, redirect, template
 from bottle import default_app
 from bottle import static_file
 
-from sessions import saveSession, getSession
-from database import companies
+from sessions import saveSession, getSession, newSession
+from database import companies, saveUser, getUser
 import json
 # import random
 import string
@@ -31,11 +31,14 @@ def postloginPage():
     password = request.forms.get('password')
 
     user = getUser(username)
+    print(type(user))
+    print(f"username is type: {type(username)}")
+    print(user)
     #!!we need to add a pop up if user credentials is wrong. Because we can not redirect to signup page
     #bootstrap has some cool alert messages 
     if not user:
         return redirect('/') #if not found will redirect user back to login page
-    if 'credentials' not in user:
+    if 'password' not in user:
         return redirect('/')
     if not verifyPassword(password, user['password']):
         return redirect('/') #if password is wrong will redirect to login page
@@ -60,7 +63,9 @@ def postSignUp():
     session = getSession(request) #get session 
     companyKey = request.forms.get('companyKey')
     username = request.forms.get('username') #get username form page
+    print("Getting password")
     password = request.forms.get('password') #get password from page
+    print(f"password is: {password}")
     passwordRepeat = request.forms.get('password_again') #get password from page
 
     if password != passwordRepeat: #makes sure the double password input is the same
@@ -70,15 +75,18 @@ def postSignUp():
     try: 
         companyInfo = list(companies.find(company_key = companyKey))
     except: 
+        # need to return error code rather than redirect
         return redirect('signup') #input message (bootstrap alert) that says company key wrong
         
-    companyName = companyInfo[0].get('company_name')
-    saveUser({ #saves user after signup
+    companyName = companyInfo[0].get('company_name')   
+    data = { #saves user after signup
         'username': username,
-        'credentials': generateCredentials(password),
+        'password': generateCredentials(password),
         'company_name': companyName, #change to company name
         'user_id' : username
-    })
+    }
+    print(type(data))
+    saveUser(data)
     session['user_id'] = username #sets session user name to the new users name
     saveSession(response, session)
     return redirect('/')
@@ -98,7 +106,7 @@ def read(key):
     assert type(data) is dict #make sure it is a dict data type
     return data
 
-def getUser(name):
+""" def getUser(name):
     try:
         with open(f"data/user.{name}.json", "r") as f: #reads from json file to find username
             data = json.load(f) #load for read
@@ -106,13 +114,13 @@ def getUser(name):
         return data
     except:
         return None
-
-def saveUser(name, data):
+ """
+""" def saveUser(name, data):
     assert type(data) is dict #make sure it is a dict data type
     with open(f"data/user.{name}.json", "w") as f: #writes data to json file 
         json.dump(data,f) #dump for write
     return
-
+ """
 
 
 

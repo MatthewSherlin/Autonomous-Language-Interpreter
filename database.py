@@ -6,9 +6,9 @@ import dataset
 ## make sure database = ali ##
 
 # Add your own password for localhost
-password = None
-db = dataset.connect(f'mysql://root:{password}@localhost/ali')
+db = dataset.connect('mysql://root:password@localhost/ali')
 # companies = db.get_table('companies')
+
 
 
 ## Testing database connection ##
@@ -18,6 +18,14 @@ users_table = db['users_table']
 companies = db['companies']
 
 
+# Testing database setup 
+db['companies'].drop()
+
+companies.insert(
+    {'company_id':'1234' ,
+    'company_name': 'Avita',
+    'company_key': '123thjmv79cdfj3ki5tye'}
+)
 """ session_table.insert(dict(session_id='session_id1234567891011121314151', user_id=123))
 session_table.insert({'session_id': 'session_id1234567891011121314180', 'user_id':189})
 
