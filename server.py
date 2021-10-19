@@ -150,6 +150,9 @@ def get_image(filename):
 def get_static(filename):
     return static_file(filename=filename, root="static")
 
+
+
+
 if __name__ == "__main__":
     debug(True)
     run(host="localhost", port=8080)
