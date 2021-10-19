@@ -51,7 +51,7 @@ def postloginPage():
 #---------------sign up functionality ----------------
 @route("/signup")
 def signUpPage():
-    return template("signup")
+    return template("signup", invaildCode = False)
 
 @post("/signup")
 def postSignUp():
@@ -71,7 +71,7 @@ def postSignUp():
         companyInfo = list(companies.find(company_key = companyKey))
     except: 
         # need to return error code rather than redirect
-        return redirect('signup') #input message (bootstrap alert) that says company key wrong
+        return Template('signup', invalidCode = True) #input message (bootstrap alert) that says company key wrong
         
     companyName = companyInfo[0].get('company_name')   
     data = { #saves user after signup
