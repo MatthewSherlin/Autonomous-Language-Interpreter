@@ -21,7 +21,7 @@ def homePage():
 #-------------------login page functionality--------------------
 @get("/")
 def getloginPage():
-    return template("login")
+    return template("login", failedLogin = False)
 
 @post("/")
 def postloginPage():
@@ -37,11 +37,11 @@ def postloginPage():
     #!!we need to add a pop up if user credentials is wrong. Because we can not redirect to signup page
     #bootstrap has some cool alert messages 
     if not user:
-        return redirect('/') #if not found will redirect user back to login page
+        return template('login', failedLogin = True) #if not found will redirect user back to login page
     if 'password' not in user:
-        return redirect('/')
+        return template('login', failedLogin = True)
     if not verifyPassword(password, user['password']):
-        return redirect('/') #if password is wrong will redirect to login page
+        return template('login', failedLogin = True) #if password is wrong will redirect to login page
     session['user_id'] = username #gives user name to session
     saveSession(response, session) #saves the session
     return redirect('/home') #will redirect to home page with the user being logged in 
@@ -51,7 +51,7 @@ def postloginPage():
 #---------------sign up functionality ----------------
 @route("/signup")
 def signUpPage():
-    return template("signup")
+    return template("signup", invaildCode = False)
 
 @post("/signup")
 def postSignUp():
@@ -71,7 +71,7 @@ def postSignUp():
         companyInfo = list(companies.find(company_key = companyKey))
     except: 
         # need to return error code rather than redirect
-        return redirect('signup') #input message (bootstrap alert) that says company key wrong
+        return Template('signup', invalidCode = True) #input message (bootstrap alert) that says company key wrong
         
     companyName = companyInfo[0].get('company_name')   
     data = { #saves user after signup

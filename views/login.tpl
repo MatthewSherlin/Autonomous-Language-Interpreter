@@ -38,6 +38,11 @@
     </div>
 </form>
 
+% if failedLogin:
+  <p>Failed log in this will be changed to bootstrap alert</p>
+%end
+
+
     <script src="static/scripts/login-page.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="

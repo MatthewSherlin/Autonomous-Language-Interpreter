@@ -33,6 +33,9 @@
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
             crossorigin="anonymous">
     </script>
+% if invalidCode:
+  <p>Failed log in this will be changed to bootstrap alert</p>
+%end
 
 </body>
 </html>
