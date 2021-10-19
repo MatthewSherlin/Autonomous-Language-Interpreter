@@ -30,7 +30,7 @@
       <i class="fas fa-user"></i> 
 
       % if failedLogin:
-        <p style="color: red">Failed log in this will be changed to bootstrap alert</p>
+        <p style="color: red">Failed log</p>
       %end
 
       <input type="text" placeholder="Username" name="username" class="text">      
