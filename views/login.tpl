@@ -30,7 +30,7 @@
       <i class="fas fa-user"></i> 
 
       % if failedLogin:
-        <p style="color: red">Failed log</p>
+        <p style="color: red">Failed login</p>
       %end
 
       <input type="text" placeholder="Username" name="username" class="text">      
