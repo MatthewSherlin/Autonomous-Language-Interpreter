@@ -30,6 +30,7 @@
           <li><a href="#">Text to Speech</a></li>
           <li><a href="#">Previous Entries</a></li>
           <li><a href="#">My Profile</a></li>
+          <li><a href="/logout">Sign Out</a></li>
         </ul>
 
         <div class="hamburger">
@@ -41,10 +42,11 @@
 
     <div class="links"> 
       <div class="exit-wrapper"><i class="fas fa-times link-close"></i></div>
-      <div class="link">Translator<i class="fas fa-chevron-right"></i></div>
-      <div class="link">Text to Speech<i class="fas fa-chevron-right"></i></div>
-      <div class="link">Previous Entries<i class="fas fa-chevron-right"></i></div>
-      <div class="link">My Profile<i class="fas fa-chevron-right"></i></div>
+      <div class="link"><a href="#">Translator<i class="fas fa-chevron-right"></a></i></div>
+      <div class="link"><a href="#">Text to Speech<i class="fas fa-chevron-right"></a></i></div>
+      <div class="link"><a href="#">Previous Entries<i class="fas fa-chevron-right"></a></i></div>
+      <div class="link"><a href="#">My Profile<i class="fas fa-chevron-right"></a></i></div>
+      <div class="link"><a href="/logout">Sign Out<i class="fas fa-chevron-right"></a></i></div>
     </div>
 
     <div class="mic-wrapper">

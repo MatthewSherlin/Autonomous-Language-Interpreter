@@ -6,7 +6,7 @@ import dataset
 ## make sure database = ali ##
 
 # Add your own password for localhost
-db = dataset.connect('mysql://root:password@localhost/ali')
+db = dataset.connect('mysql://root:@localhost/ali')
 
 ## Testing database connection ##
 # Create a reference to table 'sessions'

@@ -46,12 +46,12 @@ def postloginPage():
     saveSession(response, session) #saves the session
     return redirect('/home') #will redirect to home page with the user being logged in 
 
-
+   
 
 #---------------sign up functionality ----------------
 @route("/signup")
 def signUpPage():
-    return template("signup", invaildCode = False)
+    return template("signup", invalidCode = False, notPasswordMatch = False)
 
 @post("/signup")
 def postSignUp():
@@ -65,15 +65,15 @@ def postSignUp():
 
     if password != passwordRepeat: #makes sure the double password input is the same
         saveSession(response, session) 
-        return redirect('signup')    #will redirct to home page if not the same
+        return template('signup', invalidCode = False, notPasswordMatch = True)    #will redirct to home page if not the same
     
+    companyInfo = list(companies.find(company_key = companyKey))
     try: 
-        companyInfo = list(companies.find(company_key = companyKey))
+        companyName = companyInfo[0].get('company_name')  
     except: 
         # need to return error code rather than redirect
-        return Template('signup', invalidCode = True) #input message (bootstrap alert) that says company key wrong
+        return template('signup', invalidCode = True, notPasswordMatch = False) #input message (bootstrap alert) that says company key wrong
         
-    companyName = companyInfo[0].get('company_name')   
     data = { #saves user after signup
         'username': username,
         'password': generateCredentials(password),
