@@ -5,23 +5,23 @@ from bottle import request, response, redirect, template
 from bottle import default_app
 from bottle import static_file
 
-from sessions import saveSession, getSession, newSession
+from sessions import saveSession, getSession
 from database import companies, saveUser, getUser
-import json
-# import random
-import string
+
 import hashlib
 import os
 import codecs
 
+#----------------home page--------------------
+@route("/home")
+def homePage():
+    return template("home")
 
 
-
-#!!! please have username as 'username' inside mySql datbase. it will be easier in the future
-#login page functionality
+#-------------------login page functionality--------------------
 @get("/")
 def getloginPage():
-    return template("login")
+    return template("login", failedLogin = False)
 
 @post("/")
 def postloginPage():
@@ -37,26 +37,21 @@ def postloginPage():
     #!!we need to add a pop up if user credentials is wrong. Because we can not redirect to signup page
     #bootstrap has some cool alert messages 
     if not user:
-        return redirect('/') #if not found will redirect user back to login page
+        return template('login', failedLogin = True) #if not found will redirect user back to login page
     if 'password' not in user:
-        return redirect('/')
+        return template('login', failedLogin = True)
     if not verifyPassword(password, user['password']):
-        return redirect('/') #if password is wrong will redirect to login page
+        return template('login', failedLogin = True) #if password is wrong will redirect to login page
     session['user_id'] = username #gives user name to session
     saveSession(response, session) #saves the session
     return redirect('/home') #will redirect to home page with the user being logged in 
 
+   
 
-#ADMIN create account functionality
-#code for create an account will be added here
-
-@route("/home")
-def homePage():
-    return template("home")
-
+#---------------sign up functionality ----------------
 @route("/signup")
 def signUpPage():
-    return template("signup")
+    return template("signup", invalidCode = False, notPasswordMatch = False)
 
 @post("/signup")
 def postSignUp():
@@ -70,15 +65,15 @@ def postSignUp():
 
     if password != passwordRepeat: #makes sure the double password input is the same
         saveSession(response, session) 
-        return redirect('signup')    #will redirct to home page if not the same
+        return template('signup', invalidCode = False, notPasswordMatch = True)    #will redirct to home page if not the same
     
+    companyInfo = list(companies.find(company_key = companyKey))
     try: 
-        companyInfo = list(companies.find(company_key = companyKey))
+        companyName = companyInfo[0].get('company_name')  
     except: 
         # need to return error code rather than redirect
-        return redirect('signup') #input message (bootstrap alert) that says company key wrong
+        return template('signup', invalidCode = True, notPasswordMatch = False) #input message (bootstrap alert) that says company key wrong
         
-    companyName = companyInfo[0].get('company_name')   
     data = { #saves user after signup
         'username': username,
         'password': generateCredentials(password),
@@ -92,36 +87,13 @@ def postSignUp():
     return redirect('/')
 
 
-
-#---------------------json file functions---------------------------------------
-def write(key, data):
-    assert type(data) is dict
-    with open(f"data/session.{key}.json", "w") as f: #writes to json file
-        json.dump(data,f) #dumb for write
-    return
-
-def read(key):
-    with open(f"data/session.{key}.json", "r") as f: #reads from json file
-        data = json.load(f) #load for read
-    assert type(data) is dict #make sure it is a dict data type
-    return data
-
-""" def getUser(name):
-    try:
-        with open(f"data/user.{name}.json", "r") as f: #reads from json file to find username
-            data = json.load(f) #load for read
-        assert type(data) is dict #makes sure is dic data ype
-        return data
-    except:
-        return None
- """
-""" def saveUser(name, data):
-    assert type(data) is dict #make sure it is a dict data type
-    with open(f"data/user.{name}.json", "w") as f: #writes data to json file 
-        json.dump(data,f) #dump for write
-    return
- """
-
+#--------------sign out function & route-----------------------
+@get("/logout")
+def getLogout():
+    session = getSession(request) #get session
+    session['user_id'] = '' #change session info to no user_id
+    saveSession(response, session) #save session
+    return redirect('/') #redirect to login page
 
 
 
@@ -168,8 +140,6 @@ def verifyPassword(Userpassword, Usercredentials):
 
 
 
-
-
 #for images on page
 @route("/static/png/<filename:re:.*\.png>")
 @route("/image/<filename:re:.*\.png>")
@@ -179,6 +149,9 @@ def get_image(filename):
 @route("/static/<filename:path>")
 def get_static(filename):
     return static_file(filename=filename, root="static")
+
+
+
 
 if __name__ == "__main__":
     debug(True)

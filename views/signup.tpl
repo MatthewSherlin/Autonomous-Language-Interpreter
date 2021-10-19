@@ -20,11 +20,19 @@
 
       <i class="fas fa-users-cog"></i>
       
-      <p1>For use by Administrators in account creation.</p1>
-      <input type="text" placeholder = "Company Key" name="companyKey" class="text">
-      <input type="text" placeholder="Create Username" name="username" class="text"> 
-      <input type="text" placeholder="Create Password" name="password" class="text">
-      <input type="text" placeholder="Repeat Password" name="password_again" class="text"> 
+      <p>Sign up here with your company key.</p>
+      <input type="text" placeholder = "Company Key" name="companyKey" class="text" >
+      <input type="text" placeholder="Create Username" name="username" class="text" > 
+      <input type="password" placeholder="Create Password" name="password" class="text">
+      <input type="password" placeholder="Repeat Password" name="password_again" class="text"> 
+
+      % if invalidCode:
+        <p style="color: red; padding-top: 20px;">Wrong Key in this will be changed to bootstrap alert</p>
+      %end
+      
+      % if notPasswordMatch:
+        <p style="color: red; padding-top: 20px;">Password not matched this will be changed to bootstrap alert</p>
+      %end
 
       <input type="submit" value="Create User Account" class="button">
     </div>
@@ -33,6 +41,5 @@
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
             crossorigin="anonymous">
     </script>
-
 </body>
 </html>

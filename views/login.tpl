@@ -28,13 +28,17 @@
       <div class="large bubble"></div>
       <img src="static\images\logo.png" alt="logo">
       <i class="fas fa-user"></i> 
+
+      % if failedLogin:
+        <p style="color: red">Failed log in this will be changed to bootstrap alert</p>
+      %end
+
       <input type="text" placeholder="Username" name="username" class="text">      
-      <input type="text" placeholder="Password" name="password" class="text"> 
+      <input type="text" placeholder="Password" name="password" class="text" > 
 
       <input type="submit" value="Login" class="button">
 
-      <p>Don't have an account or forgot password?</p> 
-      <p>Please contact ALI support.</p>
+      <p>Don't have an account? <a href="/signup">Sign Up</a></p> 
     </div>
 </form>
 
