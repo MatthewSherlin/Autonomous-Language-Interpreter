@@ -27,11 +27,11 @@
       <input type="password" placeholder="Repeat Password" name="password_again" class="text"> 
 
       % if invalidCode:
-        <p style="color: red; padding-top: 20px;">Wrong Key in this will be changed to bootstrap alert</p>
+        <p style="color: red; padding-top: 20px;">Wrong Key</p>
       %end
       
       % if notPasswordMatch:
-        <p style="color: red; padding-top: 20px;">Password not matched this will be changed to bootstrap alert</p>
+        <p style="color: red; padding-top: 20px;">Password not matched</p>
       %end
 
       <input type="submit" value="Create User Account" class="button">
