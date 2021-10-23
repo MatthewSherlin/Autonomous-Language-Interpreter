@@ -36,9 +36,13 @@ def getSession(request):
 # saving session
 def saveSession(response, session):
     assert type(session) is dict
+
+    #deletes old version of session before current on is inserted
+    session_table.delete(session_id = session['session_id'])
+    
+
     session_table.insert({'session_id': session['session_id'], 'user_id':session['user_id']})
     response.set_cookie('session_id', session['session_id'], path="/")  # sets session
-
 
 # uses token function to get new session ID
 def newSessionId():
@@ -50,4 +54,5 @@ def createToken(k=32):
     return "".join(
         random.choices(string.ascii_lowercase + string.digits, k=k)
     )  # creates random string
+
 
