@@ -10,7 +10,9 @@ from google.cloud import translate_v2 as translate
 from google.cloud import texttospeech # outdated or incomplete comparing to v1
 from google.cloud import texttospeech_v1
 
+#-----------------------credential[path] needs to be change per user testing-------------------------------
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"C:\Users\Matthew Sherlin\Desktop\APIKey\myServiceKey.json"
+#------------------------------------------------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^----
 
 import pyaudio
 from six.moves import queue
