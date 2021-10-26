@@ -12,7 +12,6 @@ from google.cloud import texttospeech_v1
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"C:\Users\Matthew Sherlin\Desktop\APIKey\myServiceKey.json"
 
-
 import pyaudio
 from six.moves import queue
 
@@ -183,7 +182,7 @@ def listen_print_loop(responses):
             )
 
             # The response's audio_content is binary.
-            with open(r"C:\Users\Matthew Sherlin\Desktop\virtualEnvironment\TranslationAPI\output.mp3", "wb") as out:
+            with open(r"C:\Users\Matthew Sherlin\Desktop\ALI-Software\env\Capstone-2021\ALI-Output\output.mp3", "wb") as out:
                 # Write the response to the output file.
                 out.write(response.audio_content)
                 print('Audio content written to file "output.mp3"')
