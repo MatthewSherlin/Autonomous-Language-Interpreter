@@ -150,7 +150,12 @@ def listen_print_loop(responses):
             #print(output.values())
             print(output['translatedText'])
             speechString = output['translatedText']
-            #print(output)
+            #print input and output
+            with open('transcript2.txt', 'a') as f:
+                f.write(output['input'])
+                f.write("\n")
+                f.close()
+
             with open('transcript1.txt', 'a') as f:
                 f.write(output['translatedText'])
                 f.write("\n")
