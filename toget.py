@@ -18,7 +18,7 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"C:\Users\Matthew Sherlin\Deskto
 import pyaudio
 from six.moves import queue
 
-#set output file path to reduce error risk
+#set output file path to reduce error risk //CHANGE TO FILE PATH INSIDE ALI FOLDER//
 path = r"C:\\Users\\Matthew Sherlin\\Desktop\\ALI-Software\\env\\Capstone-2021\\ALI-Output\\output.mp3"
 assert os.path.isfile(path)
 
@@ -197,7 +197,7 @@ def listen_print_loop(responses):
             )
 
             # The response's audio_content is binary.
-            with open(r"C:\Users\Matthew Sherlin\Desktop\ALI-Software\env\Capstone-2021\ALI-Output\output.mp3", "wb") as out:
+            with open(path, "wb") as out:
                 # Write the response to the output file.
                 out.write(response.audio_content)
                 print('Audio content written to file "output.mp3"')
