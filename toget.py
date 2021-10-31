@@ -22,6 +22,11 @@ from six.moves import queue
 path = r"C:\\Users\\Matthew Sherlin\\Desktop\\ALI-Software\\env\\Capstone-2021\\ALI-Output\\output.mp3"
 assert os.path.isfile(path)
 
+#define parameters for multi-use purpose
+initalLanguage = 'es'
+targetLanguage= 'en'
+languageCode= 'en' #language of the accent for output speech
+
 # Audio recording parameters
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
@@ -143,7 +148,7 @@ def listen_print_loop(responses):
             print(transcript + overwrite_chars)
 
             text = (transcript)
-            target = 'es'
+            target = targetLanguage
 
             output = translate_client.translate(text, target_language=target)
             #print(output.keys())
@@ -172,11 +177,11 @@ def listen_print_loop(responses):
 
 
             voice = texttospeech_v1.VoiceSelectionParams(
-                language_code="es", ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
+                language_code=languageCode, ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
             )
 
             voice = texttospeech_v1.VoiceSelectionParams(
-                name='en-US-Standard-A,en-US,1,15000', language_code="es"
+                name='en-US-Standard-A,en-US,1,15000', language_code=languageCode
                 # name='vi-VN-Wavenet-D', language_code="vi-VN"
             )
 
@@ -209,15 +214,13 @@ def listen_print_loop(responses):
 
             num_chars_printed = 0
 def main():
-    # See http://g.co/cloud/speech/docs/languages
-    # for a list of supported languages.
-    language_code = "en-US"  # a BCP-47 language tag
+    # See http://g.co/cloud/speech/docs/languages for a list of supported languages.
 
     client = speech.SpeechClient()
     config = speech.RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
         sample_rate_hertz=RATE,
-        language_code=language_code,
+        language_code=initalLanguage,
     )
 
     streaming_config = speech.StreamingRecognitionConfig(
