@@ -9,6 +9,7 @@ from google.cloud import speech
 from google.cloud import translate_v2 as translate
 from google.cloud import texttospeech # outdated or incomplete comparing to v1
 from google.cloud import texttospeech_v1
+from playsound import playsound #play mp3 files
 
 #-----------------------credential[path] needs to be change per user testing-------------------------------
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"C:\Users\Matthew Sherlin\Desktop\APIKey\myServiceKey.json"
@@ -16,6 +17,10 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"C:\Users\Matthew Sherlin\Deskto
 
 import pyaudio
 from six.moves import queue
+
+#set output file path to reduce error risk
+path = r"C:\\Users\\Matthew Sherlin\\Desktop\\ALI-Software\\env\\Capstone-2021\\ALI-Output\\output.mp3"
+assert os.path.isfile(path)
 
 # Audio recording parameters
 RATE = 16000
@@ -94,15 +99,13 @@ class MicrophoneStream(object):
 
 
 def listen_print_loop(responses):
+    
     """Iterates through server responses and prints them.
-
     The responses passed is a generator that will block until a response
     is provided by the server.
-
     Each response may contain multiple results, and each result may contain
     multiple alternatives; for details, see https://goo.gl/tjCPAU.  Here we
     print only the transcription for the top alternative of the top result.
-
     In this case, responses are provided for interim results as well. If the
     response is an interim one, print a line feed at the end of it, to allow
     the next result to overwrite it, until the response is a final one. For the
@@ -188,6 +191,8 @@ def listen_print_loop(responses):
                 # Write the response to the output file.
                 out.write(response.audio_content)
                 print('Audio content written to file "output.mp3"')
+            
+            playsound(path)
 
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
