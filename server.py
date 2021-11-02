@@ -3,6 +3,7 @@
 from flask import Flask, render_template
 from flask import request
 from flask import redirect, url_for
+from flask import session
 
 # from bottle import route, get, post
 # from bottle import run, debug
@@ -18,18 +19,26 @@ import os
 import codecs
 
 app = Flask(__name__)
+app.secret_key = 'Ob,#1p{<y`|DZ!51c;_Y#|+u":{wwP'
+
+app.config["SESSION_TYPE"] = "sqlalchemy"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:db_password@localhost/ali"
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #Quiet warning message
 
 # ----------------home page--------------------
 @app.route("/home")
 def homePage():
-    return render_template("home.html")
-
+    print("SESSION VALUE IS " + str(session.get("user_id")))
+    if 'user_id' not in session:
+            return redirect("/")
+    else:
+        return render_template("home.html")
 
 # -------------------login page functionality--------------------
 @app.route("/", methods=["GET", "POST"])
 def loginPage():
     if request.method == "POST":
-        session = getSession(request)
+        # session = getSession(request)
         # this will grab user input from html page
         username = request.form["username"]
         password = request.form["password"]
@@ -50,10 +59,13 @@ def loginPage():
             return render_template(
                 "login.html", failedLogin=True
             )  # if password is wrong will redirect to login page
-        session["user_id"] = username  # gives user name to session
-        saveSession(request.response, session)  # saves the session
+        if 'user_id' not in session:
+            session["user_id"] = username  # gives user name to session
+        #print("SESSION VALUE IS " + str(session.get("user_id")))
+
+        # saveSession(request.response, session)  # saves the session
         return redirect(
-            url_for("home")
+            "/home"
         )  # will redirect to home page with the user being logged in
 
     else:
@@ -75,10 +87,12 @@ def signUpPage():
         if (
             password != passwordRepeat
         ):  # makes sure the double password input is the same
-            saveSession(request.response, session)
-            return render_template(
-                "signup.html", invalidCode=False, notPasswordMatch=True
-            )  # will redirct to home page if not the same
+            # saveSession(request.response, session)
+            if 'user_id' not in session:
+                session["user_id"] = username  ## saves the session using flask
+                return render_template(
+                    "signup.html", invalidCode=False, notPasswordMatch=True
+                )  # will redirct to home page if not the same
 
         companyInfo = list(companies.find(company_key=companyKey))
         try:
@@ -97,9 +111,12 @@ def signUpPage():
         }
         print(type(data))
         saveUser(data)
-        session["user_id"] = username  # sets session user name to the new users name
-        saveSession(request.response, session)
-        return redirect(url_for("login"))
+        if 'user_id' not in session:
+            session[
+                "user_id"
+            ] = username  # sets session user name to the new users name
+        # saveSession(request.response, session)
+        return redirect("/")
     else:
         return render_template("signup.html", invalidCode=False, notPasswordMatch=False)
 
@@ -107,10 +124,13 @@ def signUpPage():
 # --------------sign out function & route-----------------------
 @app.route("/logout", methods=["GET"])
 def getLogout():
-    session = getSession(request)  # get session
-    session["user_id"] = ""  # change session info to no user_id
-    saveSession(request.response, session)  # save session
-    return redirect(url_for("login"))  # redirect to login page
+    # session = getSession(request)  # get session
+    # session["user_id"] = ""  # change session info to no user_id
+    # saveSession(request.response, session)  # save session
+    session.pop(
+        "user_id", None
+    )  # removes the user id from the session when they logout
+    return redirect("/")  # redirect to login page
 
 
 # ------------------------Credential functions---------------------

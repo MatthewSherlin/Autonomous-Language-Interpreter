@@ -1,12 +1,12 @@
 # sessions
 from database import db, session_table
+from flask import Flask, render_template_string, request, session, redirect, url_for
 from flask import make_response
 import mysql.connector
 import os
 import string
 import random
 import json
-from flask import Flask, render_template_string, request, session, redirect, url_for
 
 # ---------------session functions------------------------
 def newSession():  # creates new session dic
