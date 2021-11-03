@@ -4,6 +4,7 @@ from flask import Flask, render_template
 from flask import request
 from flask import redirect, url_for
 from flask import session
+# from flask_sqlalchemy import SQLAlchemy
 
 # from bottle import route, get, post
 # from bottle import run, debug
@@ -28,14 +29,16 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:db_password@localhost/ali"
 # ----------------home page--------------------
 @app.route("/home")
 def homePage():
-    print("SESSION VALUE IS " + str(session.get("user_id")))
-    if 'user_id' not in session:
-            return redirect("/")
+    print("SESSION USERNAME IS " + str(session.get("username")))
+    if "username" not in session:
+        return redirect("/")
     else:
         return render_template("home.html")
 
+
 # -------------------login page functionality--------------------
 @app.route("/", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def loginPage():
     if request.method == "POST":
         # session = getSession(request)
@@ -52,16 +55,13 @@ def loginPage():
         if not user:
             return render_template(
                 "login.html", failedLogin=True
-            )  # if not found will redirect user back to login page
-        if "password" not in user:
-            return render_template("login.html", failedLogin=True)
+            )  # if user not found, will redirect user back to login page
         if not verifyPassword(password, user["password"]):
             return render_template(
                 "login.html", failedLogin=True
-            )  # if password is wrong will redirect to login page
-        if 'user_id' not in session:
-            session["user_id"] = username  # gives user name to session
-        #print("SESSION VALUE IS " + str(session.get("user_id")))
+            )  # if password is wrong, will redirect to login page
+        if username not in session:
+            session["username"] = username  # adds username to session
 
         # saveSession(request.response, session)  # saves the session
         return redirect(
@@ -88,8 +88,8 @@ def signUpPage():
             password != passwordRepeat
         ):  # makes sure the double password input is the same
             # saveSession(request.response, session)
-            if 'user_id' not in session:
-                session["user_id"] = username  ## saves the session using flask
+            if "username" not in session:
+                session["username"] = username  ## saves the session using flask
                 return render_template(
                     "signup.html", invalidCode=False, notPasswordMatch=True
                 )  # will redirct to home page if not the same
@@ -107,13 +107,13 @@ def signUpPage():
             "username": username,
             "password": generateCredentials(password),
             "company_name": companyName,  # change to company name
-            "user_id": username,
         }
         print(type(data))
+
         saveUser(data)
-        if 'user_id' not in session:
+        if "username" not in session:
             session[
-                "user_id"
+                "username"
             ] = username  # sets session user name to the new users name
         # saveSession(request.response, session)
         return redirect("/")
@@ -128,7 +128,7 @@ def getLogout():
     # session["user_id"] = ""  # change session info to no user_id
     # saveSession(request.response, session)  # save session
     session.pop(
-        "user_id", None
+        "username", None
     )  # removes the user id from the session when they logout
     return redirect("/")  # redirect to login page
 
