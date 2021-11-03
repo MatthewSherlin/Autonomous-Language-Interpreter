@@ -18,17 +18,18 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"C:\Users\Matthew Sherlin\Deskto
 import pyaudio
 from six.moves import queue
 
-#set output file path to reduce error risk //CHANGE TO FILE PATH INSIDE ALI FOLDER//
+#set output file path to reduce amount of code manipulation ***CHANGE TO FILE PATH INSIDE ALI FOLDER*****
 path = r"C:\\Users\\Matthew Sherlin\\Desktop\\ALI-Software\\env\\Capstone-2021\\ALI-Output\\output.mp3"
-assert os.path.isfile(path)
+#assert os.path.isfile(path) ###can not assert because file is deleted each cycle
 
 #define parameters for multi-use purpose
-initalLanguage = 'es'
-targetLanguage= 'en'
-languageCode= 'en' #language of the accent for output speech
+initalLanguage = 'en'
+targetLanguage= 'es'
+languageCode= 'es' #language of the accent for output speech
+#stopper= 1 #stopper to loop function until ended by user
 
 # Audio recording parameters
-RATE = 16000
+RATE = 24000 #decent speed for audible speaking
 CHUNK = int(RATE / 10)  # 100ms
 
 # instantiate clients for translate and T2S
@@ -104,18 +105,7 @@ class MicrophoneStream(object):
 
 
 def listen_print_loop(responses):
-    
-    """Iterates through server responses and prints them.
-    The responses passed is a generator that will block until a response
-    is provided by the server.
-    Each response may contain multiple results, and each result may contain
-    multiple alternatives; for details, see https://goo.gl/tjCPAU.  Here we
-    print only the transcription for the top alternative of the top result.
-    In this case, responses are provided for interim results as well. If the
-    response is an interim one, print a line feed at the end of it, to allow
-    the next result to overwrite it, until the response is a final one. For the
-    final one, print a newline to preserve the finalized transcription.
-    """
+
     num_chars_printed = 0
     for response in responses:
         if not response.results:
@@ -195,26 +185,32 @@ def listen_print_loop(responses):
             response = client.synthesize_speech(
                 input=synthesis_input, voice=voice, audio_config=audio_config
             )
-
+        
             # The response's audio_content is binary.
             with open(path, "wb") as out:
                 # Write the response to the output file.
                 out.write(response.audio_content)
                 print('Audio content written to file "output.mp3"')
+                out.close()
             
-            playsound(path)
+            playsound(path) #play the output.mp3 file
+            os.remove(path) #remove the output.mp3 file
+        
 
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
             if re.search(r"\b(exit|quit)\b", transcript, re.I):
                 print("Exiting..")
-
-
                 break
 
             num_chars_printed = 0
+           
 def main():
     # See http://g.co/cloud/speech/docs/languages for a list of supported languages.
+
+    #language_code = initalLanguage will modify the client for the desired inital language
+
+    open(path, "a") #create a new instance of the audio output file as main is ran
 
     client = speech.SpeechClient()
     config = speech.RecognitionConfig(
@@ -228,17 +224,19 @@ def main():
     )
 
     with MicrophoneStream(RATE, CHUNK) as stream:
+
         audio_generator = stream.generator()
         requests = (
             speech.StreamingRecognizeRequest(audio_content=content)
             for content in audio_generator
         )
 
+           # while stopper == 1:
         responses = client.streaming_recognize(streaming_config, requests)
-
         # Now, put the transcription responses to use.
         listen_print_loop(responses)
 
+    return
 
 if __name__ == "__main__":
     main()

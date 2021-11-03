@@ -18,12 +18,16 @@ from database import companies, saveUser, getUser
 import hashlib
 import os
 import codecs
+import toget
+
 
 app = Flask(__name__)
 app.secret_key = 'Ob,#1p{<y`|DZ!51c;_Y#|+u":{wwP'
 
+stopper = 1
+
 app.config["SESSION_TYPE"] = "sqlalchemy"
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:db_password@localhost/ali"
+#app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:db_password@localhost/ali"
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #Quiet warning message
 
 # ----------------home page--------------------
@@ -35,6 +39,18 @@ def homePage():
     else:
         return render_template("home.html")
 
+
+# -------------------translate---------------------------------
+@app.route("/home/translate", methods=["GET"])
+def dynamic_page():
+     if request.method == "GET": 
+        toget.main()
+        return render_template("home.html")
+    
+     else:
+         return render_template("home.html")
+        
+    
 
 # -------------------login page functionality--------------------
 @app.route("/", methods=["GET", "POST"])
