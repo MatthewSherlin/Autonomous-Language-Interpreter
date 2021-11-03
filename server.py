@@ -133,6 +133,18 @@ def getLogout():
     return redirect("/")  # redirect to login page
 
 
+#---------Translation page --------------
+@app.route("/takehome")
+def takeHome():
+    return render_template("takeHome.html")
+
+
+#-------chart Page -----------------
+@app.route("/mychart")
+def takehome():
+    return render_template("chart.html")
+
+
 # ------------------------Credential functions---------------------
 # function for hashing process
 def bytesToString(byte):
