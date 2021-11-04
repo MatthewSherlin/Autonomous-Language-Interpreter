@@ -24,17 +24,22 @@ import codecs
 app = Flask(__name__)
 app.secret_key = 'Ob,#1p{<y`|DZ!51c;_Y#|+u":{wwP'
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:db_password@localhost/ali"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/ali"
 app.config["SESSION_TYPE"] = "sqlalchemy"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # Quiet warning message
 app.config["SESSION_SQLALCHEMY_TABLE"] = "sessions"
-app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(seconds=5)  # change to a longer time later.
-# 5 seconds for testing
+
 db = SQLAlchemy(app)
 app.config["SESSION_SQLALCHEMY"] = db
 
 Session(app)
 # db.create_all()
+
+@app.before_request
+def sessionTimeout():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(seconds=5)
+    session.modified = True
 
 
 # ----------------home page--------------------
@@ -87,7 +92,7 @@ def loginPage():
 @app.route("/signup", methods=["GET", "POST"])
 def signUpPage():
     if request.method == "POST":
-        session = getSession(request)  # get session
+        # session = getSession(request)  # get session
         companyKey = request.form["companyKey"]
         username = request.form["username"]  # get username form page
         print("Getting password")
@@ -99,11 +104,11 @@ def signUpPage():
             password != passwordRepeat
         ):  # makes sure the double password input is the same
             # saveSession(request.response, session)
-            if "username" not in session:
-                session["username"] = username  ## saves the session using flask
+            # if "username" not in session:
+                # session["username"] = username  ## saves the session using flask
                 return render_template(
                     "signup.html", invalidCode=False, notPasswordMatch=True
-                )  # will redirct to home page if not the same
+                )  # will redirct to signup if not the same
 
         companyInfo = list(companies.find(company_key=companyKey))
         try:
@@ -127,7 +132,7 @@ def signUpPage():
                 "username"
             ] = username  # sets session user name to the new users name
         # saveSession(request.response, session)
-        return redirect("/")
+        return redirect("/home")
     else:
         return render_template("signup.html", invalidCode=False, notPasswordMatch=False)
 
