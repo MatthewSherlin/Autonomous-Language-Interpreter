@@ -1,10 +1,12 @@
 # ALI server file
 ##flask imports
+from datetime import timedelta
 from flask import Flask, render_template
 from flask import request
 from flask import redirect, url_for
 from flask import session
-# from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
+from flask_session import Session
 
 # from bottle import route, get, post
 # from bottle import run, debug
@@ -22,9 +24,18 @@ import codecs
 app = Flask(__name__)
 app.secret_key = 'Ob,#1p{<y`|DZ!51c;_Y#|+u":{wwP'
 
-app.config["SESSION_TYPE"] = "sqlalchemy"
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:db_password@localhost/ali"
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #Quiet warning message
+app.config["SESSION_TYPE"] = "sqlalchemy"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # Quiet warning message
+app.config["SESSION_SQLALCHEMY_TABLE"] = "sessions"
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(seconds=5)  # change to a longer time later.
+# 5 seconds for testing
+db = SQLAlchemy(app)
+app.config["SESSION_SQLALCHEMY"] = db
+
+Session(app)
+# db.create_all()
+
 
 # ----------------home page--------------------
 @app.route("/home")
