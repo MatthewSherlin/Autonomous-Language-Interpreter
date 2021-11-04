@@ -34,6 +34,10 @@
         <p style="color: red; padding-top: 20px;">Password not matched</p>
       {% endif %}
 
+      {% if badUsername %} 
+        <p style="color: red; padding-top: 20px;">Username already taken</p>
+      {% endif %}
+
       <input type="submit" value="Create User Account" class="button">
     </div>
     </form>
