@@ -1,0 +1,91 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ALI</title>
+  <meta name="description" content="A simple HTML5 Template for new projects.">
+  <meta name="author" content="SitePoint">
+
+  <meta property="og:title" content="A Basic HTML5 Template">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.sitepoint.com/a-basic-html5-template/">
+  <meta property="og:description" content="A simple HTML5 Template for new projects.">
+  <meta property="og:image" content="image.png">
+
+  <link rel="shortcut icon" type="image/x-icon" href="static\images\icon.ico">  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/admin.css') }}">
+
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&amp;display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">ALI</div>
+
+        <ul>
+          <li><a href="/home">Translator</a></li>
+          <li><a href="/takehome">Text to Speech</a></li>
+          <li><a href="/mychart">Previous Entries</a></li>
+          <li><a href="/logout">Sign Out</a></li>
+        </ul>
+
+        <div class="hamburger">
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+        </div>
+    </nav>
+
+    <div class="links"> 
+      <div class="exit-wrapper"><i class="fas fa-times link-close"></i></div>
+      <div class="link"><a href="/home">Translator<i class="fas fa-chevron-right"></a></i></div>
+      <div class="link"><a href="/takehome">Text to Speech<i class="fas fa-chevron-right"></a></i></div>
+      <div class="link"><a href="/mychart">Previous Entries<i class="fas fa-chevron-right"></a></i></div>
+      <div class="link"><a href="/logout">Sign Out<i class="fas fa-chevron-right"></a></i></div>
+    </div>
+
+    <form class="main" method="POST">
+    
+        {% if not keyGenerated %}
+        <h1>Generate Company Key</h1>
+
+        <h3>Username</h3>
+        <input type="text" placeholder="Username" class="text">
+
+        <h3>Password</h3>
+        <input type="text" placeholder="Password" class="text">
+
+        <h3>Company Name</h3>
+        <input type="text" placeholder="Company Name" class="text">
+
+        <h3>Company Id</h3>
+        <input type="text" placeholder="Company ID" class="text">
+
+        <div class="button-wrapper">
+            <a href="/" class="button cancel">Cancel</a>
+            <input type="button" value="Generate Key" class="button generate">
+        </div>
+        {% endif %}
+
+        {% if keyGenerated %}
+        <h1>Company key successfuly created</h1>
+        <p class="key">{{ key }}</p>
+        <p class="warning">This is your unique company key and is non-recoverable. If you lose this key, you will have to apply for another.</p>
+        
+        <div class="button-wrapper">
+            <a href="/" class="button cancel">Close</a>
+            <input type="button" value="Copy" class="button generate">
+        </div>
+        {% endif %}
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous">
+    </script>
+    <script src="../static/scripts/admin.js"></script>
+</body>
+</html>
