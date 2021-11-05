@@ -27,8 +27,8 @@ app.secret_key = 'Ob,#1p{<y`|DZ!51c;_Y#|+u":{wwP'
 stopper = 1
 
 app.config["SESSION_TYPE"] = "sqlalchemy"
-#app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:db_password@localhost/ali"
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #Quiet warning message
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/ali"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #Quiet warning message
 
 # ----------------home page--------------------
 @app.route("/home")
@@ -100,6 +100,16 @@ def signUpPage():
         print(f"password is: {password}")
         passwordRepeat = request.form["password_again"]  # get password from page
 
+        #checking to see if username is already taken
+        oldUser = getUser(username)   
+        oldName = str(oldUser['username'])
+
+        if  oldName.upper() == username.upper():
+            #username has been taken
+            return render_template(
+                "signup.html", invalidCode=False, notPasswordMatch=False, badUsername = True
+            )
+
         if (
             password != passwordRepeat
         ):  # makes sure the double password input is the same
@@ -107,7 +117,7 @@ def signUpPage():
             if "username" not in session:
                 session["username"] = username  ## saves the session using flask
                 return render_template(
-                    "signup.html", invalidCode=False, notPasswordMatch=True
+                    "signup.html", invalidCode=False, notPasswordMatch=True, badUsername = False
                 )  # will redirct to home page if not the same
 
         companyInfo = list(companies.find(company_key=companyKey))
@@ -116,7 +126,7 @@ def signUpPage():
         except:
             # need to return error code rather than redirect
             return render_template(
-                "signup.html", invalidCode=True, notPasswordMatch=False
+                "signup.html", invalidCode=True, notPasswordMatch=False, badUsername = False
             )  # input message (bootstrap alert) that says company key wrong
 
         data = {  # saves user after signup
@@ -134,7 +144,7 @@ def signUpPage():
         # saveSession(request.response, session)
         return redirect("/")
     else:
-        return render_template("signup.html", invalidCode=False, notPasswordMatch=False)
+        return render_template("signup.html", invalidCode=False, notPasswordMatch=False, badUsername = False)
 
 
 # --------------sign out function & route-----------------------
