@@ -109,34 +109,6 @@ body {
     box-shadow: 0 0 0 10000px rgb(0 0 0 / 30%);
 }
 
-.mic-wrapper {
-    background: var(--white-1);
-    width: 325px;
-    height: 325px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    outline: 5px solid var(--blue-1);
-    cursor: pointer;
-    margin-top: 40px;
-    position: relative;
-}
-
-.fill {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    border-radius: 50%;
-}
-
-.exit-wrapper {
-    height: 60px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
 .fa-times {
     font-size: 30px;
     display: flex;
@@ -153,11 +125,6 @@ body {
     background: var(--white-2);
 }
 
-.fa-microphone {
-    font-size: 225px;
-    color: var(--orange-1);
-}
-
 .fa-chevron-right {
     position: absolute;
     right: 30px;
@@ -165,94 +132,22 @@ body {
     transform: translateY(-50%);
 }
 
-h2 {
-    margin-top: 40px;
-    color: var(--grey-1);
-}
-
-select {
-    margin-top: 40px;
-    height: 35px;
-    width: 175px;
-}
-
-select:focus {
-    outline: none;
-}
-
-.text-wrapper {
-    position: absolute;
-    top: 100%;
-    display: flex; 
+.exit-wrapper {
+    height: 60px;
+    display: flex;
+    justify-content: flex-end;
     align-items: center;
-    justify-content: center;
-    background: var(--white-2);
-    transition: .2s;
 }
 
-.translation-tab {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--white-1);
-    color: var(--grey-1);
-    outline: 1px solid black;
-    padding: 7.5px 20px;
-    cursor: pointer;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-}
-
-.translation-tab:hover {
-    background: var(--white-2);
-}
-
-.fa-exchange-alt {
-    color: var(--grey-1);
-    font-size: 30px;
-    margin: 10px;
-    position: absolute;
-    background: var(--white-2);
-    outline: 1px solid var(--grey-1);
-    border-radius: 50%;
-    padding: 10px;
-}
-
-.translation {
-    min-height: 225px;
-    width: 50vw;
-    resize: none;
-    outline: 1px solid black;
-    color: black;
-    font-size: 15px;
-    padding: 10px;
-    max-width: 650px;
-}
-
-.translation:focus {
-    outline: none;
-}
-
-.text-close {
-    position: absolute;
-    right: -15px;
-    bottom: 5px;
-    color: var(--grey-1);
-}
-
-.move-text {
-    transform: translateY(-225px);
-}
 
 /* Change navbar for desktop */
 @media screen and (min-width: 1024px) { 
-  .hamburger {
-      display: none;
+    .hamburger {
+        display: none;
+    }
+  
+    .navbar ul {
+        display: flex;
+    }
+  
   }
-
-  .navbar ul {
-      display: flex;
-  }
-
-}

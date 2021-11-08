@@ -11,6 +11,7 @@ import hashlib
 import os
 import codecs
 
+stopper = 1
 
 # ----------------home page--------------------
 @app.route("/home")
@@ -21,6 +22,18 @@ def homePage():
     else:
         return render_template("home.html")
 
+
+# -------------------translate---------------------------------
+@app.route("/home/translate", methods=["GET"])
+def dynamic_page():
+     if request.method == "GET": 
+        toget.main()
+        return render_template("home.html")
+    
+     else:
+         return render_template("home.html")
+        
+    
 
 # -------------------login page functionality--------------------
 @app.route("/", methods=["GET", "POST"])
@@ -62,7 +75,7 @@ def loginPage():
 @app.route("/signup", methods=["GET", "POST"])
 def signUpPage():
     if request.method == "POST":
-        # session = getSession(request)  # get session
+        session = getSession(request)  # get session
         companyKey = request.form["companyKey"]
         username = request.form["username"]  # get username form page
         print("Getting password")
@@ -70,15 +83,25 @@ def signUpPage():
         print(f"password is: {password}")
         passwordRepeat = request.form["password_again"]  # get password from page
 
+        #checking to see if username is already taken
+        oldUser = getUser(username)   
+        oldName = str(oldUser['username'])
+
+        if  oldName.upper() == username.upper():
+            #username has been taken
+            return render_template(
+                "signup.html", invalidCode=False, notPasswordMatch=False, badUsername = True
+            )
+
         if (
             password != passwordRepeat
         ):  # makes sure the double password input is the same
             # saveSession(request.response, session)
-            # if "username" not in session:
-                # session["username"] = username  ## saves the session using flask
+            if "username" not in session:
+                session["username"] = username  ## saves the session using flask
                 return render_template(
-                    "signup.html", invalidCode=False, notPasswordMatch=True
-                )  # will redirct to signup if not the same
+                    "signup.html", invalidCode=False, notPasswordMatch=True, badUsername = False
+                )  # will redirct to home page if not the same
 
         companyInfo = list(companies.find(company_key=companyKey))
         try:
@@ -86,7 +109,7 @@ def signUpPage():
         except:
             # need to return error code rather than redirect
             return render_template(
-                "signup.html", invalidCode=True, notPasswordMatch=False
+                "signup.html", invalidCode=True, notPasswordMatch=False, badUsername = False
             )  # input message (bootstrap alert) that says company key wrong
 
         data = {  # saves user after signup
@@ -102,9 +125,9 @@ def signUpPage():
                 "username"
             ] = username  # sets session user name to the new users name
         # saveSession(request.response, session)
-        return redirect("/home")
+        return redirect("/")
     else:
-        return render_template("signup.html", invalidCode=False, notPasswordMatch=False)
+        return render_template("signup.html", invalidCode=False, notPasswordMatch=False, badUsername = False)
 
 
 # --------------sign out function & route-----------------------
@@ -117,6 +140,18 @@ def getLogout():
         "username", None
     )  # removes the user id from the session when they logout
     return redirect("/")  # redirect to login page
+
+
+#---------Translation page --------------
+@app.route("/takehome")
+def takeHome():
+    return render_template("takeHome.html")
+
+
+#-------chart Page -----------------
+@app.route("/mychart")
+def takehome():
+    return render_template("chart.html")
 
 
 # ------------------------Credential functions---------------------
@@ -178,3 +213,4 @@ def verifyPassword(Userpassword, Usercredentials):
 
 if __name__ == "__main__":
     app.run(host="localhost", port=8080, debug=True)
+    

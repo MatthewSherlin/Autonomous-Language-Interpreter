@@ -36,7 +36,8 @@ def getUser(username):
         data = {"username": username, "password": password, "company_name": company}
         return data
     except:
-        return None
+        data = {"username": '', "password": '', "company_name": ''}
+        return data
 
 
 def saveUser(data):

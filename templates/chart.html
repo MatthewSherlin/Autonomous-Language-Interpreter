@@ -16,7 +16,7 @@
   <link rel="shortcut icon" type="image/x-icon" href="static\images\icon.ico">  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles/home.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/chart.css') }}">
 
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&amp;display=swap" rel="stylesheet">
 </head>
@@ -47,46 +47,12 @@
       <div class="link"><a href="/logout">Sign Out<i class="fas fa-chevron-right"></a></i></div>
     </div>
 
-    <div class="mic-wrapper">
-      <i class="fas fa-microphone"></i>
-      <a href="/home/translate" class="fill"></a>
-    </div>
-    
-    <h2>Press and hold to translate.</h2>
-
-    <div class="lang-wrapper">
-      <select name="languages" id="cars">
-        <option value="">Select Language</option>
-        <option value="af">Afrikaans</option>
-        <option value="sq">Albanian</option>
-        <option value="am">Amharic</option>
-        <option value="ar">Arabic</option>
-        <option value="hy">Armenian</option>
-        <option value="az">Azerbaijani</option>
-        <option value="eu">Basque</option>
-        <option value="be">Belarusian</option>
-        <option value="bn">Bengali</option>
-        <option value="bs">Bosnian</option>
-        <option value="bg">Bulgarian</option>
-        <option value="ca">Catalan</option>
-        <!-- add more -->
-        
-      </select>
-    </div>
-
-    <div class="translation-tab">View Text</div>
-
-    <div class="text-wrapper">
-      <textarea class="translation" placeholder="View recorded speech here..."></textarea>
-      <i class="fas fa-exchange-alt"></i>
-      <textarea class="translation" placeholder="View translated speech here..."></textarea>
-      <i class="fas fa-times text-close"></i>
-    </div>
+    <h2>Chart</h2>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
             crossorigin="anonymous">
     </script>
-    <script src="static/scripts/home.js"></script>
+    <script src="static/scripts/chart.js"></script>
 </body>
 </html>
