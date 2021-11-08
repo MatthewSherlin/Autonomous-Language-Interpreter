@@ -13,7 +13,7 @@ from flask import session
 # from bottle import static_file
 
 from sessions import saveSession, getSession
-from database import companies, saveUser, getUser
+from database import companies, saveUser, getUser,chart_table
 
 import hashlib
 import os
@@ -167,8 +167,12 @@ def takeHome():
 
 #-------chart Page -----------------
 @app.route("/mychart")
-def takehome():
-    return render_template("chart.html")
+def getChart():
+    username = session.get("username")
+    itemsInChart = chart_table.find()
+    itemsInChart = [ dict(x) for x in list(itemsInChart) if x['username'] == username ]
+
+    return render_template("chart.html", itemsInChart = itemsInChart)
 
 
 # ------------------------Credential functions---------------------

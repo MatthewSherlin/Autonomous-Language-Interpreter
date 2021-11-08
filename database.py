@@ -13,6 +13,7 @@ db = dataset.connect("mysql://root:@localhost/ali")
 session_table = db["sessions"]
 users_table = db["users_table"]
 companies = db["companies"]
+chart_table = db["chart_table"]
 
 
 # Testing database setup
@@ -26,6 +27,25 @@ companies.insert(
     }
 )
 
+#testing chart db
+db["chart_table"].drop()
+chart_table.insert({
+    'username': 'dylan',
+    'patient': 'Bob Dylan',
+    'time' : '8:50 AM',
+    'date' : "11/07/21",
+    'notes': "back problem. cant sit up right. pain shoots down legs"
+
+})
+
+chart_table.insert({
+    'username': 'dylan',
+    'patient': 'Bob Marley',
+    'time' : '10:50 AM',
+    'date' : "11/08/21",
+    'notes': "toe pain. cant walk. been going on for days now"
+
+})
 
 def getUser(username):
     try:
