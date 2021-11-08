@@ -1,45 +1,15 @@
 # ALI server file
 ##flask imports
-from datetime import timedelta
 from flask import Flask, render_template
 from flask import request
 from flask import redirect, url_for
 from flask import session
-from flask_sqlalchemy import SQLAlchemy
-from flask_session import Session
 
-# from bottle import route, get, post
-# from bottle import run, debug
-# from bottle import request, response, redirect, template
-# from bottle import default_app
-# from bottle import static_file
-
-from sessions import saveSession, getSession
 from database import companies, saveUser, getUser
-
+from sessions import app
 import hashlib
 import os
 import codecs
-
-app = Flask(__name__)
-app.secret_key = 'Ob,#1p{<y`|DZ!51c;_Y#|+u":{wwP'
-
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/ali"
-app.config["SESSION_TYPE"] = "sqlalchemy"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # Quiet warning message
-app.config["SESSION_SQLALCHEMY_TABLE"] = "sessions"
-
-db = SQLAlchemy(app)
-app.config["SESSION_SQLALCHEMY"] = db
-
-Session(app)
-# db.create_all()
-
-@app.before_request
-def sessionTimeout():
-    session.permanent = True
-    app.permanent_session_lifetime = timedelta(seconds=5)
-    session.modified = True
 
 
 # ----------------home page--------------------
