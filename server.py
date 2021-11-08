@@ -4,31 +4,14 @@ from flask import Flask, render_template
 from flask import request
 from flask import redirect, url_for
 from flask import session
-# from flask_sqlalchemy import SQLAlchemy
 
-# from bottle import route, get, post
-# from bottle import run, debug
-# from bottle import request, response, redirect, template
-# from bottle import default_app
-# from bottle import static_file
-
-from sessions import saveSession, getSession
 from database import companies, saveUser, getUser
-
+from sessions import app
 import hashlib
 import os
 import codecs
-import toget
-
-
-app = Flask(__name__)
-app.secret_key = 'Ob,#1p{<y`|DZ!51c;_Y#|+u":{wwP'
 
 stopper = 1
-
-app.config["SESSION_TYPE"] = "sqlalchemy"
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/ali"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #Quiet warning message
 
 # ----------------home page--------------------
 @app.route("/home")
@@ -230,3 +213,4 @@ def verifyPassword(Userpassword, Usercredentials):
 
 if __name__ == "__main__":
     app.run(host="localhost", port=8080, debug=True)
+    
