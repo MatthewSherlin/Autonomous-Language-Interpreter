@@ -139,6 +139,28 @@ body {
     align-items: center;
 }
 
+table {
+    background: var(--white-1);
+    display: inline-block;
+    width: 100%;
+    max-width: 800px;
+    max-height: 450px;
+    overflow: auto;
+}
+
+tr:nth-child(odd) {
+    background: var(--white-2);
+}
+
+th, td {
+    padding: 15px 20px; 
+}
+
+th {
+    background: var(--orange-1);
+    color: var(--white-1);
+}
+
 
 /* Change navbar for desktop */
 @media screen and (min-width: 1024px) { 
