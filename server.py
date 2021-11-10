@@ -4,31 +4,15 @@ from flask import Flask, render_template
 from flask import request
 from flask import redirect, url_for
 from flask import session
-# from flask_sqlalchemy import SQLAlchemy
 
-# from bottle import route, get, post
-# from bottle import run, debug
-# from bottle import request, response, redirect, template
-# from bottle import default_app
-# from bottle import static_file
-
-from sessions import saveSession, getSession
-from database import companies, saveUser, getUser,chart_table
-
+from database import companies, saveUser, getUser, chart_table
+from sessions import app
+import toget
 import hashlib
 import os
 import codecs
-import toget
-
-
-app = Flask(__name__)
-app.secret_key = 'Ob,#1p{<y`|DZ!51c;_Y#|+u":{wwP'
 
 stopper = 1
-
-app.config["SESSION_TYPE"] = "sqlalchemy"
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:@localhost/ali"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #Quiet warning message
 
 # ----------------home page--------------------
 @app.route("/home")
@@ -43,29 +27,24 @@ def homePage():
 # -------------------translate---------------------------------
 @app.route("/home/translate", methods=["GET"])
 def dynamic_page():
-     if request.method == "GET": 
+    if request.method == "GET":
         toget.main()
         return render_template("home.html")
-    
-     else:
-         return render_template("home.html")
-        
-    
+
+    else:
+        return render_template("home.html")
+
 
 # -------------------login page functionality--------------------
 @app.route("/", methods=["GET", "POST"])
 @app.route("/login", methods=["GET", "POST"])
 def loginPage():
     if request.method == "POST":
-        # session = getSession(request)
         # this will grab user input from html page
         username = request.form["username"]
         password = request.form["password"]
 
         user = getUser(username)
-        # print(type(user))  Debug prints
-        # print(f"username is type: {type(username)}")
-        # print(user)
         #!!we need to add a pop up if user credentials is wrong. Because we can not redirect to signup page
         # bootstrap has some cool alert messages
         if not user:
@@ -79,7 +58,6 @@ def loginPage():
         if username not in session:
             session["username"] = username  # adds username to session
 
-        # saveSession(request.response, session)  # saves the session
         return redirect(
             "/home"
         )  # will redirect to home page with the user being logged in
@@ -92,7 +70,6 @@ def loginPage():
 @app.route("/signup", methods=["GET", "POST"])
 def signUpPage():
     if request.method == "POST":
-        session = getSession(request)  # get session
         companyKey = request.form["companyKey"]
         username = request.form["username"]  # get username form page
         print("Getting password")
@@ -100,25 +77,30 @@ def signUpPage():
         print(f"password is: {password}")
         passwordRepeat = request.form["password_again"]  # get password from page
 
-        #checking to see if username is already taken
-        oldUser = getUser(username)   
-        oldName = str(oldUser['username'])
+        # checking to see if username is already taken
+        oldUser = getUser(username)
+        oldName = str(oldUser["username"])
 
-        if  oldName.upper() == username.upper():
-            #username has been taken
+        if oldName.upper() == username.upper():
+            # username has been taken
             return render_template(
-                "signup.html", invalidCode=False, notPasswordMatch=False, badUsername = True
+                "signup.html",
+                invalidCode=False,
+                notPasswordMatch=False,
+                badUsername=True,
             )
 
         if (
             password != passwordRepeat
         ):  # makes sure the double password input is the same
-            # saveSession(request.response, session)
             if "username" not in session:
                 session["username"] = username  ## saves the session using flask
                 return render_template(
-                    "signup.html", invalidCode=False, notPasswordMatch=True, badUsername = False
-                )  # will redirct to home page if not the same
+                    "signup.html",
+                    invalidCode=False,
+                    notPasswordMatch=True,
+                    badUsername=False,
+                )  # will redirct to signup page if not the same
 
         companyInfo = list(companies.find(company_key=companyKey))
         try:
@@ -126,7 +108,10 @@ def signUpPage():
         except:
             # need to return error code rather than redirect
             return render_template(
-                "signup.html", invalidCode=True, notPasswordMatch=False, badUsername = False
+                "signup.html",
+                invalidCode=True,
+                notPasswordMatch=False,
+                badUsername=False,
             )  # input message (bootstrap alert) that says company key wrong
 
         data = {  # saves user after signup
@@ -141,31 +126,29 @@ def signUpPage():
             session[
                 "username"
             ] = username  # sets session user name to the new users name
-        # saveSession(request.response, session)
         return redirect("/")
     else:
-        return render_template("signup.html", invalidCode=False, notPasswordMatch=False, badUsername = False)
+        return render_template(
+            "signup.html", invalidCode=False, notPasswordMatch=False, badUsername=False
+        )
 
 
 # --------------sign out function & route-----------------------
 @app.route("/logout", methods=["GET"])
 def getLogout():
-    # session = getSession(request)  # get session
-    # session["user_id"] = ""  # change session info to no user_id
-    # saveSession(request.response, session)  # save session
     session.pop(
         "username", None
     )  # removes the user id from the session when they logout
     return redirect("/")  # redirect to login page
 
 
-#---------Translation page --------------
+# ---------Translation page --------------
 @app.route("/takehome")
 def takeHome():
     return render_template("takeHome.html")
 
 
-#-------chart Page -----------------
+# -------chart Page -----------------
 @app.route("/mychart")
 def getChart():
     username = session.get("username")
