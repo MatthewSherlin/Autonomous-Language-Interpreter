@@ -10,16 +10,18 @@ from google.cloud import translate_v2 as translate
 from google.cloud import texttospeech # outdated or incomplete comparing to v1
 from google.cloud import texttospeech_v1
 from playsound import playsound #play mp3 files
+from bs4 import BeautifulSoup
+
 
 #-----------------------credential[path] needs to be change per user testing-------------------------------
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"C:\Users\dylan dennison\Downloads\DylanServiceKey\DylanServiceKey.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"C:\Users\dhinz\Documents\My Web Sites\env\DanielServiceKey\DanielServiceKey.json"
 #------------------------------------------------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^----
 
 import pyaudio
 from six.moves import queue
 
 #set output file path to reduce amount of code manipulation ***CHANGE TO FILE PATH INSIDE ALI FOLDER*****
-path = r"C:\Users\dylan dennison\OneDrive\Desktop\AlI capstone\env\ALI source code\Capstone-2021\ALI-Output\output.mp3"
+path = r"C:\Users\dhinz\Documents\My Web Sites\env\Capstone-2021\ALI-Output\output.mp3"
 #assert os.path.isfile(path) ###can not assert because file is deleted each cycle
 
 #define parameters for multi-use purpose
@@ -146,15 +148,27 @@ def listen_print_loop(responses):
             print(output['translatedText'])
             speechString = output['translatedText']
             #print input and output
-            with open('transcript2.txt', 'a') as f:
-                f.write(output['input'])
-                f.write("\n")
+
+            with open('templates/home.html', 'r') as f: 
+                translation1 = output['input']
+                translation2 = output['translatedText'] 
+
+                soup = BeautifulSoup(f.read(), "lxml") 
+
+                # for el in soup.find_all('textarea'):
+                #     el.clear()
+                
+                for el in soup.find_all(id="t1"):
+                    el.append(translation1)
+
+                for el in soup.find_all(id="t2"):
+                    el.append(translation2)
+
                 f.close()
 
-            with open('transcript1.txt', 'a') as f:
-                f.write(output['translatedText'])
-                f.write("\n")
-                f.close()
+            savechanges = soup.prettify("utf-8")
+            with open("templates/home.html", "wb") as f:
+                f.write(savechanges)
 
             voice_list = []
             for voice in client.list_voices().voices:

@@ -50,9 +50,9 @@
     <h1>Enter anything and we'll translate it.</h1>
 
     <div class="main">
-      <div class="lang-wrapper">
-        <select name="languages" id="cars">
-          <option value="">Input Language</option>
+      <div class="input">
+        <select name="languages" id="languages">
+          <option value="">Select Language</option>
           <option value="af">Afrikaans</option>
           <option value="sq">Albanian</option>
           <option value="am">Amharic</option>
@@ -64,29 +64,37 @@
           <option value="bn">Bengali</option>
           <option value="bs">Bosnian</option>
           <option value="bg">Bulgarian</option>
-          <option value="ca">Catalan</option>        
+          <option value="ca">Catalan</option>
+          <!-- add more -->
+        
         </select>
 
-        <i class="fas fa-exchange-alt"></i>
-
-        <select name="languages" id="cars">
-          <option value="">Output Language</option>
-          <option value="af">Afrikaans</option>
-          <option value="sq">Albanian</option>
-          <option value="am">Amharic</option>
-          <option value="ar">Arabic</option>
-          <option value="hy">Armenian</option>
-          <option value="az">Azerbaijani</option>
-          <option value="eu">Basque</option>
-          <option value="be">Belarusian</option>
-          <option value="bn">Bengali</option>
-          <option value="bs">Bosnian</option>
-          <option value="bg">Bulgarian</option>
-          <option value="ca">Catalan</option>        
-        </select>
+        <textarea placeholder="Enter text here..."></textarea>
       </div>
 
-      <textarea placeholder="Enter your text here"></textarea>
+      <i class="fas fa-exchange-alt"></i>
+
+      <div class="input">
+        <select name="languages" id="languages">
+          <option value="">Select Language</option>
+          <option value="af">Afrikaans</option>
+          <option value="sq">Albanian</option>
+          <option value="am">Amharic</option>
+          <option value="ar">Arabic</option>
+          <option value="hy">Armenian</option>
+          <option value="az">Azerbaijani</option>
+          <option value="eu">Basque</option>
+          <option value="be">Belarusian</option>
+          <option value="bn">Bengali</option>
+          <option value="bs">Bosnian</option>
+          <option value="bg">Bulgarian</option>
+          <option value="ca">Catalan</option>
+          <!-- add more -->
+      
+        </select>
+
+        <textarea>Output text here...</textarea>
+      </div>
 
       <input type="button" value="Go">
     </div>
