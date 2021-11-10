@@ -10,7 +10,6 @@ db = dataset.connect("mysql://root:@localhost/ali")
 
 ## Testing database connection ##
 # Create a reference to table 'sessions'
-session_table = db["sessions"]
 users_table = db["users_table"]
 companies = db["companies"]
 chart_table = db["chart_table"]
