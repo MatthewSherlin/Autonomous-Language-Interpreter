@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='styles/chart.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&amp;display=swap" rel="stylesheet">
 
 </head>
 
@@ -48,17 +49,13 @@
 
     <table>
   <tr>
-    <th></th>
     <th>Patient</th>
     <th>Time</th>
     <th>Date</th>
     <th>Notes</th>
-    <th></th>
-    <th></th>
   </tr>
   {%for item in itemsInChart %}
     <tr>
-      <th> </th>
       <td>{{item['patient']}}</td>
       <td>{{item['time']}}</td>
       <td>{{item['date']}}</td>
