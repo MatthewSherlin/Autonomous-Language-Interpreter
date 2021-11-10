@@ -5,7 +5,7 @@ from flask import request
 from flask import redirect, url_for
 from flask import session
 
-from database import companies, saveUser, getUser
+from database import companies, saveUser, getUser, chart_table
 from sessions import app
 import toget
 import hashlib
@@ -150,8 +150,12 @@ def takeHome():
 
 # -------chart Page -----------------
 @app.route("/mychart")
-def takehome():
-    return render_template("chart.html")
+def getChart():
+    username = session.get("username")
+    itemsInChart = chart_table.find()
+    itemsInChart = [ dict(x) for x in list(itemsInChart) if x['username'] == username ]
+
+    return render_template("chart.html", itemsInChart = itemsInChart)
 
 
 # ------------------------Credential functions---------------------

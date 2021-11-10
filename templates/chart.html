@@ -17,8 +17,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='styles/chart.css') }}">
-
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&amp;display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -47,7 +47,22 @@
       <div class="link"><a href="/logout">Sign Out<i class="fas fa-chevron-right"></a></i></div>
     </div>
 
-    <h2>Chart</h2>
+    <table>
+  <tr>
+    <th>Patient</th>
+    <th>Time</th>
+    <th>Date</th>
+    <th>Notes</th>
+  </tr>
+  {%for item in itemsInChart %}
+    <tr>
+      <td>{{item['patient']}}</td>
+      <td>{{item['time']}}</td>
+      <td>{{item['date']}}</td>
+      <td>{{item['notes']}}</td>
+    </tr>
+  {% endfor %}
+</table>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
