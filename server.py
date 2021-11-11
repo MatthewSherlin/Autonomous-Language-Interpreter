@@ -5,13 +5,12 @@ from flask import request
 from flask import redirect
 from flask import session
 
-from database import companies, saveUser, getUser, chart_table,isAdmin, users_table
+from database import companies, saveUser, getUser, chart_table,isAdmin
 from database import generateCredentials, stringToBytes, companyIdGenerator, saveCompany
 from sessions import app
-#import toget uncomment later
+import toget
 import hashlib
-import os
-import codecs
+
 
 stopper = 1
 
@@ -34,7 +33,7 @@ def homePage():
 @app.route("/home/translate", methods=["GET"])
 def dynamic_page():
     if request.method == "GET":
-        #toget.main() uncomment later
+        toget.main()
         return render_template("home.html")
 
     else:
@@ -146,6 +145,7 @@ def signUpPage():
         )
 
 
+
 # --------------sign out function & route-----------------------
 @app.route("/logout", methods=["GET"])
 def getLogout():
@@ -153,6 +153,7 @@ def getLogout():
         "username", None
     )  # removes the user id from the session when they logout
     return redirect("/")  # redirect to login page
+
 
 
 # ---------Translation page --------------
@@ -163,6 +164,9 @@ def takeHome():
     else: 
         return render_template("takeHome.html",isAdmin = False)
 
+
+
+#------------admin create keys page--------------------
 @app.route("/admin", methods=["GET", "POST"])
 def getAdmin():
     if request.method == 'POST':
@@ -205,6 +209,8 @@ def getChart():
        return render_template("chart.html", itemsInChart = itemsInChart,isAdmin = False) 
 
 
+
+
 # passwords need to be verified. We need to hash and compare to see if its verifiable
 def verifyPassword(Userpassword, Usercredentials):
     salt = stringToBytes(Usercredentials["salt"])  # get salt
@@ -218,15 +224,6 @@ def verifyPassword(Userpassword, Usercredentials):
     )
     return newKey == key  # returns bool to see if they match
 
-# for images on page
-# @app.route("/static/png/<filename:re:.*\.png>")
-# @app.route("/image/<filename:re:.*\.png>")
-# def get_image(filename):
-#     return app.send_static_file(filename=filename, root="static/images", mimetype="image/png")
-
-# @app.route("/static/<filename:path>")
-# def get_static(filename):
-#     return app.send_static_file(filename=filename, root="static")
 
 
 
