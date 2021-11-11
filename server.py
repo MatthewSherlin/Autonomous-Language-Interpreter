@@ -2,12 +2,13 @@
 ##flask imports
 from flask import Flask, render_template
 from flask import request
-from flask import redirect, url_for
+from flask import redirect
 from flask import session
 
-from database import companies, saveUser, getUser, chart_table
+from database import companies, saveUser, getUser, chart_table,isAdmin, users_table
+from database import generateCredentials, stringToBytes, companyIdGenerator, saveCompany
 from sessions import app
-import toget
+#import toget uncomment later
 import hashlib
 import os
 import codecs
@@ -18,17 +19,22 @@ stopper = 1
 @app.route("/home")
 def homePage():
     print("SESSION USERNAME IS " + str(session.get("username")))
-    if "username" not in session:
+
+    if session.get("username") == "admin":
+        print("ADMIN IN SESSION!!")
+        return render_template("home.html",isAdmin = True)
+
+    elif "username" not in session:
         return redirect("/")
     else:
-        return render_template("home.html")
+        return render_template("home.html",isAdmin = False)
 
 
 # -------------------translate---------------------------------
 @app.route("/home/translate", methods=["GET"])
 def dynamic_page():
     if request.method == "GET":
-        toget.main()
+        #toget.main() uncomment later
         return render_template("home.html")
 
     else:
@@ -39,14 +45,14 @@ def dynamic_page():
 @app.route("/", methods=["GET", "POST"])
 @app.route("/login", methods=["GET", "POST"])
 def loginPage():
+
     if request.method == "POST":
         # this will grab user input from html page
         username = request.form["username"]
         password = request.form["password"]
 
         user = getUser(username)
-        #!!we need to add a pop up if user credentials is wrong. Because we can not redirect to signup page
-        # bootstrap has some cool alert messages
+
         if not user:
             return render_template(
                 "login.html", failedLogin=True
@@ -58,9 +64,13 @@ def loginPage():
         if username not in session:
             session["username"] = username  # adds username to session
 
-        return redirect(
-            "/home"
-        )  # will redirect to home page with the user being logged in
+            if(isAdmin(username)):
+                 print("ADMIN FOUND")  ## checks if user is admin
+                 return render_template("home.html",isAdmin = True)  # will redirect to home page with the user being logged in
+            else:
+                 return render_template("home.html",isAdmin = False)  
+
+
 
     else:
         return render_template("login.html", failedLogin=False)
@@ -69,6 +79,7 @@ def loginPage():
 # ---------------sign up functionality ----------------
 @app.route("/signup", methods=["GET", "POST"])
 def signUpPage():
+    
     if request.method == "POST":
         companyKey = request.form["companyKey"]
         username = request.form["username"]  # get username form page
@@ -121,7 +132,9 @@ def signUpPage():
         }
         print(type(data))
 
+        
         saveUser(data)
+      
         if "username" not in session:
             session[
                 "username"
@@ -145,7 +158,39 @@ def getLogout():
 # ---------Translation page --------------
 @app.route("/takehome")
 def takeHome():
-    return render_template("takeHome.html")
+    if session.get("username") == "admin":
+        return render_template("takeHome.html",isAdmin = True)
+    else: 
+        return render_template("takeHome.html",isAdmin = False)
+
+@app.route("/admin", methods=["GET", "POST"])
+def getAdmin():
+    if request.method == 'POST':
+        username = request.form["username"]
+        password = request.form["password"]
+        companyName = request.form["companyName"]
+        companyKey = request.form['companyKey']
+       
+
+        user = getUser(username)
+
+        if not user:
+            return render_template("admin.html", failedLogin = True, isAdmin = True, keyMade = False)
+        if not verifyPassword(password, user["password"]):
+            return render_template("admin.html", failedLogin = True, isAdmin = True, keyMade = False)
+        
+        companyID = companyIdGenerator()
+        data = {
+            "company_id": companyID,
+            "company_name": companyName,
+            "company_key": companyKey,
+        }
+        
+        saveCompany(data)
+        return render_template("admin.html", failedLogin = False, isAdmin = True, keyMade = True)   
+    else:
+        return render_template("admin.html", failedLogin = False, isAdmin = True, keyMade = False)
+
 
 
 # -------chart Page -----------------
@@ -154,40 +199,10 @@ def getChart():
     username = session.get("username")
     itemsInChart = chart_table.find()
     itemsInChart = [ dict(x) for x in list(itemsInChart) if x['username'] == username ]
-
-    return render_template("chart.html", itemsInChart = itemsInChart)
-
-
-# ------------------------Credential functions---------------------
-# function for hashing process
-def bytesToString(byte):
-    string = str(
-        codecs.encode(byte, "hex"), "utf-8"
-    )  # using utf-8 to change bytes to a string
-    assert type(string) is str  # making sure its a string
-    return string
-
-
-# function for hashing process
-def stringToBytes(string):
-    byte = codecs.decode(bytes(string, "utf-8"), "hex")  # changing from string to bytes
-    assert type(byte) is bytes  # making sure its bytes
-    return byte
-
-
-# The hashing function
-def generateCredentials(Userpassword):
-    salt = os.urandom(32)
-    key = hashlib.pbkdf2_hmac(
-        "sha256",  # The hash digest algorithm for HMAC
-        Userpassword.encode("utf-8"),  # Makes password byes
-        salt,  # Provide the salt
-        100000,  # It is recommended to use at least 100,000 iterations of SHA-256
-    )
-    return {  # returns hash
-        "salt": bytesToString(salt),
-        "key": bytesToString(key),
-    }
+    if session.get("username") == "admin":
+        return render_template("chart.html", itemsInChart = itemsInChart,isAdmin = True)
+    else:
+       return render_template("chart.html", itemsInChart = itemsInChart,isAdmin = False) 
 
 
 # passwords need to be verified. We need to hash and compare to see if its verifiable
@@ -203,7 +218,6 @@ def verifyPassword(Userpassword, Usercredentials):
     )
     return newKey == key  # returns bool to see if they match
 
-
 # for images on page
 # @app.route("/static/png/<filename:re:.*\.png>")
 # @app.route("/image/<filename:re:.*\.png>")
@@ -215,5 +229,8 @@ def verifyPassword(Userpassword, Usercredentials):
 #     return app.send_static_file(filename=filename, root="static")
 
 
+
 if __name__ == "__main__":
+ 
+
     app.run(host="localhost", port=8080, debug=True)

@@ -17,7 +17,7 @@ db = SQLAlchemy(app)
 app.config["SESSION_SQLALCHEMY"] = db
 
 Session(app)
-#db.create_all()
+db.create_all()
 
 @app.before_request
 def sessionTimeout():
