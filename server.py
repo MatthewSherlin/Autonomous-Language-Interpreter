@@ -25,7 +25,7 @@ def homePage():
 
 
 # -------------------translate---------------------------------
-@app.route("/home/translate", methods=["GET"])
+@app.route("/translate", methods=["GET"])
 def dynamic_page():
     if request.method == "GET":
         toget.main()
