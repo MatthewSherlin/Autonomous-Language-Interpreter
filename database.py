@@ -23,7 +23,7 @@ chart_table = db["chart_table"]
 sessions = db["sessions"]
 
 ## 
-def companyIdGenerator(size=4, uchars=string.ascii_letters + string.digits):
+def companyIdGenerator(size=4, uchars=string.digits):
     return ''.join(random.choice(uchars) for _ in range(size))
 
 # Testing database setup
@@ -31,8 +31,8 @@ db["companies"].drop()
 
 companies.insert(
     {
-        "company_id": "1234",
-        "company_name": "Avita",
+        "company_id": "0001",
+        "company_name": "ALI",
         "company_key": "123thjmv79cdfj3ki5tye",
     }
 )
