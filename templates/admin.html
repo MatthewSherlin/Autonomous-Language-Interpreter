@@ -19,6 +19,22 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='styles/admin.css') }}">
 
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&amp;display=swap" rel="stylesheet">
+
+<script>
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+ charactersLength));
+   }
+document.getElementById("demo").innerHTML = result;
+}
+</script>
+
+  
+  
 </head>
 
 <body>
@@ -26,6 +42,9 @@
         <div class="logo">ALI</div>
 
         <ul>
+          {% if isAdmin %}
+          <li><a href="/admin">Admin</a></li>
+          {%endif%}
           <li><a href="/home">Translator</a></li>
           <li><a href="/takehome">Text to Speech</a></li>
           <li><a href="/mychart">Previous Entries</a></li>
@@ -41,45 +60,57 @@
 
     <div class="links"> 
       <div class="exit-wrapper"><i class="fas fa-times link-close"></i></div>
+      {% if isAdmin %}
+      <div class="link"><a href="/admin">admin<i class="fas fa-chevron-right"></a></i></div>
+      {%endif%}
       <div class="link"><a href="/home">Translator<i class="fas fa-chevron-right"></a></i></div>
       <div class="link"><a href="/takehome">Text to Speech<i class="fas fa-chevron-right"></a></i></div>
       <div class="link"><a href="/mychart">Previous Entries<i class="fas fa-chevron-right"></a></i></div>
       <div class="link"><a href="/logout">Sign Out<i class="fas fa-chevron-right"></a></i></div>
     </div>
 
-    <form class="main" method="POST">
     
-        {% if not keyGenerated %}
+  
+    {%if keyMade%}
+    <p style="color: red">Key has been saved</p>
+    {%endif%}
+  
+    {% if failedLogin %}
+      <p style="color: red">Invalid Credentials</p>
+      {% endif %}    
+
+      {% if not keyMade %}
+      <div class= "main">
+        <input type="button" value="Generate a Key" onclick="makeid(20)" class="button generate"/>
+        <br> 
+        <br> 
+        <p id="demo"></p>
+      </div>
+
+      <form class="main" method="POST">
+    
+        
         <h1>Generate Company Key</h1>
 
         <h3>Username</h3>
-        <input type="text" placeholder="Username" class="text">
+        <input type="text" placeholder="Username" name="username" class="text">
 
         <h3>Password</h3>
-        <input type="text" placeholder="Password" class="text">
+        <input type="text" placeholder="Password" name="password" class="text">
 
         <h3>Company Name</h3>
-        <input type="text" placeholder="Company Name" class="text">
+        <input type="text" placeholder="Company Name" name="companyName" class="text">
 
         <h3>Company Id</h3>
-        <input type="text" placeholder="Company ID" class="text">
+        <input type="text" placeholder="Company Key" name="companyKey" class="text">
 
         <div class="button-wrapper">
             <a href="/" class="button cancel">Cancel</a>
-            <input type="button" value="Generate Key" class="button generate">
+            <input type="submit" value="Submit" class="button generate">
+            
         </div>
         {% endif %}
 
-        {% if keyGenerated %}
-        <h1>Company key successfuly created</h1>
-        <p class="key">{{ key }}</p>
-        <p class="warning">This is your unique company key and is non-recoverable. If you lose this key, you will have to apply for another.</p>
-        
-        <div class="button-wrapper">
-            <a href="/" class="button cancel">Close</a>
-            <input type="button" value="Copy" class="button generate">
-        </div>
-        {% endif %}
     </form>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"

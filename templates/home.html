@@ -26,6 +26,9 @@
         <div class="logo">ALI</div>
 
         <ul>
+          {% if isAdmin == True %}
+          <li><a href="/admin">Admin</a></li>
+          {%endif%}
           <li><a href="/home">Translator</a></li>
           <li><a href="/takehome">Text to Speech</a></li>
           <li><a href="/mychart">Previous Entries</a></li>
@@ -41,6 +44,9 @@
 
     <div class="links"> 
       <div class="exit-wrapper"><i class="fas fa-times link-close"></i></div>
+      {% if isAdmin %}
+      <div class="link"><a href="/admin">admin<i class="fas fa-chevron-right"></a></i></div>
+      {%endif%}
       <div class="link"><a href="/home">Translator<i class="fas fa-chevron-right"></a></i></div>
       <div class="link"><a href="/takehome">Text to Speech<i class="fas fa-chevron-right"></a></i></div>
       <div class="link"><a href="/mychart">Previous Entries<i class="fas fa-chevron-right"></a></i></div>
@@ -53,12 +59,13 @@
     </div>
     
     <h2>Press and hold to translate.</h2>
-
-    <div class="lang-wrapper">
-      <select name="languages" id="cars">
+  <div>
+    <form action="/home/translate" id="langOne" name="langOneName" method="POST">
+    <span>
+      <select name="languages1">
         <option value="">Select Language</option>
-        <option value="af">Afrikaans</option>
-        <option value="sq">Albanian</option>
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
         <option value="am">Amharic</option>
         <option value="ar">Arabic</option>
         <option value="hy">Armenian</option>
@@ -70,9 +77,29 @@
         <option value="bg">Bulgarian</option>
         <option value="ca">Catalan</option>
         <!-- add more -->
-        
       </select>
-    </div>
+    </span>
+    <span>
+      <select name="languages2">
+        <option value="">Select Language</option>
+        <option value="es">Spanish</option>
+        <option value="en">English</option>
+        <option value="am">Amharic</option>
+        <option value="ar">Arabic</option>
+        <option value="hy">Armenian</option>
+        <option value="az">Azerbaijani</option>
+        <option value="eu">Basque</option>
+        <option value="be">Belarusian</option>
+        <option value="bn">Bengali</option>
+        <option value="bs">Bosnian</option>
+        <option value="bg">Bulgarian</option>
+        <option value="ca">Catalan</option>
+        <!-- add more -->
+      </select>
+    </span>
+    <input type="submit" value="Submit Choices">
+  </form>
+  </div>
 
     <div class="translation-tab">View Text</div>
 
@@ -86,7 +113,16 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
             crossorigin="anonymous">
+
     </script>
     <script src="static/scripts/home.js"></script>
+    <script>
+      window.onload = function () {
+    if (localStorage.getItem("hasCodeRunBefore") === null) {
+        alert("DISCLAIMER:\nALI is not responsible for any personal damages, injuries, or death arising from the usage of the ALI software, or for any decision or action taken based upon the ALI software.\nALI is intended for use as an aide in communicating between language barriers, and as a result may not always be accurate. It is the responsibility of the professional user to make the final determining decision in any medical scenario, regardless of the information displayed within ALI. ALI and all associated components are protected under this disclaimer.\nOnly use this software if you've read and understood this message.")
+        localStorage.setItem("hasCodeRunBefore", true);
+    }
+}
+    </script>
 </body>
 </html>
