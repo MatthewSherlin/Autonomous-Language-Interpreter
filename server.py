@@ -178,7 +178,7 @@ def getAdmin():
 
         user = getUser(username)
 
-        if not user:
+        if username != "admin":
             return render_template("admin.html", failedLogin = True, isAdmin = True, keyMade = False)
         if not verifyPassword(password, user["password"]):
             return render_template("admin.html", failedLogin = True, isAdmin = True, keyMade = False)
@@ -213,8 +213,13 @@ def getChart():
 
 # passwords need to be verified. We need to hash and compare to see if its verifiable
 def verifyPassword(Userpassword, Usercredentials):
-    salt = stringToBytes(Usercredentials["salt"])  # get salt
-    key = stringToBytes(Usercredentials["key"])  # get key
+    
+    if type(Usercredentials) == str:
+        salt = stringToBytes(Usercredentials[10:74])
+        key = stringToBytes(Usercredentials[85:149])
+    else:
+        salt = stringToBytes(Usercredentials["salt"])  # get salt
+        key = stringToBytes(Usercredentials["key"])  # get key
 
     newKey = hashlib.pbkdf2_hmac(  # process to hash the password to compare
         "sha256",  # The hash digest algorithm for HMAC
