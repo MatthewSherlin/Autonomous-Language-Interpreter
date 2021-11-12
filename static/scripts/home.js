@@ -13,3 +13,12 @@ $(".translation-tab").click(function() {
 $(".text-close").click(function() {
 	$(".text-wrapper").toggleClass("move-text");
 });
+
+$(".notes-tab").click(function() {
+	$(".notes").toggleClass("move-notes");
+});
+
+$(".record-close").click(function() {
+	$(".notes").toggleClass("move-notes");
+});
+
