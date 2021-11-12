@@ -53,12 +53,13 @@
     </div>
     
     <h2>Press and hold to translate.</h2>
-
-    <div class="lang-wrapper">
-      <select name="languages" id="cars">
+  <div>
+    <form action="/home/translate" id="langOne" name="langOneName" method="POST">
+    <span>
+      <select name="languages1">
         <option value="">Select Language</option>
-        <option value="af">Afrikaans</option>
-        <option value="sq">Albanian</option>
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
         <option value="am">Amharic</option>
         <option value="ar">Arabic</option>
         <option value="hy">Armenian</option>
@@ -70,9 +71,29 @@
         <option value="bg">Bulgarian</option>
         <option value="ca">Catalan</option>
         <!-- add more -->
-        
       </select>
-    </div>
+    </span>
+    <span>
+      <select name="languages2">
+        <option value="">Select Language</option>
+        <option value="es">Spanish</option>
+        <option value="en">English</option>
+        <option value="am">Amharic</option>
+        <option value="ar">Arabic</option>
+        <option value="hy">Armenian</option>
+        <option value="az">Azerbaijani</option>
+        <option value="eu">Basque</option>
+        <option value="be">Belarusian</option>
+        <option value="bn">Bengali</option>
+        <option value="bs">Bosnian</option>
+        <option value="bg">Bulgarian</option>
+        <option value="ca">Catalan</option>
+        <!-- add more -->
+      </select>
+    </span>
+    <input type="submit" value="Submit Choices">
+  </form>
+  </div>
 
     <div class="translation-tab">View Text</div>
 
@@ -88,5 +109,13 @@
             crossorigin="anonymous">
     </script>
     <script src="static/scripts/home.js"></script>
+    <script>
+      window.onload = function () {
+    if (localStorage.getItem("hasCodeRunBefore") === null) {
+        alert("disclaimer! this is a test burrido")
+        localStorage.setItem("hasCodeRunBefore", true);
+    }
+}
+    </script>
 </body>
 </html>
