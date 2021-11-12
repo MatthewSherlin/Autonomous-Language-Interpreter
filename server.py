@@ -44,9 +44,8 @@ def loginPage():
         username = request.form["username"]
         password = request.form["password"]
 
-        user = getUser(username)
-        #!!we need to add a pop up if user credentials is wrong. Because we can not redirect to signup page
-        # bootstrap has some cool alert messages
+        user = getUser(username) #type dict
+
         if not user:
             return render_template(
                 "login.html", failedLogin=True
@@ -118,14 +117,13 @@ def signUpPage():
             "username": username,
             "password": generateCredentials(password),
             "company_name": companyName,  # change to company name
-        }
+        } # data is type dict
         print(type(data))
 
         saveUser(data)
         if "username" not in session:
-            session[
-                "username"
-            ] = username  # sets session user name to the new users name
+            session["username"] = username  
+            # sets session user name to the new users name
         return redirect("/")
     else:
         return render_template(
