@@ -12,20 +12,18 @@ from google.cloud import texttospeech_v1
 from playsound import playsound #play mp3 files
 
 #-----------------------credential[path] needs to be change per user testing-------------------------------
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"C:\Users\dylan dennison\Downloads\DylanServiceKey\DylanServiceKey.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"C:\Users\Matthew Sherlin\Desktop\APIKey\myServiceKey.json"
 #------------------------------------------------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^----
 
 import pyaudio
 from six.moves import queue
 
 #set output file path to reduce amount of code manipulation ***CHANGE TO FILE PATH INSIDE ALI FOLDER*****
-path = r"C:\Users\dylan dennison\OneDrive\Desktop\AlI capstone\env\ALI source code\Capstone-2021\ALI-Output\output.mp3"
+path = r"C:\Users\Matthew Sherlin\Desktop\ALI-Software\env\Capstone-2021\ALI-Output\output.mp3"
 #assert os.path.isfile(path) ###can not assert because file is deleted each cycle
 
 #define parameters for multi-use purpose
-initalLanguage = 'en'
-targetLanguage= 'es'
-languageCode= 'es' #language of the accent for output speech
+languageCode= 'en' #language of the accent for output speech
 #stopper= 1 #stopper to loop function until ended by user
 
 # Audio recording parameters
@@ -104,7 +102,7 @@ class MicrophoneStream(object):
             yield b"".join(data)
 
 
-def listen_print_loop(responses):
+def listen_print_loop(responses, var1, var2):
 
     num_chars_printed = 0
     for response in responses:
@@ -138,7 +136,7 @@ def listen_print_loop(responses):
             print(transcript + overwrite_chars)
 
             text = (transcript)
-            target = targetLanguage
+            target = var2
 
             output = translate_client.translate(text, target_language=target)
             #print(output.keys())
@@ -164,7 +162,6 @@ def listen_print_loop(responses):
             # Set the text input to be synthesized
             quote = output['translatedText']
             synthesis_input = texttospeech_v1.SynthesisInput(text=quote)
-
 
             voice = texttospeech_v1.VoiceSelectionParams(
                 language_code=languageCode, ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
@@ -196,7 +193,6 @@ def listen_print_loop(responses):
             playsound(path) #play the output.mp3 file
             os.remove(path) #remove the output.mp3 file
         
-
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
             if re.search(r"\b(exit|quit)\b", transcript, re.I):
@@ -205,18 +201,18 @@ def listen_print_loop(responses):
 
             num_chars_printed = 0
            
-def main():
+def main(var1, var2):
     # See http://g.co/cloud/speech/docs/languages for a list of supported languages.
 
     #language_code = initalLanguage will modify the client for the desired inital language
-
     open(path, "a") #create a new instance of the audio output file as main is ran
+
 
     client = speech.SpeechClient()
     config = speech.RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
         sample_rate_hertz=RATE,
-        language_code=initalLanguage,
+        language_code=var1,
     )
 
     streaming_config = speech.StreamingRecognitionConfig(
@@ -234,7 +230,7 @@ def main():
            # while stopper == 1:
         responses = client.streaming_recognize(streaming_config, requests)
         # Now, put the transcription responses to use.
-        listen_print_loop(responses)
+        listen_print_loop(responses, var1, var2)
 
     return
 

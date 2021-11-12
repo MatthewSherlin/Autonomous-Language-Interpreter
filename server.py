@@ -1,5 +1,6 @@
 # ALI server file
 ##flask imports
+import re
 from flask import Flask, render_template
 from flask import request
 from flask import redirect
@@ -8,11 +9,9 @@ from flask import session
 from database import companies, saveUser, getUser, chart_table,isAdmin
 from database import generateCredentials, stringToBytes, companyIdGenerator, saveCompany
 from sessions import app
-import toget
 import hashlib
 
 
-stopper = 1
 
 # ----------------home page--------------------
 @app.route("/home")
@@ -30,11 +29,16 @@ def homePage():
 
 
 # -------------------translate---------------------------------
-@app.route("/home/translate", methods=["GET"])
+@app.route("/home/translate", methods=["GET", "POST"])
 def dynamic_page():
-    if request.method == "GET":
-        toget.main()
-        return render_template("home.html")
+    if request.method == "POST":
+        languageOne = request.form["languages1"]
+        langaugeTwo = request.form["languages2"]
+        print(languageOne)
+        print(langaugeTwo)
+        import toget
+        toget.main(languageOne, langaugeTwo)
+        return redirect("/home")
 
     else:
         return render_template("home.html")
