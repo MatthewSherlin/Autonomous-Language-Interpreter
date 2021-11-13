@@ -232,7 +232,6 @@ def main(var1, var2):
         # Now, put the transcription responses to use.
         listen_print_loop(responses, var1, var2)
 
-    return
 
 if __name__ == "__main__":
     main()
