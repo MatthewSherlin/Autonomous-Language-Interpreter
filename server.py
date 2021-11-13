@@ -1,17 +1,23 @@
 # ALI server file
 ##flask imports
-import re
 from flask import Flask, render_template
 from flask import request
 from flask import redirect
 from flask import session
+from sqlalchemy.sql.expression import true
 
 from database import companies, saveUser, getUser, chart_table,isAdmin
 from database import generateCredentials, stringToBytes, companyIdGenerator, saveCompany
 from sessions import app
+#import toget UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!
 import hashlib
+import time
+import threading
 
-
+from threading import Timer
+import datetime
+from database import db
+stopper = 1
 
 # ----------------home page--------------------
 @app.route("/home")
@@ -29,16 +35,11 @@ def homePage():
 
 
 # -------------------translate---------------------------------
-@app.route("/home/translate", methods=["GET", "POST"])
+@app.route("/home/translate", methods=["GET"])
 def dynamic_page():
-    if request.method == "POST":
-        languageOne = request.form["languages1"]
-        langaugeTwo = request.form["languages2"]
-        print(languageOne)
-        print(langaugeTwo)
-        import toget
-        toget.main(languageOne, langaugeTwo)
-        return redirect("/home")
+    if request.method == "GET":
+  #      toget.main()   UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!
+        return render_template("home.html")
 
     else:
         return render_template("home.html")
@@ -54,7 +55,7 @@ def loginPage():
         username = request.form["username"]
         password = request.form["password"]
 
-        user = getUser(username) #type dict
+        user = getUser(username)
 
         if not user:
             return render_template(
@@ -132,15 +133,16 @@ def signUpPage():
             "username": username,
             "password": generateCredentials(password),
             "company_name": companyName,  # change to company name
-        } # data is type dict
+        }
         print(type(data))
 
         
         saveUser(data)
       
         if "username" not in session:
-            session["username"] = username  
-            # sets session user name to the new users name
+            session[
+                "username"
+            ] = username  # sets session user name to the new users name
         return redirect("/")
     else:
         return render_template(
@@ -233,9 +235,57 @@ def verifyPassword(Userpassword, Usercredentials):
     return newKey == key  # returns bool to see if they match
 
 
+def background():
+    minutes = 0
+ 
+    while True:
+            minutes = minutes + 1
+            print("minuetes " + str(minutes))
+            ##if an hour has passed
+            if minutes > 60:
+                db.query('DELETE FROM chart_table WHERE time_stamp<=DATE_SUB(NOW(), INTERVAL 1 DAY);')
+                db.commit()
+                currentTimeStamp = datetime.datetime.now()
+                print("CURRENT TIME STAP " + str(currentTimeStamp))
+
+
+            time.sleep(60)
+            
+
+        
+
+
+## Im testing something###############################
+def timeStamp():
+    db.query('DELETE FROM chart_table WHERE time_stamp<=DATE_SUB(NOW(), INTERVAL 1 DAY);')
+    db.commit()
+    currentTimeStamp = datetime.datetime.now()
+    print("CURRENT TIME STAP " + str(currentTimeStamp))
+#########################################################
+def foreground():
+         app.run(host="localhost", port=8080)
+            
+            
+
 
 
 if __name__ == "__main__":
  
+    b = threading.Thread(name='background', target=background)
+    #t = Timer(5.0, timeStamp)
+    f = threading.Thread(name='foreground', target=foreground)
+    #f.daemon = True
+    #b.daemon = True
 
-    app.run(host="localhost", port=8080, debug=True)
+    b.start()
+    #t.start()
+    f.start()
+    b.join()
+
+    #b.join()
+
+
+        #app.run(host="localhost", port=8080, debug=True)
+
+
+
