@@ -36,7 +36,7 @@ def dynamic_page():
         return redirect("/home")
 
     else:
-        return render_template("home.html")
+        return redirect("/home")
 
 
 # -------------------login page functionality--------------------
