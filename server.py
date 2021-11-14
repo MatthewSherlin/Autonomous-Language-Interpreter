@@ -9,7 +9,7 @@ from sqlalchemy.sql.expression import true
 from database import companies, saveUser, getUser, chart_table,isAdmin
 from database import generateCredentials, stringToBytes, companyIdGenerator, saveCompany
 from sessions import app
-#import toget UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!
+import toget 
 import hashlib
 import time
 import threading
@@ -38,7 +38,7 @@ def homePage():
 @app.route("/home/translate", methods=["GET"])
 def dynamic_page():
     if request.method == "GET":
-  #      toget.main()   UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!
+        toget.main()  
         return render_template("home.html")
 
     else:
