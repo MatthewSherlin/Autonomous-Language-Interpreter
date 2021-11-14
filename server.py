@@ -1,31 +1,63 @@
 # ALI server file
 ##flask imports
-import re
 from flask import Flask, render_template
 from flask import request
 from flask import redirect
 from flask import session
+from flask import Response
 
 from database import companies, saveUser, getUser, chart_table,isAdmin
 from database import generateCredentials, stringToBytes, companyIdGenerator, saveCompany
 from sessions import app
 import hashlib
+import datetime
 
 
 
 # ----------------home page--------------------
-@app.route("/home")
+@app.route("/home", methods=["GET", "POST"])
 def homePage():
-    print("SESSION USERNAME IS " + str(session.get("username")))
+    
+    if request.method == 'POST':
+        patientName = request.form["name"]
+        userNotes = request.form["notes"]
+        dateAndTime = str(datetime.datetime.now())
+        date = dateAndTime[0:10]
+        time = dateAndTime[11:19]
+        username = session.get("username")
+        
+        try:
+            chart_table.insert({
+                'username': username,
+                'patient': patientName,
+                'time' : time,
+                'date' : date,
+                'notes': userNotes
+            })
+            
+        except Exception as e:
+            return Response(e, status=409)
+        
+        if username  == "admin":
+            print("ADMIN IN SESSION!!")
+            return render_template("home.html",isAdmin = True)
 
-    if session.get("username") == "admin":
-        print("ADMIN IN SESSION!!")
-        return render_template("home.html",isAdmin = True)
-
-    elif "username" not in session:
-        return redirect("/")
+        elif "username" not in session:
+            return redirect("/")
+        else:
+            return render_template("home.html",isAdmin = False)
+        
     else:
-        return render_template("home.html",isAdmin = False)
+        print("SESSION USERNAME IS " + str(session.get("username")))
+
+        if session.get("username") == "admin":
+            print("ADMIN IN SESSION!!")
+            return render_template("home.html",isAdmin = True)
+
+        elif "username" not in session:
+            return redirect("/")
+        else:
+            return render_template("home.html",isAdmin = False)
 
 
 # -------------------translate---------------------------------
