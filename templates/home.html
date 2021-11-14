@@ -25,6 +25,13 @@
     ALI
    </div>
    <ul>
+    {% if isAdmin == True %}
+    <li>
+     <a href="/admin">
+      Admin
+     </a>
+    </li>
+    {%endif%}
     <li>
      <a href="/home">
       Translator
@@ -60,6 +67,15 @@
     <i class="fas fa-times link-close">
     </i>
    </div>
+   {% if isAdmin %}
+   <div class="link">
+    <a href="/admin">
+     admin
+     <i class="fas fa-chevron-right">
+     </i>
+    </a>
+   </div>
+   {%endif%}
    <div class="link">
     <a href="/home">
      Translator
@@ -89,26 +105,26 @@
     </a>
    </div>
   </div>
-  <div class="mic-wrapper">
-   <i class="fas fa-microphone">
-   </i>
-   <a class="fill" href="/translate">
-   </a>
-  </div>
-  <h2>
-   Press and hold to translate.
-  </h2>
-  <div class="lang-wrapper">
-   <form action="/home/translate" method="GET">
-    <select id="languages" name="languages">
+  <form action="/translate" id="langOne" method="POST" name="langOneName">
+   <div class="mic-wrapper">
+    <i class="fas fa-microphone">
+    </i>
+    <a class="fill" href="#" onclick="submit()">
+    </a>
+   </div>
+   <h2>
+    Click the icon to start translating.
+   </h2>
+   <div style="display: flex; justify-content: center;">
+    <select name="languages1">
      <option value="">
       Select Language
      </option>
-     <option value="af">
-      Afrikaans
+     <option value="en">
+      English
      </option>
-     <option value="sq">
-      Albanian
+     <option value="es">
+      Spanish
      </option>
      <option value="am">
       Amharic
@@ -142,16 +158,58 @@
      </option>
      <!-- add more -->
     </select>
-   </form>
-  </div>
+    <select name="languages2">
+     <option value="">
+      Select Language
+     </option>
+     <option value="es">
+      Spanish
+     </option>
+     <option value="en">
+      English
+     </option>
+     <option value="am">
+      Amharic
+     </option>
+     <option value="ar">
+      Arabic
+     </option>
+     <option value="hy">
+      Armenian
+     </option>
+     <option value="az">
+      Azerbaijani
+     </option>
+     <option value="eu">
+      Basque
+     </option>
+     <option value="be">
+      Belarusian
+     </option>
+     <option value="bn">
+      Bengali
+     </option>
+     <option value="bs">
+      Bosnian
+     </option>
+     <option value="bg">
+      Bulgarian
+     </option>
+     <option value="ca">
+      Catalan
+     </option>
+     <!-- add more -->
+    </select>
+   </div>
+  </form>
   <div class="translation-tab">
    View Text
   </div>
   <div class="text-wrapper">
-   <textarea class="translation" id="t1" placeholder="View recorded speech here...">hello my name is Daniel exit</textarea>
+   <textarea class="translation" id="t1" placeholder="View recorded speech here...">hello my name is Daniel Bryan's exit</textarea>
    <i class="fas fa-exchange-alt">
    </i>
-   <textarea class="translation" id="t2" placeholder="View translated speech here...">Hola, mi nombre es DanielSalida</textarea>
+   <textarea class="translation" id="t2" placeholder="View translated speech here...">hola mi nombre es Daniel BryanSalida</textarea>
    <i class="fas fa-times text-close">
    </i>
   </div>
@@ -159,5 +217,10 @@
   </script>
   <script src="static/scripts/home.js">
   </script>
+  {% if values == False %}
+  <script>
+   alert("Please insert both an input and an output language")
+  </script>
+  {% endif %}
  </body>
 </html>
