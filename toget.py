@@ -12,14 +12,15 @@ from google.cloud import texttospeech_v1
 from playsound import playsound #play mp3 files
 
 #-----------------------credential[path] needs to be change per user testing-------------------------------
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"C:\Users\dylan dennison\Downloads\DylanServiceKey\DylanServiceKey.json"
-#------------------------------------------------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^----
 
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"./ServiceKey.json"
+#------------------------------------------------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^----
 import pyaudio
 from six.moves import queue
 
 #set output file path to reduce amount of code manipulation ***CHANGE TO FILE PATH INSIDE ALI FOLDER*****
-path = r"C:\Users\dylan dennison\OneDrive\Desktop\AlI capstone\env\ALI source code\Capstone-2021\ALI-Output\output.mp3"
+path = r"./ALI-Output/output.mp3"
+
 #assert os.path.isfile(path) ###can not assert because file is deleted each cycle
 
 #define parameters for multi-use purpose
@@ -232,7 +233,6 @@ def main(var1, var2):
         # Now, put the transcription responses to use.
         listen_print_loop(responses, var1, var2)
 
-    return
 
 if __name__ == "__main__":
     main()
