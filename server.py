@@ -234,13 +234,13 @@ def verifyPassword(Userpassword, Usercredentials):
     )
     return newKey == key  # returns bool to see if they match
 
-
+##runs in the backgroud and deletes records that are 24 hours old
 def background():
     minutes = 0
  
     while True:
-            minutes = minutes + 1
-            print("minuetes " + str(minutes))
+
+            #print("minutes " + str(minutes))
             ##if an hour has passed
             if minutes > 60:
                 db.query('DELETE FROM chart_table WHERE time_stamp<=DATE_SUB(NOW(), INTERVAL 1 DAY);')
@@ -250,20 +250,14 @@ def background():
 
 
             time.sleep(60)
+            minutes = minutes + 1
             
 
         
 
 
-## Im testing something###############################
-def timeStamp():
-    db.query('DELETE FROM chart_table WHERE time_stamp<=DATE_SUB(NOW(), INTERVAL 1 DAY);')
-    db.commit()
-    currentTimeStamp = datetime.datetime.now()
-    print("CURRENT TIME STAP " + str(currentTimeStamp))
-#########################################################
-def foreground():
-         app.run(host="localhost", port=8080)
+#def foreground():
+ #        app.run(host="localhost", port=8080)
             
             
 
@@ -273,19 +267,15 @@ if __name__ == "__main__":
  
     b = threading.Thread(name='background', target=background)
     #t = Timer(5.0, timeStamp)
-    f = threading.Thread(name='foreground', target=foreground)
+    #f = threading.Thread(name='foreground', target=foreground)
+    
+
+    b.daemon = True
     #f.daemon = True
-    #b.daemon = True
-
     b.start()
-    #t.start()
-    f.start()
-    b.join()
-
+    #f.start()
+    #print("AFTER")
     #b.join()
-
-
-        #app.run(host="localhost", port=8080, debug=True)
-
+    app.run(host="localhost", port=8080, debug=True)
 
 
