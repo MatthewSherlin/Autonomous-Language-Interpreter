@@ -139,4 +139,9 @@ dmypy.json
 .vscode
 
 # Transcripts
-*.txt
+transcript1.txt
+transcript2.txt
+
+
+# Service key
+ServiceKey.json
