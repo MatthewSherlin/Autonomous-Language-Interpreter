@@ -9,12 +9,11 @@ from sqlalchemy.sql.expression import true
 from database import companies, saveUser, getUser, chart_table,isAdmin
 from database import generateCredentials, stringToBytes, companyIdGenerator, saveCompany
 from sessions import app
-import toget 
+#import toget UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!
 import hashlib
 import time
 import threading
 
-from threading import Timer
 import datetime
 from database import db
 stopper = 1
@@ -38,7 +37,7 @@ def homePage():
 @app.route("/home/translate", methods=["GET"])
 def dynamic_page():
     if request.method == "GET":
-        toget.main()  
+  #      toget.main()   UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!
         return render_template("home.html")
 
     else:
@@ -243,12 +242,14 @@ def background():
             #print("minutes " + str(minutes))
             ##if an hour has passed
             if minutes > 60:
-                db.query('DELETE FROM chart_table WHERE time_stamp<=DATE_SUB(NOW(), INTERVAL 1 DAY);')
-                db.commit()
-                currentTimeStamp = datetime.datetime.now()
-                print("CURRENT TIME STAP " + str(currentTimeStamp))
+                try:
+                    db.query('DELETE FROM chart_table WHERE time_stamp<=DATE_SUB(NOW(), INTERVAL 1 DAY);')
+                    db.commit()
+                    minutes = 0
+                    currentTimeStamp = datetime.datetime.now()
+                    print("CURRENT TIME STAP " + str(currentTimeStamp))
 
-
+                except: pass
             time.sleep(60)
             minutes = minutes + 1
             
@@ -256,26 +257,18 @@ def background():
         
 
 
-#def foreground():
- #        app.run(host="localhost", port=8080)
-            
-            
+
 
 
 
 if __name__ == "__main__":
  
     b = threading.Thread(name='background', target=background)
-    #t = Timer(5.0, timeStamp)
-    #f = threading.Thread(name='foreground', target=foreground)
-    
 
     b.daemon = True
-    #f.daemon = True
     b.start()
-    #f.start()
-    #print("AFTER")
-    #b.join()
     app.run(host="localhost", port=8080, debug=True)
+
+
 
 
