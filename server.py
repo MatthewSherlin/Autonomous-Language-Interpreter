@@ -32,7 +32,8 @@ def homePage():
                 'patient': patientName,
                 'time' : time,
                 'date' : date,
-                'notes': userNotes
+                'notes': userNotes,
+                'time_stamp': dateAndTime
             })
             
         except Exception as e:
