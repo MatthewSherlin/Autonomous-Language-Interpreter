@@ -58,14 +58,14 @@
 
   <div class="notes-tab">></div>
 
-    <form action="" method="POST" class="notes">
+    <form action='/home' method="POST" class="notes">
       <h2>Enter record</h2>
 
       <p style="text-align: left;">Paitent Name</p>
-      <input type="text" placeholder="Paitent name" class="soap name">
+      <input type="text" placeholder="Paitent name" name="name" class="soap name">
 
       <p style="text-align: left;">Relevant Information</p>
-      <input type="text" placeholder="Enter any relevant information here" class="soap note">
+      <input type="text" placeholder="Enter any relevant information here" name="notes" class="soap note">
 
       <input type="submit" value="Submit" class="button">
       <i class="fas fa-times record-close"></i>
