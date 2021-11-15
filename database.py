@@ -37,33 +37,6 @@ companies.insert(
     }
 )
 
-#testing chart db
-db["chart_table"].drop()
-chart_table.insert({
-    'username': 'dylan',
-    'patient': 'Bob Dylan',
-    'time_stamp' : '2021-11-12 17:32:11',
-    'notes': "back problem. cant sit up right. pain shoots down legs"
-
-})
-
-chart_table.insert({
-    'username': 'dylan',
-    'patient': 'Bob Marley',
-    'time_stamp' : '2021-11-11 17:32:11',
-    'notes': "toe pain. cant walk. been going on for days now"
-
-})
-
-currentTimeStamp = datetime.datetime.now()
-
-chart_table.insert({
-    'username': 'dylan',
-    'patient': 'Randy Marsh',
-    'time_stamp' : str(currentTimeStamp),
-    'notes': "ate too much mcribs"
-
-})
 
 def getUser(username):
     try:
@@ -71,7 +44,6 @@ def getUser(username):
         username = user[0].get("username")
         password = user[0].get("password")
         company = user[0].get("company_name")
-        isAdmin = user[0].get("is_admin")
         data = {"username": username, "password": password, "company_name": company}
         return data
     except:
