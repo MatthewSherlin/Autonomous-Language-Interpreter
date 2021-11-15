@@ -12,13 +12,10 @@ from sessions import app
 
 import hashlib
 import datetime
-<<<<<<< HEAD
 import time
 import threading
-=======
 import toget
 
->>>>>>> 31411c769b0e005a7b8dc79b80332599c4f4bbe8
 
 
 # ----------------home page--------------------

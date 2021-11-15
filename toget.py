@@ -13,14 +13,14 @@ from playsound import playsound #play mp3 files
 from bs4 import BeautifulSoup
 
 #-----------------------credential[path] needs to be change per user testing-------------------------------
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r".//ServiceKey.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"C:\Users\dylan dennison\Downloads\DylanServiceKey\DylanServiceKey.json"
 #------------------------------------------------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^----
 
 import pyaudio
 from six.moves import queue
 
 #set output file path to reduce amount of code manipulation ***CHANGE TO FILE PATH INSIDE ALI FOLDER*****
-path = r".//ALI-Output//output.mp3"
+path = r"C:\\Users\\dylan dennison\\OneDrive\\Desktop\\AlI capstone\\env\\ALI source code\\Capstone-2021\\ALI-Output\\output.mp3"
 #assert os.path.isfile(path) ###can not assert because file is deleted each cycle
 
 #define parameters for multi-use purpose
