@@ -4,44 +4,78 @@ from flask import Flask, render_template
 from flask import request
 from flask import redirect
 from flask import session
-from sqlalchemy.sql.expression import true
+from flask import Response
 
-from database import companies, saveUser, getUser, chart_table,isAdmin
+from database import companies, saveUser, getUser, chart_table,isAdmin, db
 from database import generateCredentials, stringToBytes, companyIdGenerator, saveCompany
 from sessions import app
-#import toget UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!
 import hashlib
+import datetime
 import time
 import threading
 
-import datetime
-from database import db
-stopper = 1
 
 # ----------------home page--------------------
-@app.route("/home")
+@app.route("/home", methods=["GET", "POST"])
 def homePage():
-    print("SESSION USERNAME IS " + str(session.get("username")))
+    
+    if request.method == 'POST':
+        patientName = request.form["name"]
+        userNotes = request.form["notes"]
+        dateAndTime = str(datetime.datetime.now())
+        date = dateAndTime[0:10]
+        time = dateAndTime[11:19]
+        username = session.get("username")
+        
+        try:
+            chart_table.insert({
+                'username': username,
+                'patient': patientName,
+                'time' : time,
+                'date' : date,
+                'notes': userNotes,
+                'time_stamp': dateAndTime
+            })
+            
+        except Exception as e:
+            return Response(e, status=409)
+        
+        if username  == "admin":
+            print("ADMIN IN SESSION!!")
+            return render_template("home.html",isAdmin = True)
 
-    if session.get("username") == "admin":
-        print("ADMIN IN SESSION!!")
-        return render_template("home.html",isAdmin = True)
-
-    elif "username" not in session:
-        return redirect("/")
+        elif "username" not in session:
+            return redirect("/")
+        else:
+            return render_template("home.html",isAdmin = False)
+        
     else:
-        return render_template("home.html",isAdmin = False)
+        print("SESSION USERNAME IS " + str(session.get("username")))
+
+        if session.get("username") == "admin":
+            print("ADMIN IN SESSION!!")
+            return render_template("home.html",isAdmin = True)
+
+        elif "username" not in session:
+            return redirect("/")
+        else:
+            return render_template("home.html",isAdmin = False)
 
 
 # -------------------translate---------------------------------
-@app.route("/home/translate", methods=["GET"])
+@app.route("/home/translate", methods=["GET", "POST"])
 def dynamic_page():
-    if request.method == "GET":
-  #      toget.main()   UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!
-        return render_template("home.html")
+    if request.method == "POST":
+        languageOne = request.form["languages1"]
+        langaugeTwo = request.form["languages2"]
+        print(languageOne)
+        print(langaugeTwo)
+        import toget
+        toget.main(languageOne, langaugeTwo)
+        return redirect("/home")
 
     else:
-        return render_template("home.html")
+        return redirect("/home")
 
 
 # -------------------login page functionality--------------------
@@ -54,7 +88,7 @@ def loginPage():
         username = request.form["username"]
         password = request.form["password"]
 
-        user = getUser(username)
+        user = getUser(username) #type dict
 
         if not user:
             return render_template(
@@ -132,16 +166,15 @@ def signUpPage():
             "username": username,
             "password": generateCredentials(password),
             "company_name": companyName,  # change to company name
-        }
+        } # data is type dict
         print(type(data))
 
         
         saveUser(data)
       
         if "username" not in session:
-            session[
-                "username"
-            ] = username  # sets session user name to the new users name
+            session["username"] = username  
+            # sets session user name to the new users name
         return redirect("/")
     else:
         return render_template(
@@ -246,8 +279,8 @@ def background():
                     db.query('DELETE FROM chart_table WHERE time_stamp<=DATE_SUB(NOW(), INTERVAL 1 DAY);')
                     db.commit()
                     minutes = 0
-                    currentTimeStamp = datetime.datetime.now()
-                    print("CURRENT TIME STAP " + str(currentTimeStamp))
+                    #currentTimeStamp = datetime.datetime.now()
+                    #print("CURRENT TIME STAP " + str(currentTimeStamp))
 
                 except: pass
             time.sleep(60)
@@ -268,6 +301,10 @@ if __name__ == "__main__":
     b.daemon = True
     b.start()
     app.run(host="localhost", port=8080, debug=True)
+
+
+
+
 
 
 
