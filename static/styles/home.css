@@ -109,6 +109,74 @@ body {
     box-shadow: 0 0 0 10000px rgb(0 0 0 / 30%);
 }
 
+.notes-tab {
+    padding: 20px 5px;
+    outline: 2px solid black;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+    background: var(--white-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+}
+
+.notes {
+    position: absolute;
+    left: -330;
+    width: 330px;
+    height: 100%;
+    background: var(--white-1);
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--white-2);
+    transition: .2s;
+}
+
+.notes h2 {
+    margin-bottom: 30px;
+}
+
+.notes p {
+    width: 250px;
+    margin: 10px;
+}
+
+.soap, .soap:focus {
+    outline: 0;
+    border: 0;
+    width: 250px;
+    margin: 5px;
+    padding: 10px;
+    outline: 1px solid black;
+    border-radius: 2px;
+}
+
+.note {
+    padding-bottom: 225px;
+}
+
+.button {
+    padding: 5px 15px;
+    margin: 10px;
+}
+
+.record-close {
+    position: absolute;
+    top: 15px;
+    right: 0px;
+} 
+
+.move-notes {
+    transform: translateX(325px);
+    box-shadow: 0 0 0 10000px rgb(0 0 0 / 30%);
+}
+
 .mic-wrapper {
     background: var(--white-1);
     width: 325px;
@@ -147,6 +215,7 @@ body {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .fa-times:hover {
@@ -165,12 +234,20 @@ body {
     transform: translateY(-50%);
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 h2 {
     margin-top: 40px;
     color: var(--grey-1);
 }
 
 select {
+    margin: 0 10px;
     margin-top: 40px;
     height: 35px;
     width: 175px;
@@ -219,7 +296,9 @@ select:focus {
     padding: 10px;
 }
 
-.translation {
+.translation, .translation:focus {
+    outline: 0;
+    border: 0;
     min-height: 225px;
     width: 50vw;
     resize: none;
@@ -228,10 +307,6 @@ select:focus {
     font-size: 15px;
     padding: 10px;
     max-width: 650px;
-}
-
-.translation:focus {
-    outline: none;
 }
 
 .text-close {

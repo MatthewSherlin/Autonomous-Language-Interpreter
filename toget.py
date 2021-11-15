@@ -10,16 +10,17 @@ from google.cloud import translate_v2 as translate
 from google.cloud import texttospeech # outdated or incomplete comparing to v1
 from google.cloud import texttospeech_v1
 from playsound import playsound #play mp3 files
+from bs4 import BeautifulSoup
 
 #-----------------------credential[path] needs to be change per user testing-------------------------------
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"C:\Users\Matthew Sherlin\Desktop\APIKey\myServiceKey.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r".//ServiceKey.json"
 #------------------------------------------------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^----
 
 import pyaudio
 from six.moves import queue
 
 #set output file path to reduce amount of code manipulation ***CHANGE TO FILE PATH INSIDE ALI FOLDER*****
-path = r"C:\Users\Matthew Sherlin\Desktop\ALI-Software\env\Capstone-2021\ALI-Output\output.mp3"
+path = r".//ALI-Output//output.mp3"
 #assert os.path.isfile(path) ###can not assert because file is deleted each cycle
 
 #define parameters for multi-use purpose
@@ -104,6 +105,18 @@ class MicrophoneStream(object):
 
 def listen_print_loop(responses, var1, var2):
 
+    with open('templates/home.html', 'r') as file: 
+        soup = BeautifulSoup(file.read(), "lxml") 
+        soup.find("textarea", {"id": "t1"}).clear()
+        soup.find("textarea", {"id": "t2"}).clear()
+
+        file.close()
+    
+    savechanges = soup.prettify("utf-8")
+    with open("templates/home.html", "wb") as file:
+        file.write(savechanges)
+        file.close()
+
     num_chars_printed = 0
     for response in responses:
         if not response.results:
@@ -143,16 +156,19 @@ def listen_print_loop(responses, var1, var2):
             #print(output.values())
             print(output['translatedText'])
             speechString = output['translatedText']
+            
             #print input and output
-            with open('transcript2.txt', 'a') as f:
-                f.write(output['input'])
-                f.write("\n")
-                f.close()
+            with open('templates/home.html', 'r') as file: 
+                soup = BeautifulSoup(file.read(), "lxml") 
+                soup.find("textarea", {"id": "t1"}).append(output['input'])
+                soup.find("textarea", {"id": "t2"}).append(output['translatedText'])
 
-            with open('transcript1.txt', 'a') as f:
-                f.write(output['translatedText'])
-                f.write("\n")
-                f.close()
+                file.close()
+
+            savechanges = soup.prettify("utf-8")
+            with open("templates/home.html", "wb") as file:
+                file.write(savechanges)
+                file.close()
 
             voice_list = []
             for voice in client.list_voices().voices:
@@ -164,11 +180,11 @@ def listen_print_loop(responses, var1, var2):
             synthesis_input = texttospeech_v1.SynthesisInput(text=quote)
 
             voice = texttospeech_v1.VoiceSelectionParams(
-                language_code=languageCode, ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
+                language_code=var2, ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
             )
 
             voice = texttospeech_v1.VoiceSelectionParams(
-                name='en-US-Standard-A,en-US,1,15000', language_code=languageCode
+                name='en-US-Standard-A,en-US,1,15000', language_code=var2
                 # name='vi-VN-Wavenet-D', language_code="vi-VN"
             )
 
@@ -232,7 +248,6 @@ def main(var1, var2):
         # Now, put the transcription responses to use.
         listen_print_loop(responses, var1, var2)
 
-    return
 
 if __name__ == "__main__":
     main()
