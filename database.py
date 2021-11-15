@@ -138,7 +138,7 @@ def generateCredentials(Userpassword):
         salt,  # Provide the salt
         100000,  # It is recommended to use at least 100,000 iterations of SHA-256
     )
-    return {  # returns hash
-        "salt": bytesToString(salt),
-        "key": bytesToString(key),
-    }
+
+    return '{"salt": "' + str(bytesToString(salt)) + '", "key": "' + str(bytesToString(key)) + '"}'
+
+   #{"salt": "bad89deff4af3aeeb064f149fac7c2a2c51332a5c05894b465602e73c6535922", "key": "6446dbd11da101c1cde414e34474e6c1b53e9cad2f62f22c41715bd0af3fdc62"} 
