@@ -9,8 +9,10 @@ from flask import Response
 from database import companies, saveUser, getUser, chart_table,isAdmin
 from database import generateCredentials, stringToBytes, companyIdGenerator, saveCompany
 from sessions import app
+
 import hashlib
 import datetime
+import toget
 
 
 
@@ -62,16 +64,17 @@ def homePage():
 
 
 # -------------------translate---------------------------------
-@app.route("/home/translate", methods=["GET", "POST"])
+@app.route("/translate", methods=["GET", "POST"])
 def dynamic_page():
     if request.method == "POST":
         languageOne = request.form["languages1"]
         langaugeTwo = request.form["languages2"]
-        print(languageOne)
-        print(langaugeTwo)
-        import toget
-        toget.main(languageOne, langaugeTwo)
-        return redirect("/home")
+
+        if languageOne and langaugeTwo:
+            toget.main(languageOne, langaugeTwo)
+            return redirect("/home")
+        else:
+            return render_template("home.html", values = False)
 
     else:
         return redirect("/home")

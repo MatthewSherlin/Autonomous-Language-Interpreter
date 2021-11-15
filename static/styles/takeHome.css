@@ -147,10 +147,17 @@ h1 {
 
 .main {
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.input {
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 15px;
 }
 
 .lang-wrapper {
@@ -175,9 +182,14 @@ select, select:focus {
 textarea, textarea:focus {
     width: 345px;
     height: 345px;
-    padding: 5px;
+    padding: 10px;
+    margin: 15px;
+    background: var(--white-1);
     resize: none;
-    outline: none;
+    outline: 0;
+    border: 0;
+    outline: 1px solid var(--grey-1);
+    font-size: 15px;
 }
 
 input {
