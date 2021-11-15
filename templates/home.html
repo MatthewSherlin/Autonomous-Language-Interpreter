@@ -26,20 +26,18 @@
    </div>
    <ul>
     {% if isAdmin == True %}
-    <li>
-     <a href="/admin">
-      Admin
-     </a>
-    </li>
+
+    <li><a href="/admin">Admin</a></li>
+
     {%endif%}
     <li>
      <a href="/home">
-      Translator
+      Home
      </a>
     </li>
     <li>
      <a href="/takehome">
-      Text to Speech
+      Translator
      </a>
     </li>
     <li>
@@ -87,24 +85,19 @@
     </i>
    </div>
    {% if isAdmin %}
-   <div class="link">
-    <a href="/admin">
-     Admin
-     <i class="fas fa-chevron-right">
-     </i>
-    </a>
-   </div>
+
+   <div class="link"><a href="/admin">Admin<i class="fas fa-chevron-right"></a></i></div>
    {%endif%}
    <div class="link">
     <a href="/home">
-     Translator
+     Home
      <i class="fas fa-chevron-right">
      </i>
     </a>
    </div>
    <div class="link">
     <a href="/takehome">
-     Text to Speech
+     Translator
      <i class="fas fa-chevron-right">
      </i>
     </a>
