@@ -25,6 +25,9 @@
     ALI
    </div>
    <ul>
+    {% if isAdmin == True %}
+    <li><a href="/admin">Admin</a></li>
+    {%endif%}
     <li>
      <a href="/home">
       Home
@@ -76,6 +79,9 @@
     <i class="fas fa-times link-close">
     </i>
    </div>
+   {% if isAdmin %}
+   <div class="link"><a href="/admin">Admin<i class="fas fa-chevron-right"></a></i></div>
+   {%endif%}
    <div class="link">
     <a href="/home">
      Home
