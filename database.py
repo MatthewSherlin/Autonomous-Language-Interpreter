@@ -1,7 +1,7 @@
 # database
 import dataset
 
-
+import datetime
 import hashlib
 import os
 import codecs
@@ -42,8 +42,7 @@ db["chart_table"].drop()
 chart_table.insert({
     'username': 'dylan',
     'patient': 'Bob Dylan',
-    'time' : '8:50 AM',
-    'date' : "11/07/21",
+    'time_stamp' : '2021-11-12 17:32:11',
     'notes': "back problem. cant sit up right. pain shoots down legs"
 
 })
@@ -51,9 +50,18 @@ chart_table.insert({
 chart_table.insert({
     'username': 'dylan',
     'patient': 'Bob Marley',
-    'time' : '10:50 AM',
-    'date' : "11/08/21",
+    'time_stamp' : '2021-11-11 17:32:11',
     'notes': "toe pain. cant walk. been going on for days now"
+
+})
+
+currentTimeStamp = datetime.datetime.now()
+
+chart_table.insert({
+    'username': 'dylan',
+    'patient': 'Randy Marsh',
+    'time_stamp' : str(currentTimeStamp),
+    'notes': "ate too much mcribs"
 
 })
 
@@ -131,3 +139,4 @@ def generateCredentials(Userpassword):
     )
 
     return '{"salt": "' + str(bytesToString(salt)) + '", "key": "' + str(bytesToString(key)) + '"}'
+

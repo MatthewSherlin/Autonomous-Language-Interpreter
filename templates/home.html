@@ -26,7 +26,9 @@
    </div>
    <ul>
     {% if isAdmin == True %}
+
     <li><a href="/admin">Admin</a></li>
+
     {%endif%}
     <li>
      <a href="/home">
@@ -58,28 +60,32 @@
     </div>
    </div>
   </nav>
-
-  <div class="notes-tab">></div>
-
-    <form action='/home' method="POST" class="notes">
-      <h2>Enter record</h2>
-
-      <p style="text-align: left;">Paitent Name</p>
-      <input type="text" placeholder="Paitent name" name="name" class="soap name">
-
-      <p style="text-align: left;">Relevant Information</p>
-      <input type="text" placeholder="Enter any relevant information here" name="notes" class="soap note">
-
-      <input type="submit" value="Submit" class="button">
-      <i class="fas fa-times record-close"></i>
-    </form>
-
+  <div class="notes-tab">
+   &gt;
+  </div>
+  <form action="/home" class="notes" method="POST">
+   <h2>
+    Enter record
+   </h2>
+   <p style="text-align: left;">
+    Paitent Name
+   </p>
+   <input class="soap name" name="name" placeholder="Paitent name" type="text"/>
+   <p style="text-align: left;">
+    Relevant Information
+   </p>
+   <input class="soap note" name="notes" placeholder="Enter any relevant information here" type="text"/>
+   <input class="button" type="submit" value="Submit"/>
+   <i class="fas fa-times record-close">
+   </i>
+  </form>
   <div class="links">
    <div class="exit-wrapper">
     <i class="fas fa-times link-close">
     </i>
    </div>
    {% if isAdmin %}
+
    <div class="link"><a href="/admin">Admin<i class="fas fa-chevron-right"></a></i></div>
    {%endif%}
    <div class="link">
@@ -111,26 +117,26 @@
     </a>
    </div>
   </div>
-  <div class="mic-wrapper">
-   <i class="fas fa-microphone">
-   </i>
-   <a class="fill" href="/translate">
-   </a>
-  </div>
-  <h2>
-   Press and hold to translate.
-  </h2>
-  <div class="lang-wrapper">
-   <form action="/home/translate" method="GET">
-    <select id="languages" name="language-one">
+  <form action="/translate" id="langOne" method="POST" name="langOneName">
+   <div class="mic-wrapper">
+    <i class="fas fa-microphone">
+    </i>
+    <a class="fill" href="#" onclick="document.getElementById('langOne').submit();">
+    </a>
+   </div>
+   <h2>
+    Click the icon to start translating.
+   </h2>
+   <div style="display: flex; justify-content: center;">
+    <select name="languages1">
      <option value="">
       Select Language
      </option>
-     <option value="af">
-      Afrikaans
+     <option value="en">
+      English
      </option>
-     <option value="sq">
-      Albanian
+     <option value="es">
+      Spanish
      </option>
      <option value="am">
       Amharic
@@ -164,16 +170,58 @@
      </option>
      <!-- add more -->
     </select>
-   </form>
-  </div>
+    <select name="languages2">
+     <option value="">
+      Select Language
+     </option>
+     <option value="es">
+      Spanish
+     </option>
+     <option value="en">
+      English
+     </option>
+     <option value="am">
+      Amharic
+     </option>
+     <option value="ar">
+      Arabic
+     </option>
+     <option value="hy">
+      Armenian
+     </option>
+     <option value="az">
+      Azerbaijani
+     </option>
+     <option value="eu">
+      Basque
+     </option>
+     <option value="be">
+      Belarusian
+     </option>
+     <option value="bn">
+      Bengali
+     </option>
+     <option value="bs">
+      Bosnian
+     </option>
+     <option value="bg">
+      Bulgarian
+     </option>
+     <option value="ca">
+      Catalan
+     </option>
+     <!-- add more -->
+    </select>
+   </div>
+  </form>
   <div class="translation-tab">
    View Text
   </div>
   <div class="text-wrapper">
-   <textarea class="translation" id="t1" placeholder="View recorded speech here..."></textarea>
+   <textarea class="translation" id="t1" placeholder="View recorded speech here...">hello this is a test quit</textarea>
    <i class="fas fa-exchange-alt">
    </i>
-   <textarea class="translation" id="t2" placeholder="View translated speech here..."></textarea>
+   <textarea class="translation" id="t2" placeholder="View translated speech here...">hola esto es una pruebadejar</textarea>
    <i class="fas fa-times text-close">
    </i>
   </div>
@@ -181,5 +229,10 @@
   </script>
   <script src="static/scripts/home.js">
   </script>
+  {% if values == False %}
+  <script>
+   alert("Please insert both an input and an output language")
+  </script>
+  {% endif %}
  </body>
 </html>

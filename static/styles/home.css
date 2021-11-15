@@ -234,12 +234,20 @@ body {
     transform: translateY(-50%);
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 h2 {
     margin-top: 40px;
     color: var(--grey-1);
 }
 
 select {
+    margin: 0 10px;
     margin-top: 40px;
     height: 35px;
     width: 175px;
