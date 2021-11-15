@@ -29,8 +29,8 @@
           {% if isAdmin == True %}
           <li><a href="/admin">Admin</a></li>
           {%endif%}
-          <li><a href="/home">Translator</a></li>
-          <li><a href="/takehome">Text to Speech</a></li>
+          <li><a href="/home">Home</a></li>
+          <li><a href="/takehome">Translator</a></li>
           <li><a href="/mychart">Previous Entries</a></li>
           <li><a href="/logout">Sign Out</a></li>
         </ul>
@@ -45,10 +45,10 @@
     <div class="links"> 
       <div class="exit-wrapper"><i class="fas fa-times link-close"></i></div>
       {% if isAdmin %}
-      <div class="link"><a href="/admin">admin<i class="fas fa-chevron-right"></a></i></div>
+      <div class="link"><a href="/admin">Admin<i class="fas fa-chevron-right"></a></i></div>
       {%endif%}
-      <div class="link"><a href="/home">Translator<i class="fas fa-chevron-right"></a></i></div>
-      <div class="link"><a href="/takehome">Text to Speech<i class="fas fa-chevron-right"></a></i></div>
+      <div class="link"><a href="/home">Home<i class="fas fa-chevron-right"></a></i></div>
+      <div class="link"><a href="/takehome">Translator<i class="fas fa-chevron-right"></a></i></div>
       <div class="link"><a href="/mychart">Previous Entries<i class="fas fa-chevron-right"></a></i></div>
       <div class="link"><a href="/logout">Sign Out<i class="fas fa-chevron-right"></a></i></div>
     </div>
