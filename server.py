@@ -39,7 +39,7 @@ def homePage():
         except Exception as e:
             return Response(e, status=409)
         
-        if username  == "admin":
+        if session.get("username")  == "admin":
             print("ADMIN IN SESSION!!")
             return render_template("home.html",isAdmin = True)
 
@@ -58,7 +58,7 @@ def homePage():
         elif "username" not in session:
             return redirect("/")
         else:
-            return render_template("home.html",isAdmin = False)
+            return render_template("home.html",isAdmin = False) ## ----------------
 
 
 # -------------------translate---------------------------------
@@ -71,10 +71,17 @@ def dynamic_page():
         print(langaugeTwo)
         import toget
         toget.main(languageOne, langaugeTwo)
-        return redirect("/home")
+        if session.get("username") == "admin":
+            return redirect("/home", isAdmin == True)
+        else: 
+             return redirect("/home")
 
     else:
-        return redirect("/home")
+         if session.get("username") == "admin":
+            return redirect("/home", isAdmin == True)
+         else: 
+             return redirect("/home")
+
 
 
 # -------------------login page functionality--------------------
