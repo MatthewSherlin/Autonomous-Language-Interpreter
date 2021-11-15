@@ -121,7 +121,6 @@ def stringToBytes(string):
     return byte
 
 
-# The hashing function
 def generateCredentials(Userpassword):
     salt = os.urandom(32)
     key = hashlib.pbkdf2_hmac(
@@ -130,7 +129,5 @@ def generateCredentials(Userpassword):
         salt,  # Provide the salt
         100000,  # It is recommended to use at least 100,000 iterations of SHA-256
     )
-    return {  # returns hash
-        "salt": bytesToString(salt),
-        "key": bytesToString(key),
-    }
+
+    return '{"salt": "' + str(bytesToString(salt)) + '", "key": "' + str(bytesToString(key)) + '"}'
