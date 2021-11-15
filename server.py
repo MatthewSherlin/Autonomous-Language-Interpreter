@@ -6,12 +6,14 @@ from flask import redirect
 from flask import session
 from flask import Response
 
-from database import companies, saveUser, getUser, chart_table,isAdmin
+from database import companies, saveUser, getUser, chart_table,isAdmin, db
 from database import generateCredentials, stringToBytes, companyIdGenerator, saveCompany
 from sessions import app
 
 import hashlib
 import datetime
+import time
+import threading
 import toget
 
 
@@ -268,10 +270,46 @@ def verifyPassword(Userpassword, Usercredentials):
     )
     return newKey == key  # returns bool to see if they match
 
+##runs in the backgroud and deletes records that are 24 hours old
+def background():
+    minutes = 0
+ 
+    while True:
+
+            #print("minutes " + str(minutes))
+            ##if an hour has passed
+            if minutes > 60:
+                try:
+                    db.query('DELETE FROM chart_table WHERE time_stamp<=DATE_SUB(NOW(), INTERVAL 1 DAY);')
+                    db.commit()
+                    minutes = 0
+                    #currentTimeStamp = datetime.datetime.now()
+                    #print("CURRENT TIME STAP " + str(currentTimeStamp))
+
+                except: pass
+            time.sleep(60)
+            minutes = minutes + 1
+            
+
+        
+
+
+
 
 
 
 if __name__ == "__main__":
  
+    b = threading.Thread(name='background', target=background)
 
+    b.daemon = True
+    b.start()
     app.run(host="localhost", port=8080, debug=True)
+
+
+
+
+
+
+
+
