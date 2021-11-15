@@ -62,22 +62,25 @@
     </div>
    </div>
   </nav>
-
-  <div class="notes-tab">></div>
-
-    <form action='/home' method="POST" class="notes">
-      <h2>Enter record</h2>
-
-      <p style="text-align: left;">Paitent Name</p>
-      <input type="text" placeholder="Paitent name" name="name" class="soap name">
-
-      <p style="text-align: left;">Relevant Information</p>
-      <input type="text" placeholder="Enter any relevant information here" name="notes" class="soap note">
-
-      <input type="submit" value="Submit" class="button">
-      <i class="fas fa-times record-close"></i>
-    </form>
-
+  <div class="notes-tab">
+   &gt;
+  </div>
+  <form action="/home" class="notes" method="POST">
+   <h2>
+    Enter record
+   </h2>
+   <p style="text-align: left;">
+    Paitent Name
+   </p>
+   <input class="soap name" name="name" placeholder="Paitent name" type="text"/>
+   <p style="text-align: left;">
+    Relevant Information
+   </p>
+   <input class="soap note" name="notes" placeholder="Enter any relevant information here" type="text"/>
+   <input class="button" type="submit" value="Submit"/>
+   <i class="fas fa-times record-close">
+   </i>
+  </form>
   <div class="links">
    <div class="exit-wrapper">
     <i class="fas fa-times link-close">
@@ -125,7 +128,7 @@
    <div class="mic-wrapper">
     <i class="fas fa-microphone">
     </i>
-    <a class="fill" href="#" onclick="submit()">
+    <a class="fill" href="#" onclick="document.getElementById('langOne').submit();">
     </a>
    </div>
    <h2>
@@ -222,10 +225,10 @@
    View Text
   </div>
   <div class="text-wrapper">
-   <textarea class="translation" id="t1" placeholder="View recorded speech here...">hello my name is Daniel Bryan's exit</textarea>
+   <textarea class="translation" id="t1" placeholder="View recorded speech here...">hello my name is Daniel 10:10 exit</textarea>
    <i class="fas fa-exchange-alt">
    </i>
-   <textarea class="translation" id="t2" placeholder="View translated speech here...">hola mi nombre es Daniel BryanSalida</textarea>
+   <textarea class="translation" id="t2" placeholder="View translated speech here...">hola mi nombre es Daniel 10:10Salida</textarea>
    <i class="fas fa-times text-close">
    </i>
   </div>

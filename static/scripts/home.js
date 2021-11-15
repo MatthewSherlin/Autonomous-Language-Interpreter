@@ -22,9 +22,10 @@ window.onload = function () {
   }
 
 function submit() {
-	document.forms[0].action = "/translate" ;
+	document.forms[0].action = "/translate";
     document.forms[0].submit(); 
 }
+
 $(".notes-tab").click(function() {
 	$(".notes").toggleClass("move-notes");
 });

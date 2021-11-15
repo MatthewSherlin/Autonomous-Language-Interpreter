@@ -73,7 +73,6 @@ def dynamic_page():
         if languageOne and langaugeTwo:
             toget.main(languageOne, langaugeTwo)
             return redirect("/home")
-
         else:
             return render_template("home.html", values = False)
 
