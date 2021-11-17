@@ -9,7 +9,7 @@ from flask import Response
 from database import companies, saveUser, getUser, chart_table,isAdmin, db
 from database import generateCredentials, stringToBytes, companyIdGenerator, saveCompany
 from sessions import app
-from translatetext import takeHomeTranslate
+from translatetext import takeHomeTranslate, clearTags
 
 import hashlib
 import datetime
@@ -210,15 +210,15 @@ def takeHome():
         languageOne = request.form["languages1"]
         langaugeTwo = request.form["languages2"]
         text = request.form["t1"]
-        print(text)
 
         if languageOne and langaugeTwo:
             takeHomeTranslate(langaugeTwo, text)
-            return redirect("/takehome")
+            return render_template("takeHome.html")
         else:
             return render_template("takeHome.html", values = False)
     
     else:
+        clearTags()
         if session.get("username") == "admin":
             return render_template("takeHome.html",isAdmin = True)
         else: 

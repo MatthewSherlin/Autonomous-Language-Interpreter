@@ -25,3 +25,16 @@ def takeHomeTranslate(var1, text):
         file.write(savechanges)
         file.close()
 
+
+def clearTags(): 
+    with open('templates/takeHome.html', 'r') as file:
+        soup = BeautifulSoup(file.read(), "lxml") 
+        soup.find("textarea", {"id": "t1"}).clear()
+        soup.find("textarea", {"id": "t2"}).clear()
+        file.close()
+
+    savechanges = soup.prettify("utf-8")
+    with open("templates/takeHome.html", "wb") as file:
+        file.write(savechanges)
+        file.close()
+
