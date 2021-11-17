@@ -9,6 +9,7 @@ from flask import Response
 from database import companies, saveUser, getUser, chart_table,isAdmin, db
 from database import generateCredentials, stringToBytes, companyIdGenerator, saveCompany
 from sessions import app
+from translatetext import takeHomeTranslate
 
 import hashlib
 import datetime
@@ -85,8 +86,7 @@ def dynamic_page():
             return redirect("/home", isAdmin == True)
          else: 
              return redirect("/home")
-
-
+    
 
 # -------------------login page functionality--------------------
 @app.route("/", methods=["GET", "POST"])
@@ -202,15 +202,32 @@ def getLogout():
     return redirect("/")  # redirect to login page
 
 
-
+##takeHomeTranslate(var1)
 # ---------Translation page --------------
-@app.route("/takehome")
+@app.route("/takehome", methods=["GET", "POST"])
 def takeHome():
-    if session.get("username") == "admin":
-        return render_template("takeHome.html",isAdmin = True)
-    else: 
-        return render_template("takeHome.html",isAdmin = False)
+    if request.method == "POST":
+        languageOne = request.form["languages1"]
+        langaugeTwo = request.form["languages2"]
+        text = request.form["t1"]
+        print(text)
 
+        if languageOne and langaugeTwo:
+            takeHomeTranslate(langaugeTwo, text)
+            return redirect("/takehome")
+        else:
+            return render_template("takeHome.html", values = False)
+    
+    else:
+        if session.get("username") == "admin":
+            return render_template("takeHome.html",isAdmin = True)
+        else: 
+            return render_template("takeHome.html",isAdmin = False)
+
+
+# ---------translate text route --------------
+# @app.route("/translatetext")
+# def translatetext():
 
 
 #------------admin create keys page--------------------
