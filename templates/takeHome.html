@@ -105,107 +105,64 @@
     </a>
    </div>
   </div>
-  <h1>
-   Enter anything and we'll translate it.
-  </h1>
   <form action="/takehome" class="main" method="POST">
-   <div class="input">
-    <select id="languages" name="languages1">
-     <option value="">
-      Select Language
-     </option>
-     <option value="en">
-      English
-     </option>
-     <option value="af">
-      Afrikaans
-     </option>
-     <option value="sq">
-      Albanian
-     </option>
-     <option value="am">
-      Amharic
-     </option>
-     <option value="ar">
-      Arabic
-     </option>
-     <option value="hy">
-      Armenian
-     </option>
-     <option value="az">
-      Azerbaijani
-     </option>
-     <option value="eu">
-      Basque
-     </option>
-     <option value="be">
-      Belarusian
-     </option>
-     <option value="bn">
-      Bengali
-     </option>
-     <option value="bs">
-      Bosnian
-     </option>
-     <option value="bg">
-      Bulgarian
-     </option>
-     <option value="ca">
-      Catalan
-     </option>
-     <!-- add more -->
-    </select>
-    <textarea id="t1" name="t1" placeholder="Enter text here..."></textarea>
-   </div>
-   <i class="fas fa-exchange-alt">
-   </i>
-   <div class="input">
-    <select id="languages" name="languages2">
-     <option value="">
-      Select Language
-     </option>
-     <option value="es">
-      Spanish
-     </option>
-     <option value="af">
-      Afrikaans
-     </option>
-     <option value="sq">
-      Albanian
-     </option>
-     <option value="am">
-      Amharic
-     </option>
-     <option value="ar">
-      Arabic
-     </option>
-     <option value="hy">
-      Armenian
-     </option>
-     <option value="az">
-      Azerbaijani
-     </option>
-     <option value="eu">
-      Basque
-     </option>
-     <option value="be">
-      Belarusian
-     </option>
-     <option value="bn">
-      Bengali
-     </option>
-     <option value="bs">
-      Bosnian
-     </option>
-     <option value="bg">
-      Bulgarian
-     </option>
-     <option value="ca">
-      Catalan
-     </option>
-     <!-- add more -->
-    </select>
-    <textarea id="t2" placeholder="Output text here..."></textarea>
+   <h1>
+    Enter anything and we'll translate it.
+   </h1>
+   <select id="languages" name="languages2">
+    <option value="">
+     Select Language
+    </option>
+    <option value="es">
+     Spanish
+    </option>
+    <option value="af">
+     Afrikaans
+    </option>
+    <option value="sq">
+     Albanian
+    </option>
+    <option value="am">
+     Amharic
+    </option>
+    <option value="ar">
+     Arabic
+    </option>
+    <option value="hy">
+     Armenian
+    </option>
+    <option value="az">
+     Azerbaijani
+    </option>
+    <option value="eu">
+     Basque
+    </option>
+    <option value="be">
+     Belarusian
+    </option>
+    <option value="bn">
+     Bengali
+    </option>
+    <option value="bs">
+     Bosnian
+    </option>
+    <option value="bg">
+     Bulgarian
+    </option>
+    <option value="ca">
+     Catalan
+    </option>
+    <!-- add more -->
+   </select>
+   <div class="input-wrapper">
+    <div class="input">
+     <textarea id="t1" name="t1" placeholder="Enter text here...">Hello I am daniel</textarea>
+    </div>
+    <i class="fas fa-exchange-alt">
+    </i>
+    <div class="input">
+     <textarea id="t2" placeholder="Output text here...">Hola soy daniel</textarea>
+    </div>
    </div>
    <input type="submit" value="Go"/>
   </form>
@@ -215,7 +172,7 @@
   </script>
   {% if values == False %}
   <script>
-   alert("Please insert both an input and an output language")
+   alert("Please insert an output language");
   </script>
   {% endif %}
  </body>

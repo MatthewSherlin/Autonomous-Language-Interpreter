@@ -35,8 +35,6 @@ body {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    position: absolute;
-    top: 0;
     border-bottom: 5px solid var(--orange-2);
 }
 
@@ -143,14 +141,22 @@ h1 {
     color: var(--grey-1);
     max-width: 60vw;
     text-align: center;
+    padding-bottom: 20px;
 }
 
 .main {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 25px;
+    height: calc(100vh - 60px);
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .input {
@@ -168,20 +174,18 @@ h1 {
 }
 
 select, select:focus {
-    margin: 15px 15px 25px 15px;
+    margin: 5px;
     padding: 5px;
     outline: 0;
 }
 
 .fa-exchange-alt {
     color: var(--grey-1);
-    margin: 15px 0 25px 0;
-    padding: 5px;
 }
 
 textarea, textarea:focus {
-    width: 345px;
-    height: 345px;
+    width: 335px;
+    height: 150px;
     padding: 10px;
     margin: 15px;
     background: var(--white-1);
@@ -193,18 +197,8 @@ textarea, textarea:focus {
 }
 
 input {
-    position: absolute;
     padding: 10px 50px;
-    margin: 20px;
-    bottom: 30px;
-    background: var(--white-1);
-    border: 1px solid var(--grey-1);
-    color: var(--grey-1);
-    text-transform: uppercase;
-    float: right;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: .2s;
+
 }
 
 input:hover {
@@ -222,4 +216,16 @@ input:hover {
         display: flex;
     }
   
+    .input-wrapper {
+        flex-direction: row;
+    }
+
+    .fa-exchange-alt {
+        display: block;
+        padding: 10px;
+    }
+
+    textarea, textarea:focus {
+        height: 345px;
+    }
   }

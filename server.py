@@ -9,7 +9,8 @@ from flask import Response
 from database import companies, saveUser, getUser, chart_table,isAdmin, db
 from database import generateCredentials, stringToBytes, companyIdGenerator, saveCompany
 from sessions import app
-from translatetext import takeHomeTranslate, clearTags
+from translatetext import takeHomeTranslate, clearTextTags
+from toget import clearHomeTags
 
 import hashlib
 import datetime
@@ -24,7 +25,6 @@ import random
 # ----------------home page--------------------
 @app.route("/home", methods=["GET", "POST"])
 def homePage():
-    
     if request.method == 'POST':
         patientName = request.form["name"]
         userNotes = request.form["notes"]
@@ -47,25 +47,22 @@ def homePage():
             return Response(e, status=409)
         
         if session.get("username")  == "admin":
-            print("ADMIN IN SESSION!!")
-            return render_template("home.html",isAdmin = True)
+            return render_template("home.html", isAdmin = True)
 
         elif "username" not in session:
             return redirect("/")
         else:
-            return render_template("home.html",isAdmin = False)
+            return render_template("home.html", isAdmin = False)
         
     else:
-        print("SESSION USERNAME IS " + str(session.get("username")))
-
+        clearHomeTags()
         if session.get("username") == "admin":
-            print("ADMIN IN SESSION!!")
-            return render_template("home.html",isAdmin = True)
+            return render_template("home.html", isAdmin = True)
 
         elif "username" not in session:
             return redirect("/")
         else:
-            return render_template("home.html",isAdmin = False) ## ----------------
+            return render_template("home.html", isAdmin = False)
 
 
 # -------------------translate---------------------------------
@@ -77,15 +74,12 @@ def dynamic_page():
 
         if languageOne and langaugeTwo:
             toget.main(languageOne, langaugeTwo)
-            return redirect("/home")
+            return render_template("home.html", isAdmin = True) if session.get("username") == "admin" else render_template("home.html", isAdmin = False)
         else:
-            return render_template("home.html", values = False)
+            return render_template("home.html", isAdmin = True, values = False) if session.get("username") == "admin" else render_template("home.html", isAdmin = False, values=False)
 
     else:
-         if session.get("username") == "admin":
-            return redirect("/home", isAdmin == True)
-         else: 
-             return redirect("/home")
+        return render_template("home.html", isAdmin == True) if session.get("username") == "admin" else render_template("home.html", isAdmin = False)
     
 
 # -------------------login page functionality--------------------
@@ -206,28 +200,19 @@ def getLogout():
 # ---------Translation page --------------
 @app.route("/takehome", methods=["GET", "POST"])
 def takeHome():
+    clearTextTags()
     if request.method == "POST":
-        languageOne = request.form["languages1"]
         langaugeTwo = request.form["languages2"]
-        text = request.form["t1"]
+        text        = request.form["t1"]
 
-        if languageOne and langaugeTwo:
+        if langaugeTwo:
             takeHomeTranslate(langaugeTwo, text)
-            return render_template("takeHome.html")
+            return render_template("takeHome.html", isAdmin = True) if session.get("username") == "admin" else render_template("takeHome.html", isAdmin = False)    
         else:
-            return render_template("takeHome.html", values = False)
-    
+            return render_template("takeHome.html", isAdmin = True, values = False) if session.get("username") == "admin" else render_template("takeHome.html", isAdmin = False, values = False)    
+                 
     else:
-        clearTags()
-        if session.get("username") == "admin":
-            return render_template("takeHome.html",isAdmin = True)
-        else: 
-            return render_template("takeHome.html",isAdmin = False)
-
-
-# ---------translate text route --------------
-# @app.route("/translatetext")
-# def translatetext():
+        return render_template("takeHome.html", isAdmin = True) if session.get("username") == "admin" else render_template("takeHome.html", isAdmin = False)
 
 
 #------------admin create keys page--------------------

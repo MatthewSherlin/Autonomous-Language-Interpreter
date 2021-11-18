@@ -105,18 +105,6 @@ class MicrophoneStream(object):
 
 def listen_print_loop(responses, var1, var2):
 
-    with open('templates/home.html', 'r') as file: 
-        soup = BeautifulSoup(file.read(), "lxml") 
-        soup.find("textarea", {"id": "t1"}).clear()
-        soup.find("textarea", {"id": "t2"}).clear()
-
-        file.close()
-    
-    savechanges = soup.prettify("utf-8")
-    with open("templates/home.html", "wb") as file:
-        file.write(savechanges)
-        file.close()
-
     num_chars_printed = 0
     for response in responses:
         if not response.results:
@@ -248,6 +236,18 @@ def main(var1, var2):
         # Now, put the transcription responses to use.
         listen_print_loop(responses, var1, var2)
 
+
+def clearHomeTags(): 
+    with open('templates/home.html', 'r') as file:
+        soup = BeautifulSoup(file.read(), "lxml") 
+        soup.find("textarea", {"id": "t1"}).clear()
+        soup.find("textarea", {"id": "t2"}).clear()
+        file.close()
+
+    savechanges = soup.prettify("utf-8")
+    with open("templates/home.html", "wb") as file:
+        file.write(savechanges)
+        file.close()
 
 if __name__ == "__main__":
     main()
