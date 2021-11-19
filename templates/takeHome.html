@@ -1,64 +1,116 @@
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>ALI</title>
-  <meta name="description" content="A simple HTML5 Template for new projects.">
-  <meta name="author" content="SitePoint">
-
-  <meta property="og:title" content="A Basic HTML5 Template">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.sitepoint.com/a-basic-html5-template/">
-  <meta property="og:description" content="A simple HTML5 Template for new projects.">
-  <meta property="og:image" content="image.png">
-
-  <link rel="shortcut icon" type="image/x-icon" href="static\images\icon.ico">  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles/takeHome.css') }}">
-
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&amp;display=swap" rel="stylesheet">
-</head>
-
-<body>
-    <nav class="navbar">
-        <div class="logo">ALI</div>
-
-        <ul>
-          {% if isAdmin == True %}
-          <li><a href="/admin">Admin</a></li>
-          {%endif%}
-          <li><a href="/home">Home</a></li>
-          <li><a href="/takehome">Translator</a></li>
-          <li><a href="/mychart">Previous Entries</a></li>
-          <li><a href="/logout">Sign Out</a></li>
-        </ul>
-
-        <div class="hamburger">
-            <div class="hamburger-line"></div>
-            <div class="hamburger-line"></div>
-            <div class="hamburger-line"></div>
-        </div>
-    </nav>
-
-    <div class="links"> 
-      <div class="exit-wrapper"><i class="fas fa-times link-close"></i></div>
-      {% if isAdmin %}
-      <div class="link"><a href="/admin">Admin<i class="fas fa-chevron-right"></a></i></div>
-      {%endif%}
-      <div class="link"><a href="/home">Home<i class="fas fa-chevron-right"></a></i></div>
-      <div class="link"><a href="/takehome">Translator<i class="fas fa-chevron-right"></a></i></div>
-      <div class="link"><a href="/mychart">Previous Entries<i class="fas fa-chevron-right"></a></i></div>
-      <div class="link"><a href="/logout">Sign Out<i class="fas fa-chevron-right"></a></i></div>
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   ALI
+  </title>
+  <meta content="A simple HTML5 Template for new projects." name="description"/>
+  <meta content="SitePoint" name="author"/>
+  <meta content="A Basic HTML5 Template" property="og:title"/>
+  <meta content="website" property="og:type"/>
+  <meta content="https://www.sitepoint.com/a-basic-html5-template/" property="og:url"/>
+  <meta content="A simple HTML5 Template for new projects." property="og:description"/>
+  <meta content="image.png" property="og:image"/>
+  <link href="static\images\icon.ico" rel="shortcut icon" type="image/x-icon"/>
+  <link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+  <link href="{{ url_for('static', filename='styles/takeHome.css') }}" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&amp;display=swap" rel="stylesheet"/>
+ </head>
+ <body>
+  <nav class="navbar">
+   <div class="logo">
+    ALI
+   </div>
+   <ul>
+    {% if isAdmin == True %}
+    <li>
+     <a href="/admin">
+      Admin
+     </a>
+    </li>
+    {%endif%}
+    <li>
+     <a href="/home">
+      Home
+     </a>
+    </li>
+    <li>
+     <a href="/takehome">
+      Translator
+     </a>
+    </li>
+    <li>
+     <a href="/mychart">
+      Previous Entries
+     </a>
+    </li>
+    <li>
+     <a href="/logout">
+      Sign Out
+     </a>
+    </li>
+   </ul>
+   <div class="hamburger">
+    <div class="hamburger-line">
     </div>
-
-    <h1>Enter anything and we'll translate it.</h1>
-
-    <div class="main">
-      <div class="input">
-        <select name="languages" id="languages">
-          <option value="">
+    <div class="hamburger-line">
+    </div>
+    <div class="hamburger-line">
+    </div>
+   </div>
+  </nav>
+  <div class="links">
+   <div class="exit-wrapper">
+    <i class="fas fa-times link-close">
+    </i>
+   </div>
+   {% if isAdmin %}
+   <div class="link">
+    <a href="/admin">
+     Admin
+     <i class="fas fa-chevron-right">
+     </i>
+    </a>
+   </div>
+   {%endif%}
+   <div class="link">
+    <a href="/home">
+     Home
+     <i class="fas fa-chevron-right">
+     </i>
+    </a>
+   </div>
+   <div class="link">
+    <a href="/takehome">
+     Translator
+     <i class="fas fa-chevron-right">
+     </i>
+    </a>
+   </div>
+   <div class="link">
+    <a href="/mychart">
+     Previous Entries
+     <i class="fas fa-chevron-right">
+     </i>
+    </a>
+   </div>
+   <div class="link">
+    <a href="/logout">
+     Sign Out
+     <i class="fas fa-chevron-right">
+     </i>
+    </a>
+   </div>
+  </div>
+  <form action="/takehome" class="main" method="POST">
+   <h1>
+    Enter anything and we'll translate it.
+   </h1>
+   <select id="languages" name="languages2">
+    <option value="">
             Select Language
            </option>
            <option value="en">
@@ -67,7 +119,7 @@
              <option value="ar">
               Arabic
              </option>
-             <option value="yue">
+             <option value="zh">
               Chinese
              </option>
              <option value="fr">
@@ -106,79 +158,28 @@
              <option value="vi">
               Vietnamese
              </option>
-          <!-- add more -->
-        
-        </select>
-
-        <textarea placeholder="Enter text here..."></textarea>
-      </div>
-
-      <i class="fas fa-exchange-alt"></i>
-
-      <div class="input">
-        <select name="languages" id="languages">
-          <option value="">
-            Select Language
-           </option>
-             <option value="ar">
-              Arabic
-             </option>
-             <option value="yue">
-              Chinese
-             </option>
-             <option value="en">
-              English
-             </option>
-             <option value="fr">
-              French
-             </option>
-             <option value="de">
-              German
-             </option>
-             <option value="hi">
-              Hindi
-             </option>
-             <option value="ja">
-              Japanese
-             </option>
-             <option value="ko">
-              Korean
-             </option>
-             <option value="pl">
-              Polish
-             </option>
-             <option value="pt">
-              Portuguese
-             </option>
-             <option value="ru">
-              Russian
-             </option>
-             <option value="es">
-              Spanish
-             </option>
-             <option value="te">
-              Telugu
-             </option>
-             <option value="tr">
-                Turkish
-             </option>
-             <option value="vi">
-              Vietnamese
-             </option>
-          <!-- add more -->
-      
-        </select>
-
-        <textarea>Output text here...</textarea>
-      </div>
-
-      <input type="button" value="Go">
+    <!-- add more -->
+   </select>
+   <div class="input-wrapper">
+    <div class="input">
+     <textarea id="t1" name="t1" placeholder="Enter text here...">Hello I am daniel</textarea>
     </div>
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.js"
-            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-            crossorigin="anonymous">
-    </script>
-    <script src="static/scripts/takeHome.js"></script>
-</body>
+    <i class="fas fa-exchange-alt">
+    </i>
+    <div class="input">
+     <textarea id="t2" placeholder="Output text here...">Hola soy daniel</textarea>
+    </div>
+   </div>
+   <input type="submit" value="Go"/>
+  </form>
+  <script crossorigin="anonymous" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" src="https://code.jquery.com/jquery-3.6.0.js">
+  </script>
+  <script src="static/scripts/takeHome.js">
+  </script>
+  {% if values == False %}
+  <script>
+   alert("Please insert an output language");
+  </script>
+  {% endif %}
+ </body>
 </html>
