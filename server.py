@@ -1,5 +1,5 @@
 # ALI server file
-##flask imports
+# Flask imports
 from flask import Flask, render_template
 from flask import request
 from flask import redirect
@@ -294,13 +294,6 @@ def background():
             time.sleep(60)
             minutes = minutes + 1
             
-
-        
-
-
-
-
-
 
 if __name__ == "__main__":
  
