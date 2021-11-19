@@ -12,20 +12,15 @@ from google.cloud import texttospeech_v1
 from playsound import playsound #play mp3 files
 from bs4 import BeautifulSoup
 
-#-----------------------credential[path] needs to be change per user testing-------------------------------
+#-----------------------credential[path] ensure that it is set to proper location -------------------------------
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r".\\ServiceKey.json"
 #------------------------------------------------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^----
 
 import pyaudio
 from six.moves import queue
 
-#set output file path to reduce amount of code manipulation ***CHANGE TO FILE PATH INSIDE ALI FOLDER*****
-path = r".\\ALI-Output\\output.mp3"
-#assert os.path.isfile(path) ###can not assert because file is deleted each cycle
-
-#define parameters for multi-use purpose
-languageCode= 'en' #language of the accent for output speech
-#stopper= 1 #stopper to loop function until ended by user
+#set output file path to reduce amount of code manipulation
+path = r".\ALI-Output\output.mp3"
 
 # Audio recording parameters
 RATE = 24000 #decent speed for audible speaking
@@ -102,10 +97,9 @@ class MicrophoneStream(object):
 
             yield b"".join(data)
 
-
 def listen_print_loop(responses, var1, var2):
 
-    with open('templates/home.html', 'r') as file: 
+    with open('templates/home.html', 'rb') as file: 
         soup = BeautifulSoup(file.read(), "lxml") 
         soup.find("textarea", {"id": "t1"}).clear()
         soup.find("textarea", {"id": "t2"}).clear()
@@ -158,7 +152,7 @@ def listen_print_loop(responses, var1, var2):
             speechString = output['translatedText']
             
             #print input and output
-            with open('templates/home.html', 'r') as file: 
+            with open('templates/home.html', 'rb') as file: 
                 soup = BeautifulSoup(file.read(), "lxml") 
                 soup.find("textarea", {"id": "t1"}).append(output['input'])
                 soup.find("textarea", {"id": "t2"}).append(output['translatedText'])
@@ -185,7 +179,7 @@ def listen_print_loop(responses, var1, var2):
 
             voice = texttospeech_v1.VoiceSelectionParams(
                 name='en-US-Standard-A,en-US,1,15000', language_code=var2
-                # name='vi-VN-Wavenet-D', language_code="vi-VN"
+                # name='vi-VN-Wavenet-D', language_code="vi-VN" example
             )
 
             # Select the type of audio file you want returned
@@ -220,9 +214,7 @@ def listen_print_loop(responses, var1, var2):
 def main(var1, var2):
     # See http://g.co/cloud/speech/docs/languages for a list of supported languages.
 
-    #language_code = initalLanguage will modify the client for the desired inital language
     open(path, "a") #create a new instance of the audio output file as main is ran
-
 
     client = speech.SpeechClient()
     config = speech.RecognitionConfig(

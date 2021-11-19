@@ -1,5 +1,5 @@
 # ALI server file
-##flask imports
+# Flask imports
 from flask import Flask, render_template
 from flask import request
 from flask import redirect
@@ -297,7 +297,7 @@ def background():
                 except: pass
             time.sleep(60)
             minutes = minutes + 1
-        
+    
 
 def generateKey(length):
     result           = ''
@@ -308,7 +308,6 @@ def generateKey(length):
       
     return result
    
-    
 
 if __name__ == "__main__":
  
