@@ -13,3 +13,8 @@ $(".translation-tab").click(function() {
 $(".text-close").click(function() {
 	$(".text-wrapper").toggleClass("move-text");
 });
+
+function savekey() {
+	document.getElementById("generated").action = "/home";
+    document.getElementById("generated").submit(); 
+}

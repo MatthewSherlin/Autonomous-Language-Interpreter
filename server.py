@@ -15,6 +15,8 @@ import datetime
 import time
 import threading
 import toget
+import math
+import random
 
 
 
@@ -227,16 +229,18 @@ def getAdmin():
             return render_template("admin.html", failedLogin = True, isAdmin = True, keyMade = False)
         if not verifyPassword(password, user["password"]):
             return render_template("admin.html", failedLogin = True, isAdmin = True, keyMade = False)
+
+        key = generateKey(20)
         
         companyID = companyIdGenerator()
         data = {
             "company_id": companyID,
             "company_name": companyName,
-            "company_key": companyKey,
+            "company_key": key,
         }
         
         saveCompany(data)
-        return render_template("admin.html", failedLogin = False, isAdmin = True, keyMade = True)   
+        return render_template("admin.html", failedLogin = False, isAdmin = True, keyMade = True, key = key)   
     else:
         return render_template("admin.html", failedLogin = False, isAdmin = True, keyMade = False)
 
@@ -293,7 +297,17 @@ def background():
                 except: pass
             time.sleep(60)
             minutes = minutes + 1
-            
+    
+
+def generateKey(length):
+    result           = ''
+    characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+    for i in range(length):
+      result += characters[math.floor(random.randint(0, len(characters)-1))]
+      
+    return result
+   
 
 if __name__ == "__main__":
  

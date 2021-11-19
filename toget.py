@@ -13,7 +13,7 @@ from playsound import playsound #play mp3 files
 from bs4 import BeautifulSoup
 
 #-----------------------credential[path] ensure that it is set to proper location -------------------------------
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"ServiceKey.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r".\\ServiceKey.json"
 #------------------------------------------------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^----
 
 import pyaudio

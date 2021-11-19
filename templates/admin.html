@@ -18,23 +18,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='styles/admin.css') }}">
 
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&amp;display=swap" rel="stylesheet">
-
-<script>
-function makeid(length) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * 
- charactersLength));
-   }
-document.getElementById("demo").innerHTML = result;
-}
-</script>
-
-  
-  
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&amp;display=swap" rel="stylesheet">  
 </head>
 
 <body>
@@ -69,48 +53,45 @@ document.getElementById("demo").innerHTML = result;
       <div class="link"><a href="/logout">Sign Out<i class="fas fa-chevron-right"></a></i></div>
     </div>
 
-    
-  
-    {%if keyMade%}
-    <p style="color: red">Key has been saved</p>
-    {%endif%}
-  
     {% if failedLogin %}
       <p style="color: red">Invalid Credentials</p>
-      {% endif %}    
+    {% endif %}   
+  
+    {%if keyMade%}
+    <form class="main" method="GET" id="generated">    
+      <h1>Key Has Been Generated</h1>
 
-      {% if not keyMade %}
-      <div class= "main">
-        <input type="button" value="Generate a Key" onclick="makeid(20)" class="button generate"/>
-        <br> 
-        <br> 
-        <p id="demo"></p>
+      <h3>Your New Key Is Listed Below</h3>
+      <input type="text" name="key" class="text" value="{{ key }}">
+
+      <div class="button-wrapper">
+          <a href="/" class="button cancel">Cancel</a>
+          <a href="#" class="button generate" onclick="savekey()">Save</a>
       </div>
+    </form>
+    {%endif%} 
 
-      <form class="main" method="POST">
-    
-        
-        <h1>Generate Company Key</h1>
+    {% if not keyMade %}
+    <form class="main" method="POST">    
+      <h1>Generate Company Key</h1>
 
-        <h3>Username</h3>
-        <input type="text" placeholder="Username" name="username" class="text">
+      <h3>Username</h3>
+      <input type="text" placeholder="Username" name="username" class="text">
 
-        <h3>Password</h3>
-        <input type="text" placeholder="Password" name="password" class="text">
+      <h3>Password</h3>
+      <input type="text" placeholder="Password" name="password" class="text">
 
-        <h3>Company Name</h3>
-        <input type="text" placeholder="Company Name" name="companyName" class="text">
+      <h3>Company Name</h3>
+      <input type="text" placeholder="Company Name" name="companyName" class="text">
 
-        <h3>Company Id</h3>
-        <input type="text" placeholder="Company Key" name="companyKey" class="text">
+      <h3>Company Id</h3>
+      <input type="text" placeholder="Company Key" name="companyKey" class="text">
 
-        <div class="button-wrapper">
-            <a href="/" class="button cancel">Cancel</a>
-            <input type="submit" value="Submit" class="button generate">
-            
-        </div>
-        {% endif %}
-
+      <div class="button-wrapper">
+          <a href="/" class="button cancel">Cancel</a>
+          <input type="submit" value="Submit" class="button generate">
+      </div>
+      {% endif %}
     </form>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"
