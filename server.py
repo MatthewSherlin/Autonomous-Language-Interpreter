@@ -10,7 +10,6 @@ from database import companies, saveUser, getUser, chart_table,isAdmin, db
 from database import generateCredentials, stringToBytes, companyIdGenerator, saveCompany
 from sessions import app
 from translatetext import takeHomeTranslate, clearTextTags
-from toget import clearHomeTags
 
 import hashlib
 import datetime
@@ -25,6 +24,7 @@ import random
 # ----------------home page--------------------
 @app.route("/home", methods=["GET", "POST"])
 def homePage():
+    
     if request.method == 'POST':
         patientName = request.form["name"]
         userNotes = request.form["notes"]
@@ -55,7 +55,7 @@ def homePage():
             return render_template("home.html", isAdmin = False)
         
     else:
-        clearHomeTags()
+        clearTextTags()
         if session.get("username") == "admin":
             return render_template("home.html", isAdmin = True)
 

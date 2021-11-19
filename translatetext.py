@@ -12,7 +12,7 @@ translate_client = translate.Client()
 client = texttospeech_v1.TextToSpeechClient()
 
 def takeHomeTranslate(var1, text):
-    with open('templates/takeHome.html', 'r') as file:
+    with open('templates/takeHome.html', 'rb') as file:
         soup = BeautifulSoup(file.read(), "lxml") 
         output = translate_client.translate(text, target_language=var1)
         soup.find("textarea", {"id": "t1"}).append(text)
@@ -27,7 +27,7 @@ def takeHomeTranslate(var1, text):
 
 
 def clearTextTags(): 
-    with open('templates/takeHome.html', 'r') as file:
+    with open('templates/takeHome.html', 'rb') as file:
         soup = BeautifulSoup(file.read(), "lxml") 
         soup.find("textarea", {"id": "t1"}).clear()
         soup.find("textarea", {"id": "t2"}).clear()
