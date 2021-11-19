@@ -99,7 +99,7 @@ class MicrophoneStream(object):
 
 def listen_print_loop(responses, var1, var2):
 
-    with open('templates/home.html', 'r') as file: 
+    with open('templates/home.html', 'rb') as file: 
         soup = BeautifulSoup(file.read(), "lxml") 
         soup.find("textarea", {"id": "t1"}).clear()
         soup.find("textarea", {"id": "t2"}).clear()
@@ -152,7 +152,7 @@ def listen_print_loop(responses, var1, var2):
             speechString = output['translatedText']
             
             #print input and output
-            with open('templates/home.html', 'r') as file: 
+            with open('templates/home.html', 'rb') as file: 
                 soup = BeautifulSoup(file.read(), "lxml") 
                 soup.find("textarea", {"id": "t1"}).append(output['input'])
                 soup.find("textarea", {"id": "t2"}).append(output['translatedText'])
