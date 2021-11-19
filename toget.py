@@ -13,14 +13,16 @@ from playsound import playsound #play mp3 files
 from bs4 import BeautifulSoup
 
 #-----------------------credential[path] ensure that it is set to proper location -------------------------------
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r".\\ServiceKey.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r".\\ServiceKey.json"    # un-comment for windows
+# os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"./ServiceKey.json"   # un-comment for mac
 #------------------------------------------------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^----
 
 import pyaudio
 from six.moves import queue
 
 #set output file path to reduce amount of code manipulation
-path = r".\ALI-Output\output.mp3"
+path = r".\ALI-Output\output.mp3"   # un-comment for windows
+# path = r"./ALI-Output/output.mp3" # un-comment for mac
 
 # Audio recording parameters
 RATE = 24000 #decent speed for audible speaking

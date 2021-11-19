@@ -28,6 +28,7 @@ def homePage():
     if request.method == 'POST':
         patientName = request.form["name"]
         userNotes = request.form["notes"]
+        highlights = request.form["highlights"]
         dateAndTime = str(datetime.datetime.now())
         date = dateAndTime[0:10]
         time = dateAndTime[11:19]
@@ -40,7 +41,8 @@ def homePage():
                 'time' : time,
                 'date' : date,
                 'notes': userNotes,
-                'time_stamp': dateAndTime
+                'time_stamp': dateAndTime,
+                'highlights': highlights
             })
             
         except Exception as e:

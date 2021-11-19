@@ -77,6 +77,11 @@
     Relevant Information
    </p>
    <input class="soap note" name="notes" placeholder="Enter any relevant information here" type="text"/>
+   <p style="text-align: left;">
+    Highlights
+   </p>
+   <textarea cols="35" id="h1" name="highlights" rows="10"></textarea>
+   &gt;
    <input class="button" type="submit" value="Submit"/>
    <i class="fas fa-times record-close">
    </i>
@@ -243,10 +248,12 @@
    View Text
   </div>
   <div class="text-wrapper">
-   <textarea class="translation" id="t1" placeholder="View recorded speech here...">my name is Matt exit</textarea>
-   <i class="fas fa-exchange-alt">
-   </i>
-   <textarea class="translation" id="t2" placeholder="View translated speech here...">我叫马特出口</textarea>
+   <textarea class="translation" id="t1" placeholder="View recorded speech here...">hello doctor I say I have a headache shortness of breath and my stomach hurt exit</textarea>
+   <button onclick="getText()">
+    <i class="fas fa-exchange-alt" id="highlightKey">
+    </i>
+   </button>
+   <textarea class="translation" id="t2" placeholder="View translated speech here...">你好医生我说我头疼气短胃疼出口</textarea>
    <i class="fas fa-times text-close">
    </i>
   </div>

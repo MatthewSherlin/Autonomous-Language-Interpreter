@@ -6,7 +6,8 @@ from bs4 import BeautifulSoup
 
 import os
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r".\\ServiceKey.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r".\\ServiceKey.json"    # un-comment for windows
+# os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"./ServiceKey.json"   # un-comment for mac
 
 translate_client = translate.Client()
 client = texttospeech_v1.TextToSpeechClient()
