@@ -9,7 +9,7 @@ from flask import Response
 from database import companies, saveUser, getUser, chart_table,isAdmin, db
 from database import generateCredentials, stringToBytes, companyIdGenerator, saveCompany
 from sessions import app
-from translatetext import takeHomeTranslate, clearTextTags
+from translatetext import takeHomeTranslate, clearTextTags,clearHomeTags
 
 import hashlib
 import datetime
@@ -57,7 +57,7 @@ def homePage():
             return render_template("home.html", isAdmin = False)
         
     else:
-        clearTextTags()
+       ## clearHomeTags() may need to uncomment!!
         if session.get("username") == "admin":
             return render_template("home.html", isAdmin = True)
 
@@ -192,6 +192,7 @@ def signUpPage():
 # --------------sign out function & route-----------------------
 @app.route("/logout", methods=["GET"])
 def getLogout():
+    clearHomeTags()
     session.pop(
         "username", None
     )  # removes the user id from the session when they logout
@@ -320,6 +321,7 @@ if __name__ == "__main__":
     b.daemon = True
     b.start()
     app.run(host="localhost", port=8080, debug=True)
+
 
 
 
