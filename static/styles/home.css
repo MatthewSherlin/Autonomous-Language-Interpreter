@@ -158,7 +158,8 @@ body {
 }
 
 .note {
-    padding-bottom: 225px;
+    height: 225px;
+    resize: none;
 }
 
 .button {
