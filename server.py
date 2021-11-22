@@ -26,6 +26,7 @@ import random
 def homePage():
     
     if request.method == 'POST':
+        #getting from forms
         patientName = request.form["name"]
         userNotes = request.form["notes"]
         highlights = request.form["highlights"]
@@ -35,7 +36,7 @@ def homePage():
         username = session.get("username")
         
         try:
-            chart_table.insert({
+            chart_table.insert({ # insert to chart
                 'username': username,
                 'patient': patientName,
                 'time' : time,
@@ -45,7 +46,7 @@ def homePage():
                 'highlights': highlights
             })
             
-        except Exception as e:
+        except Exception as e: # throw 409 error if exception occurs 
             return Response(e, status=409)
         
         if session.get("username")  == "admin":
@@ -71,11 +72,12 @@ def homePage():
 @app.route("/translate", methods=["GET", "POST"])
 def dynamic_page():
     if request.method == "POST":
+        #getting language input from page
         languageOne = request.form["languages1"]
         langaugeTwo = request.form["languages2"]
 
         if languageOne and langaugeTwo:
-            toget.main(languageOne, langaugeTwo)
+            toget.main(languageOne, langaugeTwo) # run google APIS
             return render_template("home.html", isAdmin = True) if session.get("username") == "admin" else render_template("home.html", isAdmin = False)
         else:
             return render_template("home.html", isAdmin = True, values = False) if session.get("username") == "admin" else render_template("home.html", isAdmin = False, values=False)
@@ -222,29 +224,31 @@ def takeHome():
 @app.route("/admin", methods=["GET", "POST"])
 def getAdmin():
     if request.method == 'POST':
+        #getting from form
         username = request.form["username"]
         password = request.form["password"]
         companyName = request.form["companyName"]
-        companyKey = request.form['companyKey']
-       
+        companyID = request.form["companyID"]
 
-        user = getUser(username)
+        user = getUser(username) #getting user name
 
-        if username != "admin":
+        if username != "admin": # checking for admin 
             return render_template("admin.html", failedLogin = True, isAdmin = True, keyMade = False)
         if not verifyPassword(password, user["password"]):
             return render_template("admin.html", failedLogin = True, isAdmin = True, keyMade = False)
 
-        key = generateKey(20)
+        key = generateKey(20) # generate company key
         
-        companyID = companyIdGenerator()
-        data = {
+        if(companyID == ""): #if no ID inputted, use the compnayIDGenerator function
+            companyID = companyIdGenerator()
+        
+        data = { # create dict 
             "company_id": companyID,
             "company_name": companyName,
             "company_key": key,
         }
         
-        saveCompany(data)
+        saveCompany(data) #save data
         return render_template("admin.html", failedLogin = False, isAdmin = True, keyMade = True, key = key)   
     else:
         return render_template("admin.html", failedLogin = False, isAdmin = True, keyMade = False)
@@ -254,13 +258,13 @@ def getAdmin():
 # -------chart Page -----------------
 @app.route("/mychart")
 def getChart():
-    username = session.get("username")
+    username = session.get("username") # get username from session
     itemsInChart = chart_table.find()
-    itemsInChart = [ dict(x) for x in list(itemsInChart) if x['username'] == username ]
-    if session.get("username") == "admin":
+    itemsInChart = [ dict(x) for x in list(itemsInChart) if x['username'] == username ] #find data from username
+    if session.get("username") == "admin": # admin check
         return render_template("chart.html", itemsInChart = itemsInChart,isAdmin = True)
     else:
-       return render_template("chart.html", itemsInChart = itemsInChart,isAdmin = False) 
+       return render_template("chart.html", itemsInChart = itemsInChart,isAdmin = False) #return items found on template
 
 
 
@@ -293,7 +297,7 @@ def background():
             ##if an hour has passed
             if minutes > 60:
                 try:
-                    db.query('DELETE FROM chart_table WHERE time_stamp<=DATE_SUB(NOW(), INTERVAL 1 DAY);')
+                    db.query('DELETE FROM chart_table WHERE time_stamp<=DATE_SUB(NOW(), INTERVAL 1 DAY);') #query to find old chart data(24 hours)
                     db.commit()
                     minutes = 0
                     #currentTimeStamp = datetime.datetime.now()
@@ -304,7 +308,7 @@ def background():
             minutes = minutes + 1
     
 
-def generateKey(length):
+def generateKey(length): #function to generate company key
     result           = ''
     characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
@@ -316,7 +320,7 @@ def generateKey(length):
 
 if __name__ == "__main__":
  
-    b = threading.Thread(name='background', target=background)
+    b = threading.Thread(name='background', target=background) #thread for deleting old chart data
 
     b.daemon = True
     b.start()
