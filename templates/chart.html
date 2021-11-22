@@ -58,6 +58,7 @@
     <th>Time</th>
     <th>Date</th>
     <th>Notes</th>
+    <th>Highlights</th>
   </tr>
   {%for item in itemsInChart %}
     <tr>
@@ -65,6 +66,7 @@
       <td>{{item['time']}}</td>
       <td>{{item['date']}}</td>
       <td>{{item['notes']}}</td>
+      <td>{{item['highlights']}}</td>
     </tr>
   {% endfor %}
 </table>

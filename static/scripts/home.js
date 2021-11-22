@@ -34,6 +34,13 @@ $(".record-close").click(function() {
 	$(".notes").toggleClass("move-notes");
 });
 
+function getText(){
+	if(document.getSelection)
+		var text = document.getSelection().toString();
+		//alert(text);
+								//id will change
+		document.getElementById("h1").innerHTML += (" " + text)
+	}
 $(".fa-sync-alt").click(function() {
    var val1 = $("#languages1 option:selected").val();
    var text1 = $("#languages1 option:selected").text();

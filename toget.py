@@ -13,14 +13,16 @@ from playsound import playsound #play mp3 files
 from bs4 import BeautifulSoup
 
 #-----------------------credential[path] ensure that it is set to proper location -------------------------------
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r".\\ServiceKey.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r".\\ServiceKey.json"    # un-comment for windows
+# os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"./ServiceKey.json"   # un-comment for mac
 #------------------------------------------------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^----
 
 import pyaudio
 from six.moves import queue
 
 #set output file path to reduce amount of code manipulation
-path = r".\ALI-Output\output.mp3"
+path = r".\ALI-Output\output.mp3"   # un-comment for windows
+# path = r"./ALI-Output/output.mp3" # un-comment for mac
 
 # Audio recording parameters
 RATE = 24000 #decent speed for audible speaking
@@ -164,11 +166,6 @@ def listen_print_loop(responses, var1, var2):
                 file.write(savechanges)
                 file.close()
 
-            voice_list = []
-            for voice in client.list_voices().voices:
-                voice_list.append([voice.name, voice.language_codes[0], voice.ssml_gender, voice.natural_sample_rate_hertz])
-                df_voice_list = pd.DataFrame(voice_list, columns=['name', 'language code', 'ssml gender', 'hertz rate']).to_csv('Voice List.csv', index=False)
-
             # Set the text input to be synthesized
             quote = output['translatedText']
             synthesis_input = texttospeech_v1.SynthesisInput(text=quote)
@@ -235,7 +232,6 @@ def main(var1, var2):
             for content in audio_generator
         )
 
-           # while stopper == 1:
         responses = client.streaming_recognize(streaming_config, requests)
         # Now, put the transcription responses to use.
         listen_print_loop(responses, var1, var2)
