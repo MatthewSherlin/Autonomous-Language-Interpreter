@@ -76,11 +76,11 @@
    <p style="text-align: left;">
     Relevant Information
    </p>
-   <textarea cols="35" name="notes" placeholder="Type your notes here" rows="10"></textarea>
+   <textarea class="soap" cols="35" name="notes" placeholder="Type your notes here" rows="10"></textarea>
    <p style="text-align: left;">
     Highlights
    </p>
-   <textarea cols="35" id="h1" name="highlights" placeholder="Highlighted Information" readonly="" rows="10"></textarea>
+   <textarea class="soap" cols="35" id="h1" name="highlights" placeholder="Highlighted Information" readonly="" rows="10"></textarea>
    <input class="button" type="submit" value="Submit"/>
    <i class="fas fa-times record-close">
    </i>
@@ -250,10 +250,9 @@
   </div>
   <div class="text-wrapper">
    <textarea class="translation" id="t1" placeholder="View recorded speech here..."></textarea>
-   <button onclick="getText()">
+   <button class="highlight"onclick="getText()"></button>
     <i class="fas fa-exchange-alt" id="highlightKey">
     </i>
-   </button>
    <textarea class="translation" id="t2" placeholder="View translated speech here..."></textarea>
    <i class="fas fa-times text-close">
    </i>
