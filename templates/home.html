@@ -63,7 +63,7 @@
    </div>
   </nav>
   <div class="notes-tab">
-   &gt;
+   Notes
   </div>
   <form action="/home" class="notes" method="POST">
    <h2>
@@ -76,13 +76,11 @@
    <p style="text-align: left;">
     Relevant Information
    </p>
-   <input class="soap note" name="notes" placeholder="Enter any relevant information here" type="text"/>
+   <textarea cols="35" name="notes" placeholder="Type your notes here" rows="10"></textarea>
    <p style="text-align: left;">
     Highlights
    </p>
-   <textarea cols="35" id="h1" name="highlights" rows="10"></textarea>
-   &gt;
-   <textarea class="soap note" name="notes" placeholder="Enter any relevant information here" type="text"></textarea>
+   <textarea cols="35" id="h1" name="highlights" placeholder="Highlighted Information" readonly="" rows="10"></textarea>
    <input class="button" type="submit" value="Submit"/>
    <i class="fas fa-times record-close">
    </i>
@@ -251,19 +249,12 @@
    View Text
   </div>
   <div class="text-wrapper">
-<<<<<<< HEAD
    <textarea class="translation" id="t1" placeholder="View recorded speech here..."></textarea>
    <button onclick="getText()">
     <i class="fas fa-exchange-alt" id="highlightKey">
     </i>
    </button>
    <textarea class="translation" id="t2" placeholder="View translated speech here..."></textarea>
-=======
-   <textarea class="translation" id="t1" placeholder="View recorded speech here...">her name is Daniel exit</textarea>
-   <i class="fas fa-exchange-alt">
-   </i>
-   <textarea class="translation" id="t2" placeholder="View translated speech here...">اسمها دانيالخروج</textarea>
->>>>>>> a7494d1695bcd94a07fde93e01ec30fdf5e9b661
    <i class="fas fa-times text-close">
    </i>
   </div>
