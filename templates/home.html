@@ -82,6 +82,7 @@
    </p>
    <textarea cols="35" id="h1" name="highlights" rows="10"></textarea>
    &gt;
+   <textarea class="soap note" name="notes" placeholder="Enter any relevant information here" type="text"></textarea>
    <input class="button" type="submit" value="Submit"/>
    <i class="fas fa-times record-close">
    </i>
@@ -139,10 +140,10 @@
    <h2>
     Click the icon to start translating.
    </h2>
-   <div style="display: flex; justify-content: center;">
-    <select name="languages1">
+   <div style="display: flex; justify-content: center; align-items: center;">
+    <select id="languages1" name="languages1">
      <option value="">
-      Select Language
+      Input Language
      </option>
      <option value="en">
       English
@@ -191,9 +192,11 @@
      </option>
      <!-- add more -->
     </select>
-    <select name="languages2">
+    <i class="fas fa-sync-alt">
+    </i>
+    <select id="languages2" name="languages2">
      <option value="">
-      Select Language
+      Output Language
      </option>
      <option value="ar">
       Arabic
@@ -248,12 +251,19 @@
    View Text
   </div>
   <div class="text-wrapper">
+<<<<<<< HEAD
    <textarea class="translation" id="t1" placeholder="View recorded speech here..."></textarea>
    <button onclick="getText()">
     <i class="fas fa-exchange-alt" id="highlightKey">
     </i>
    </button>
    <textarea class="translation" id="t2" placeholder="View translated speech here..."></textarea>
+=======
+   <textarea class="translation" id="t1" placeholder="View recorded speech here...">her name is Daniel exit</textarea>
+   <i class="fas fa-exchange-alt">
+   </i>
+   <textarea class="translation" id="t2" placeholder="View translated speech here...">اسمها دانيالخروج</textarea>
+>>>>>>> a7494d1695bcd94a07fde93e01ec30fdf5e9b661
    <i class="fas fa-times text-close">
    </i>
   </div>
