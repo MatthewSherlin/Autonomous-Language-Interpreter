@@ -155,10 +155,6 @@ body {
     padding: 10px;
     outline: 1px solid black;
     border-radius: 2px;
-}
-
-.note {
-    height: 225px;
     resize: none;
 }
 
@@ -319,6 +315,18 @@ select:focus {
     right: -15px;
     bottom: 5px;
     color: var(--grey-1);
+}
+
+.highlight {
+    position: absolute;
+    z-index: 999;
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 50%;
+    outline: 0;
+    border: 0;
 }
 
 .move-text {
