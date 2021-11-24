@@ -144,6 +144,16 @@
       Input Language
      </option>
      <!-- ---------------------------------- -->
+     {% if l1 == "en" %}
+     <option selected="True" value="en">
+      English
+     </option>
+     {% elif l1 !="en" %}
+     <option value="en">
+      English
+     </option>
+     {% endif %}
+     <!-- ---------------------------------- -->
      {% if l1 == "ar" %}
      <option selected="True" value="ar">
       Arabic
@@ -161,16 +171,6 @@
      {% elif l1 !="zh" %}
      <option value="zh">
       Chinese
-     </option>
-     {% endif %}
-     <!-- ---------------------------------- -->
-     {% if l1 == "en" %}
-     <option selected="True" value="en">
-      English
-     </option>
-     {% elif l1 !="en" %}
-     <option value="en">
-      English
      </option>
      {% endif %}
      <!-- ---------------------------------- -->
