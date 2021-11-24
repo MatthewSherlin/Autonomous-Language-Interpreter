@@ -81,7 +81,7 @@ def dynamic_page():
 
             l1 = session.get('languageOne')
             l2 = session.get('langaugeTwo')
-            print("L1 IS A "+ str(type(l1)))
+          #  print("L1 IS A "+ str(type(l1)))
             toget.main(languageOne, langaugeTwo) # run google APIS
             return render_template("home.html", isAdmin = True,l1 = l1, l2 = l2) if session.get("username") == "admin" else render_template("home.html", isAdmin = False ,l1 = l1, l2 = l2)
         else:
@@ -216,8 +216,10 @@ def takeHome():
         text        = request.form["t1"]
 
         if langaugeTwo:
+            session["textLanguage"] = langaugeTwo
+            l2 = session.get("textLanguage")
             takeHomeTranslate(langaugeTwo, text)
-            return render_template("takeHome.html", isAdmin = True) if session.get("username") == "admin" else render_template("takeHome.html", isAdmin = False)    
+            return render_template("takeHome.html", isAdmin = True, l2 = l2) if session.get("username") == "admin" else render_template("takeHome.html", isAdmin = False, l2 = l2)    
         else:
             return render_template("takeHome.html", isAdmin = True, values = False) if session.get("username") == "admin" else render_template("takeHome.html", isAdmin = False, values = False)    
                  

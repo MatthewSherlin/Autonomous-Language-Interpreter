@@ -113,52 +113,157 @@
     <option value="">
      Select Language
     </option>
-    <option value="en">
-     English
+    <!-- ---------------------------------- -->
+    {% if l2 == "ar" %}
+    <option selected="True" value="ar">
+     Arabic
     </option>
+    {% elif l2 !="ar" %}
     <option value="ar">
      Arabic
     </option>
+    {% endif %}
+    <!-- ---------------------------------- -->
+    {% if l2 == "zh" %}
+    <option selected="True" value="zh">
+     Chinese
+    </option>
+    {% elif l2 !="zh" %}
     <option value="zh">
      Chinese
     </option>
+    {% endif %}
+    <!-- ---------------------------------- -->
+    {% if l2 == "en" %}
+    <option selected="True" value="en">
+     English
+    </option>
+    {% elif l2 !="en" %}
+    <option value="en">
+     English
+    </option>
+    {% endif %}
+    <!-- ---------------------------------- -->
+    {% if l2 == "fr" %}
+    <option selected="True" value="fr">
+     French
+    </option>
+    {% elif l2 !="fr" %}
     <option value="fr">
      French
     </option>
+    {% endif %}
+    <!-- ---------------------------------- -->
+    {% if l2 == "de" %}
+    <option selected="True" value="de">
+     German
+    </option>
+    {% elif l2 !="de" %}
     <option value="de">
      German
     </option>
+    {% endif %}
+    <!-- ---------------------------------- -->
+    {% if l2 == "hi" %}
+    <option selected="True" value="hi">
+     Hindi
+    </option>
+    {% elif l2 !="hi" %}
     <option value="hi">
      Hindi
     </option>
+    {% endif %}
+    <!-- ---------------------------------- -->
+    {% if l2 == "ja" %}
+    <option selected="True" value="ja">
+     Japanese
+    </option>
+    {% elif l2 !="ja" %}
     <option value="ja">
      Japanese
     </option>
+    {% endif %}
+    <!-- ---------------------------------- -->
+    {% if l2 == "ko" %}
+    <option selected="True" value="ko">
+     Korean
+    </option>
+    {% elif l2 !="ko" %}
     <option value="ko">
      Korean
     </option>
+    {% endif %}
+    <!-- ---------------------------------- -->
+    {% if l2 == "pl" %}
+    <option selected="True" value="pl">
+     Polish
+    </option>
+    {% elif l2 !="pl" %}
     <option value="pl">
      Polish
     </option>
+    {% endif %}
+    <!-- ---------------------------------- -->
+    {% if l2 == "pt" %}
+    <option selected="True" value="pt">
+     Portuguese
+    </option>
+    {% elif l2 !="pt" %}
     <option value="pt">
      Portuguese
     </option>
+    {% endif %}
+    <!-- ---------------------------------- -->
+    {% if l2 == "ru" %}
+    <option selected="True" value="ru">
+     Russian
+    </option>
+    {% elif l2 !="ru" %}
     <option value="ru">
      Russian
     </option>
+    {% endif %}
+    <!-- ---------------------------------- -->
+    {% if l2 == "es" %}
+    <option selected="True" value="es">
+     Spanish
+    </option>
+    {% elif l2 !="es" %}
     <option value="es">
      Spanish
     </option>
+    {% endif %}
+    <!-- ---------------------------------- -->
+    {% if l2 == "te" %}
+    <option selected="True" value="te">
+     Telugu
+    </option>
+    {% elif l2 !="te" %}
     <option value="te">
      Telugu
     </option>
+    {% endif %}
+    <!-- ---------------------------------- -->
+    {% if l2 == "tr" %}
+    <option selected="True" value="tr">
+     Turkish
+    </option>
+    {% elif l2 !="tr" %}
     <option value="tr">
      Turkish
     </option>
-    <option value="vi">
+    {% endif %}
+    <!-- ---------------------------------- -->
+    {% if l2 == "vi" %}
+    <option selected="True" value="vi">
      Vietnamese
     </option>
-    <!-- add more -->
+    {% elif l2 !="vi" %}
+    <option value="vi">
+     Vietnamese
+     <!-- add more -->
+    </option>
+    {% endif %}
    </select>
    <div class="input-wrapper">
     <div class="input">
