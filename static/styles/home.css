@@ -281,7 +281,7 @@ select:focus {
     background: var(--white-2);
 }
 
-.fa-exchange-alt {
+.fa-highlighter {
     color: var(--grey-1);
     font-size: 30px;
     margin: 10px;
