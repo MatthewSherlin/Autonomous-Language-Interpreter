@@ -10,6 +10,7 @@ from database import companies, saveUser, getUser, chart_table,isAdmin, db
 from database import generateCredentials, stringToBytes, companyIdGenerator, saveCompany
 from sessions import app
 from translatetext import takeHomeTranslate, clearTextTags,clearHomeTags
+from toget import path
 
 import hashlib
 import datetime
@@ -18,6 +19,8 @@ import threading
 import toget
 import math
 import random
+import sys
+import os
 
 
 
@@ -90,6 +93,17 @@ def dynamic_page():
     else:
         return render_template("home.html", isAdmin == True) if session.get("username") == "admin" else render_template("home.html", isAdmin = False)
     
+
+"""# -------------------redirect for toget--------------------
+@app.route("/redirect", methods=["GET", "POST"])
+def terminate_page():
+    l1 = session.get('languageOne')
+    l2 = session.get('langaugeTwo')
+    if path:
+        os.remove(path)
+    return render_template("home.html", isAdmin = True,l1 = l1, l2 = l2) if session.get("username") == "admin" else render_template("home.html", isAdmin = False ,l1 = l1, l2 = l2)
+       """ 
+
 
 # -------------------login page functionality--------------------
 @app.route("/", methods=["GET", "POST"])
