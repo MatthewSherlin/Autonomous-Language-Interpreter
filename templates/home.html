@@ -3,15 +3,8 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
   <title>
-   ALI
+   Homepage
   </title>
-  <meta content="A simple HTML5 Template for new projects." name="description"/>
-  <meta content="SitePoint" name="author"/>
-  <meta content="A Basic HTML5 Template" property="og:title"/>
-  <meta content="website" property="og:type"/>
-  <meta content="https://www.sitepoint.com/a-basic-html5-template/" property="og:url"/>
-  <meta content="A simple HTML5 Template for new projects." property="og:description"/>
-  <meta content="image.png" property="og:image"/>
   <link href="static\images\icon.ico" rel="shortcut icon" type="image/x-icon"/>
   <link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
@@ -457,18 +450,22 @@
     </select>
    </div>
   </form>
+  <input name="quit" onclick="terminate()" type="button" value="Stop Listening"/>
   <div class="translation-tab">
    View Text
   </div>
   <div class="text-wrapper">
-   <textarea class="translation" id="t1" placeholder="View recorded speech here..."></textarea>
-   <button class="highlight"onclick="getText()"></button>
-    <i class="fas fa-highlighter" id="highlightKey">
-    </i>
-   <textarea class="translation" id="t2" placeholder="View translated speech here..."></textarea>
+   <textarea class="translation" id="t1" placeholder="View recorded speech here...">this is a test</textarea>
+   <button class="highlight" onclick="getText()">
+   </button>
+   <i class="fas fa-highlighter" id="highlightKey">
+   </i>
+   <textarea class="translation" id="t2" placeholder="View translated speech here...">c&amp;#39;est un test</textarea>
    <i class="fas fa-times text-close">
    </i>
   </div>
+  <script crossorigin="anonymous" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" src="http://code.jquery.com/jquery-3.3.1.min.js">
+  </script>
   <script crossorigin="anonymous" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" src="https://code.jquery.com/jquery-3.6.0.js">
   </script>
   <script src="static/scripts/home.js">
