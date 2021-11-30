@@ -1,7 +1,6 @@
 # database
 import dataset
 
-import datetime
 import hashlib
 import os
 import codecs
@@ -9,7 +8,6 @@ import codecs
 import string
 import random
 ## connecting to database
-## !!!may need to put root as password if no connection occurs!!!
 ## make sure database = ali ##
 
 # Add your own password for localhost
@@ -22,22 +20,22 @@ companies = db["companies"]
 chart_table = db["chart_table"]
 sessions = db["sessions"]
 
-## 
+## creates a company ID
 def companyIdGenerator(size=4, uchars=string.digits):
     return ''.join(random.choice(uchars) for _ in range(size))
 
-# Testing database setup
-db["companies"].drop()
+#if at the very least, just have ALI in the database
+if(companies.__len__()== 0):
+     companies.insert(
+            {
+                "company_id": "0001",
+                "company_name": "ALI",
+                "company_key": "123thjmv79cdfj3ki5tye",
+            }
+        )
 
-companies.insert(
-    {
-        "company_id": "0001",
-        "company_name": "ALI",
-        "company_key": "123thjmv79cdfj3ki5tye",
-    }
-)
 
-
+#finds user through the username inside of database
 def getUser(username):
     try:
         user = list(users_table.find(username=username))
@@ -46,11 +44,12 @@ def getUser(username):
         company = user[0].get("company_name")
         data = {"username": username, "password": password, "company_name": company}
         return data
-    except:
+    except: # if not found return empty Dictionary 
         data = {"username": '', "password": '', "company_name": ''}
         return data
 
 
+#saves user into database
 def saveUser(data):
     assert type(data) is dict
     users_table.insert(
@@ -62,11 +61,10 @@ def saveUser(data):
     )
     return
 
+#saves company into database
 def saveCompany(data):
     assert type(data) is dict
-    #try:
-    #companies.find(company_key = data["company_key"])
-    #except:
+
     companies.insert(
         {
             "company_id": data["company_id"],
@@ -76,6 +74,7 @@ def saveCompany(data):
     )
     return
 
+#checks to see if user is an Admin
 def isAdmin(username):
     if username  == "admin":
         return True
@@ -83,8 +82,6 @@ def isAdmin(username):
         return False
 
 
-
-# ------------------------Credential functions---------------------
 # function for hashing process
 def bytesToString(byte):
     string = str(

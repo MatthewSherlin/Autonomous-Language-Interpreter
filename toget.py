@@ -149,8 +149,6 @@ def listen_print_loop(responses, var1, var2):
             target = var2
 
             output = translate_client.translate(text, target_language=target)
-            #print(output.keys())
-            #print(output.values())
             print(output['translatedText'])
             speechString = output['translatedText']
             

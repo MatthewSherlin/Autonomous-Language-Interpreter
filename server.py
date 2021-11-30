@@ -1,6 +1,6 @@
 # ALI server file
 # Flask imports
-from flask import Flask, render_template
+from flask import render_template
 from flask import request
 from flask import redirect
 from flask import session
@@ -58,7 +58,7 @@ def homePage():
             return render_template("home.html", isAdmin = False)
         
     else:
-       ## clearHomeTags() may need to uncomment!!
+
         if session.get("username") == "admin":
             return render_template("home.html", isAdmin = True)
 
@@ -81,11 +81,16 @@ def dynamic_page():
 
             l1 = session.get('languageOne')
             l2 = session.get('langaugeTwo')
-          #  print("L1 IS A "+ str(type(l1)))
+
             toget.main(languageOne, langaugeTwo) # run google APIS
-            return render_template("home.html", isAdmin = True,l1 = l1, l2 = l2) if session.get("username") == "admin" else render_template("home.html", isAdmin = False ,l1 = l1, l2 = l2)
+            return render_template("home.html", isAdmin = True,
+            l1 = l1, l2 = l2) if session.get("username") == "admin" else render_template("home.html", 
+            isAdmin = False, l1 = l1, l2 = l2)
+
         else:
-            return render_template("home.html", isAdmin = True, values = False) if session.get("username") == "admin" else render_template("home.html", isAdmin = False, values=False)
+            return render_template("home.html", isAdmin = True, 
+            values = False) if session.get("username") == "admin" else render_template("home.html", 
+            isAdmin = False, values=False)
 
     else:
         return render_template("home.html", isAdmin == True) if session.get("username") == "admin" else render_template("home.html", isAdmin = False)
@@ -206,7 +211,7 @@ def getLogout():
     return redirect("/")  # redirect to login page
 
 
-##takeHomeTranslate(var1)
+
 # ---------Translation page --------------
 @app.route("/takehome", methods=["GET", "POST"])
 def takeHome():
@@ -300,15 +305,13 @@ def background():
  
     while True:
 
-            #print("minutes " + str(minutes))
-            ##if an hour has passed
+
             if minutes > 60:
                 try:
                     db.query('DELETE FROM chart_table WHERE time_stamp<=DATE_SUB(NOW(), INTERVAL 1 DAY);') #query to find old chart data(24 hours)
                     db.commit()
                     minutes = 0
-                    #currentTimeStamp = datetime.datetime.now()
-                    #print("CURRENT TIME STAP " + str(currentTimeStamp))
+
 
                 except: pass
             time.sleep(60)
