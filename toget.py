@@ -11,6 +11,7 @@ from google.cloud import texttospeech # outdated or incomplete comparing to v1
 from google.cloud import texttospeech_v1
 from playsound import playsound #play mp3 files
 from bs4 import BeautifulSoup
+import keyboard
 
 #-----------------------credential[path] ensure that it is set to proper location -------------------------------
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r".\\ServiceKey.json"    # un-comment for windows
@@ -204,6 +205,9 @@ def listen_print_loop(responses, var1, var2):
             # one of our keywords.
             if re.search(r"\b(exit|quit)\b", transcript, re.I):
                 print("Exiting..")
+                break
+            
+            if keyboard.is_pressed("space"):
                 break
 
             num_chars_printed = 0
