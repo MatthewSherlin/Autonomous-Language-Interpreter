@@ -23,7 +23,7 @@ db.create_all()
 # functionality for session timeout
 @app.before_request
 def sessionTimeout():
-    session.permanent = True
-    app.permanent_session_lifetime = timedelta(minutes=20)
+    session.permanent = True # so session persists even if browser is closed
+    app.permanent_session_lifetime = timedelta(minutes=20) # session expires after 20 mins
     session.modified = True
 
