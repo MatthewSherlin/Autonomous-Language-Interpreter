@@ -1,5 +1,3 @@
-Capstone/Software Development Project
-
 A.L.I. is an autonomous language interpreter. It was developed as a tool for use in hospitals to bridge language barriers in the medical environment. It is designed to work similarly to a live interpreter who would normally be present for the conversation. A.L.I. is able to not only translate conversations as they happen, but also features several components that may be useful for a medical professional when interacting with a patient. These include a database to log conversations as well as highlight key parts of conversations. These conversations and highlights are stored for future reference, up to 24 hours. In addition, A.L.I includes a menu to create SOAP notes in regards to a conversation. Additionally, it is possible to use A.L.I. to create discharge instructions for a given patient. 
 
 All of these features are intended to aid a professional user in interpretation, and all information presented in A.L.I. should be checked for accuracy by the professional user.
