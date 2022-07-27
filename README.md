@@ -9,8 +9,7 @@ ALI is a complex program that uses several APIs and specific modules in order to
 
 Getting started:
 
-Install python
-Install pip
+- Install python and pip
 
 Install server libraries/extensions in terminal:
 ```
